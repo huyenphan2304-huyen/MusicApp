@@ -1,0 +1,18 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ordesignerObjectsDiagram dslVersion="1.0.0.0" absoluteBounds="0, 0, 11, 8.5" name="MusicDb">
+  <DataContextMoniker Name="/MusicDbDataContext" />
+  <nestedChildShapes>
+    <classShape Id="a6eac814-3366-40fc-8cd7-77d69c0424a3" absoluteBounds="1.25, 0.875, 2, 1.5785953776041666">
+      <DataClassMoniker Name="/MusicDbDataContext/Menu" />
+      <nestedChildShapes>
+        <elementListCompartment Id="e4016bd3-56a0-469d-8185-0d1991e248c5" absoluteBounds="1.2650000000000001, 1.335, 1.9700000000000002, 1.0185953776041665" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="9f73810b-4437-4693-9568-95b692b2fa97" absoluteBounds="4.625, 0.875, 2, 2.5401025390625">
+      <DataClassMoniker Name="/MusicDbDataContext/Song" />
+      <nestedChildShapes>
+        <elementListCompartment Id="cef49408-6a7d-4d48-bf55-50f3dbeb1367" absoluteBounds="4.64, 1.335, 1.9700000000000002, 1.9801025390625" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+  </nestedChildShapes>
+</ordesignerObjectsDiagram>

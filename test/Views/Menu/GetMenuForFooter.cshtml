@@ -1,0 +1,19 @@
+﻿@using System.Collections.Generic  // Add this line to bring in List<>
+@model List<test.Models.Menu>
+@{
+    ViewBag.Title = "FooterMenu";
+}
+
+
+
+<ul>
+    @foreach (var menu in Model)
+    {
+        if (menu.ParentId == null) // Nếu là menu chính
+        {
+            <li>
+                <a href="@menu.Url">@menu.Name</a>
+            </li>
+        }
+    }
+</ul>

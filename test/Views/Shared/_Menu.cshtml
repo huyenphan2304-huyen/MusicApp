@@ -1,0 +1,26 @@
+﻿@using System.Collections.Generic  
+
+@model IEnumerable<test.Models.Menu>
+
+<div class="classynav">
+    <ul>
+        @foreach (var menu in Model)
+        {
+            if (menu.ParentId == null)
+            {
+                <li>
+                    <a href="@menu.Url">@menu.Name</a>
+                    @if (Model.Any(m => m.ParentId == menu.Id))
+                    {
+                        <ul class="dropdown">
+                            @foreach (var subMenu in Model.Where(m => m.ParentId == menu.Id))
+                            {
+                                <li><a href="@subMenu.Url">@subMenu.Name</a></li>
+                            }
+                        </ul>
+                    }
+                </li>
+            }
+        }
+    </ul>
+</div>

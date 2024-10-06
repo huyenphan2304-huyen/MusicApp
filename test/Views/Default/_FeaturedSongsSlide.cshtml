@@ -1,0 +1,31 @@
+﻿@model List<Midver1.Models.Song>
+<link rel="stylesheet" href="~/Content/style.css">
+
+<section class="hero-area">
+    <div class="hero-slides owl-carousel">
+        @foreach (var song in Model)
+        {
+            <div class="single-hero-slide d-flex align-items-center justify-content-center">
+                <!-- Slide Img -->
+                <div class="slide-img bg-img" style="background-image: url('@(string.IsNullOrEmpty(song.CoverImageUrl) ? "default-image-url.jpg" : song.CoverImageUrl)');">
+                    <img src="@song.CoverImageUrl" alt="Cover image of @song.Title;" />
+                </div>
+                <!-- Slide Content -->
+                <div class="container">
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="hero-slides-content text-center">
+                                <h6>@(string.IsNullOrEmpty(song.Album) ? "Unknown Album" : song.Album)</h6>
+                                <h2>@(string.IsNullOrEmpty(song.Title) ? "Unknown Title" : song.Title) <span>@(string.IsNullOrEmpty(song.Artist) ? "Unknown Artist" : song.Artist)</span></h2>
+                                <a href="@song.Url" class="btn oneMusic-btn mt-50">Play Now <i class="fa fa-angle-double-right"></i></a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</section>
+
+
+
