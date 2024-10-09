@@ -1,9 +1,9 @@
-﻿using test.Models; // Make sure to include your models namespace
+﻿using MusicApp.Models; // Make sure to include your models namespace
 using System.Configuration;
 using System.Linq;
 using System.Web.Mvc;
 
-namespace test.Controllers
+namespace MusicApp.Controllers
 {
     public class DefaultController : Controller
     {

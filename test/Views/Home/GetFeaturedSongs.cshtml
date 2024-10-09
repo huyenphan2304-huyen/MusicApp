@@ -1,4 +1,6 @@
-﻿@model List<test.Models.Song>
+﻿@using System.Collections.Generic
+
+@model List<MusicApp.Models.Song>
 <link rel="stylesheet" href="~/Content/style.css">
 
 <section class="hero-area">
@@ -8,7 +10,6 @@
             <div class="single-hero-slide d-flex align-items-center justify-content-center">
                 <!-- Slide Img -->
                 <div class="slide-img bg-img" style="background-image: url('@(string.IsNullOrEmpty(song.CoverImageUrl) ? "default-image-url.jpg" : song.CoverImageUrl)');">
-                    <img src="@song.CoverImageUrl" alt="Cover image of @song.Title;" />
                 </div>
                 <!-- Slide Content -->
                 <div class="container">

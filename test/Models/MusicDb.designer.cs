@@ -9,7 +9,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace test.Models
+namespace MusicApp.Models
 {
 	using System.Data.Linq;
 	using System.Data.Linq.Mapping;

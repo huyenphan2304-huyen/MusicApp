@@ -1,9 +1,9 @@
-﻿using test.Models;
+﻿using MusicApp.Models;
 using System;
 using System.Linq;
 using System.Web.Mvc;
 
-namespace test.Controllers
+namespace MusicApp.Controllers
 {
     public class LayoutController : Controller
     {

@@ -4,8 +4,8 @@ using System.Configuration;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
-using test.Models;
-namespace test.Controllers
+using MusicApp.Models;
+namespace MusicApp.Controllers
 {
     public class HomeController : Controller
     {
@@ -35,7 +35,7 @@ namespace test.Controllers
             var featuredSongs = db.Songs.Where(song => (bool)song.IsFeatured).ToList();
 
             // Trả về view với dữ liệu các bài hát nổi bật
-            return PartialView("_FeaturedSongsSlide", featuredSongs);
+            return PartialView("GetFeaturedSongs", featuredSongs);
         }
     }
 }

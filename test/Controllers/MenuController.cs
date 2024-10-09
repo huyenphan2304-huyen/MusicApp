@@ -1,9 +1,9 @@
-﻿using test.Models;  // Chứa lớp Menu
+﻿using MusicApp.Models;  // Chứa lớp Menu
 using System.Collections.Generic;
 using System.Linq;
 using System.Web.Mvc;
 
-namespace test.Controllers
+namespace MusicApp.Controllers
 {
     public class MenuController : Controller
     {
@@ -16,7 +16,7 @@ namespace test.Controllers
             var menus = db.Menus.ToList();
 
             // Trả về view _Menu với danh sách menus
-            return PartialView("_Menu", menus);
+            return PartialView("GetMenu", menus);
         }
         public ActionResult GetMenuForFooter()
         {

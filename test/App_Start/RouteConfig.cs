@@ -1,7 +1,7 @@
 ﻿using System.Web.Mvc;
 using System.Web.Routing;
 
-namespace test
+namespace MusicApp
 {
     public class RouteConfig
     {

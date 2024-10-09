@@ -3,7 +3,7 @@ using System.Web.Optimization;
 using System.Web.Routing; // Đảm bảo dòng này đã có
 using System.Web; // Đảm bảo dòng này đã có
 
-namespace test
+namespace MusicApp
 {
     public class MvcApplication : HttpApplication
     {
