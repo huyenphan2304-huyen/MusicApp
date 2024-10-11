@@ -1,10 +1,36 @@
 ﻿<?xml version="1.0" encoding="utf-8"?><Database Name="MusicDb" Class="MusicDbDataContext" xmlns="http://schemas.microsoft.com/linqtosql/dbml/2007">
+  <Connection Mode="WebSettings" ConnectionString="Data Source=(LocalDB)\MSSQLLocalDB;Initial Catalog=MusicDb;Integrated Security=True" SettingsObjectName="System.Configuration.ConfigurationManager.ConnectionStrings" SettingsPropertyName="MusicDbDataContext" Provider="System.Data.SqlClient" />
+  <Table Name="dbo.Albums" Member="Albums">
+    <Type Name="Album">
+      <Column Name="Id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="Title" Type="System.String" DbType="NVarChar(255) NOT NULL" CanBeNull="false" />
+      <Column Name="Artist" Type="System.String" DbType="NVarChar(255) NOT NULL" CanBeNull="false" />
+      <Column Name="CoverImageUrl" Type="System.String" DbType="NVarChar(500)" CanBeNull="true" />
+      <Column Name="Url" Type="System.String" DbType="NVarChar(500) NOT NULL" CanBeNull="false" />
+      <Column Name="ReleaseDate" Type="System.DateTime" DbType="Date" CanBeNull="true" />
+      <Column Name="ArtistId" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Association Name="Album_Song" Member="Songs" ThisKey="Id" OtherKey="AlbumId" Type="Song" />
+      <Association Name="Artist_Album" Member="Artist1" ThisKey="ArtistId" OtherKey="Id" Type="Artist" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Artists" Member="Artists">
+    <Type Name="Artist">
+      <Column Name="Id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="Name" Type="System.String" DbType="NVarChar(255) NOT NULL" CanBeNull="false" />
+      <Column Name="ImageUrl" Type="System.String" DbType="NVarChar(500)" CanBeNull="true" />
+      <Column Name="BackgroundImageUrl" Type="System.String" DbType="NVarChar(500)" CanBeNull="true" />
+      <Column Name="Description" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
+      <Association Name="Artist_Album" Member="Albums" ThisKey="Id" OtherKey="ArtistId" Type="Album" />
+    </Type>
+  </Table>
   <Table Name="dbo.Menu" Member="Menus">
     <Type Name="Menu">
       <Column Name="Id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
-      <Column Name="Name" Type="System.String" DbType="NVarChar(100)" CanBeNull="true" />
-      <Column Name="Url" Type="System.String" DbType="NVarChar(200)" CanBeNull="true" />
+      <Column Name="Name" Type="System.String" DbType="NVarChar(100) NOT NULL" CanBeNull="false" />
+      <Column Name="Url" Type="System.String" DbType="NVarChar(200) NOT NULL" CanBeNull="false" />
       <Column Name="ParentId" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Association Name="Menu_Menu" Member="Menus" ThisKey="Id" OtherKey="ParentId" Type="Menu" />
+      <Association Name="Menu_Menu" Member="Menu1" ThisKey="ParentId" OtherKey="Id" Type="Menu" IsForeignKey="true" />
     </Type>
   </Table>
   <Table Name="dbo.Songs" Member="Songs">
@@ -16,8 +42,10 @@
       <Column Name="Genre" Type="System.String" DbType="NVarChar(100)" CanBeNull="true" />
       <Column Name="ReleaseDate" Type="System.DateTime" DbType="Date" CanBeNull="true" />
       <Column Name="CoverImageUrl" Type="System.String" DbType="NVarChar(500)" CanBeNull="true" />
-      <Column Name="Url" Type="System.String" DbType="NVarChar(500)" CanBeNull="true" />
+      <Column Name="Url" Type="System.String" DbType="NVarChar(500) NOT NULL" CanBeNull="false" />
       <Column Name="IsFeatured" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Column Name="AlbumId" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Association Name="Album_Song" Member="Album1" ThisKey="AlbumId" OtherKey="Id" Type="Album" IsForeignKey="true" />
     </Type>
   </Table>
 </Database>

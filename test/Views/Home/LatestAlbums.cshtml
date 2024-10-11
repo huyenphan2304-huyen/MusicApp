@@ -1,0 +1,48 @@
+﻿
+@{
+    ViewBag.Title = "LatestAlbums";
+}
+
+@model List<MusicApp.Models.Album>
+
+<!-- ##### Latest Albums Area Start ##### -->
+<section class="latest-albums-area section-padding-100">
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <div class="section-heading style-2">
+                    <p>See what’s new</p>
+                    <h2>Latest Albums</h2>
+                </div>
+            </div>
+        </div>
+        <div class="row justify-content-center">
+            <div class="col-12 col-lg-9">
+                <div class="ablums-text text-center mb-70">
+                    <p>Nam tristique ex vel magna tincidunt, ut porta nisl finibus. Vivamus eu dolor eu quam varius rutrum. Fusce nec justo id sem aliquam fringilla nec non lacus. Suspendisse eget lobortis nisi, ac cursus odio. Vivamus nibh velit, rutrum at ipsum ac, dignissim iaculis ante. Donec in velit non elit pulvinar pellentesque et non eros.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-12">
+                <div class="albums-slideshow owl-carousel">
+                    @foreach (var album in Model)
+                    {
+                        <!-- Single Album -->
+                        <div class="single-album">
+                            <img src="@album.CoverImageUrl" alt="@album.Title">
+                            <div class="album-info">
+                                <a href="@album.Url">
+                                    <h5>@album.Title</h5>
+                                </a>
+                                <p>@album.Artist</p>
+                            </div>
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- ##### Latest Albums Area End ##### -->

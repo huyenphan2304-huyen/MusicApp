@@ -30,6 +30,12 @@ namespace MusicApp.Models
 		
     #region Extensibility Method Definitions
     partial void OnCreated();
+    partial void InsertAlbum(Album instance);
+    partial void UpdateAlbum(Album instance);
+    partial void DeleteAlbum(Album instance);
+    partial void InsertArtist(Artist instance);
+    partial void UpdateArtist(Artist instance);
+    partial void DeleteArtist(Artist instance);
     partial void InsertMenu(Menu instance);
     partial void UpdateMenu(Menu instance);
     partial void DeleteMenu(Menu instance);
@@ -37,6 +43,12 @@ namespace MusicApp.Models
     partial void UpdateSong(Song instance);
     partial void DeleteSong(Song instance);
     #endregion
+		
+		public MusicDbDataContext() : 
+				base(global::System.Configuration.ConfigurationManager.ConnectionStrings["MusicDbDataContext"].ConnectionString, mappingSource)
+		{
+			OnCreated();
+		}
 		
 		public MusicDbDataContext(string connection) : 
 				base(connection, mappingSource)
@@ -62,6 +74,22 @@ namespace MusicApp.Models
 			OnCreated();
 		}
 		
+		public System.Data.Linq.Table<Album> Albums
+		{
+			get
+			{
+				return this.GetTable<Album>();
+			}
+		}
+		
+		public System.Data.Linq.Table<Artist> Artists
+		{
+			get
+			{
+				return this.GetTable<Artist>();
+			}
+		}
+		
 		public System.Data.Linq.Table<Menu> Menus
 		{
 			get
@@ -79,19 +107,29 @@ namespace MusicApp.Models
 		}
 	}
 	
-	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.Menu")]
-	public partial class Menu : INotifyPropertyChanging, INotifyPropertyChanged
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.Albums")]
+	public partial class Album : INotifyPropertyChanging, INotifyPropertyChanged
 	{
 		
 		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
 		
 		private int _Id;
 		
-		private string _Name;
+		private string _Title;
+		
+		private string _Artist;
+		
+		private string _CoverImageUrl;
 		
 		private string _Url;
 		
-		private System.Nullable<int> _ParentId;
+		private System.Nullable<System.DateTime> _ReleaseDate;
+		
+		private System.Nullable<int> _ArtistId;
+		
+		private EntitySet<Song> _Songs;
+		
+		private EntityRef<Artist> _Artist1;
 		
     #region Extensibility Method Definitions
     partial void OnLoaded();
@@ -99,16 +137,24 @@ namespace MusicApp.Models
     partial void OnCreated();
     partial void OnIdChanging(int value);
     partial void OnIdChanged();
-    partial void OnNameChanging(string value);
-    partial void OnNameChanged();
+    partial void OnTitleChanging(string value);
+    partial void OnTitleChanged();
+    partial void OnArtistChanging(string value);
+    partial void OnArtistChanged();
+    partial void OnCoverImageUrlChanging(string value);
+    partial void OnCoverImageUrlChanged();
     partial void OnUrlChanging(string value);
     partial void OnUrlChanged();
-    partial void OnParentIdChanging(System.Nullable<int> value);
-    partial void OnParentIdChanged();
+    partial void OnReleaseDateChanging(System.Nullable<System.DateTime> value);
+    partial void OnReleaseDateChanged();
+    partial void OnArtistIdChanging(System.Nullable<int> value);
+    partial void OnArtistIdChanged();
     #endregion
 		
-		public Menu()
+		public Album()
 		{
+			this._Songs = new EntitySet<Song>(new Action<Song>(this.attach_Songs), new Action<Song>(this.detach_Songs));
+			this._Artist1 = default(EntityRef<Artist>);
 			OnCreated();
 		}
 		
@@ -132,7 +178,271 @@ namespace MusicApp.Models
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Name", DbType="NVarChar(100)")]
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Title", DbType="NVarChar(255) NOT NULL", CanBeNull=false)]
+		public string Title
+		{
+			get
+			{
+				return this._Title;
+			}
+			set
+			{
+				if ((this._Title != value))
+				{
+					this.OnTitleChanging(value);
+					this.SendPropertyChanging();
+					this._Title = value;
+					this.SendPropertyChanged("Title");
+					this.OnTitleChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Artist", DbType="NVarChar(255) NOT NULL", CanBeNull=false)]
+		public string Artist
+		{
+			get
+			{
+				return this._Artist;
+			}
+			set
+			{
+				if ((this._Artist != value))
+				{
+					this.OnArtistChanging(value);
+					this.SendPropertyChanging();
+					this._Artist = value;
+					this.SendPropertyChanged("Artist");
+					this.OnArtistChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_CoverImageUrl", DbType="NVarChar(500)")]
+		public string CoverImageUrl
+		{
+			get
+			{
+				return this._CoverImageUrl;
+			}
+			set
+			{
+				if ((this._CoverImageUrl != value))
+				{
+					this.OnCoverImageUrlChanging(value);
+					this.SendPropertyChanging();
+					this._CoverImageUrl = value;
+					this.SendPropertyChanged("CoverImageUrl");
+					this.OnCoverImageUrlChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Url", DbType="NVarChar(500) NOT NULL", CanBeNull=false)]
+		public string Url
+		{
+			get
+			{
+				return this._Url;
+			}
+			set
+			{
+				if ((this._Url != value))
+				{
+					this.OnUrlChanging(value);
+					this.SendPropertyChanging();
+					this._Url = value;
+					this.SendPropertyChanged("Url");
+					this.OnUrlChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ReleaseDate", DbType="Date")]
+		public System.Nullable<System.DateTime> ReleaseDate
+		{
+			get
+			{
+				return this._ReleaseDate;
+			}
+			set
+			{
+				if ((this._ReleaseDate != value))
+				{
+					this.OnReleaseDateChanging(value);
+					this.SendPropertyChanging();
+					this._ReleaseDate = value;
+					this.SendPropertyChanged("ReleaseDate");
+					this.OnReleaseDateChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ArtistId", DbType="Int")]
+		public System.Nullable<int> ArtistId
+		{
+			get
+			{
+				return this._ArtistId;
+			}
+			set
+			{
+				if ((this._ArtistId != value))
+				{
+					if (this._Artist1.HasLoadedOrAssignedValue)
+					{
+						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
+					}
+					this.OnArtistIdChanging(value);
+					this.SendPropertyChanging();
+					this._ArtistId = value;
+					this.SendPropertyChanged("ArtistId");
+					this.OnArtistIdChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Album_Song", Storage="_Songs", ThisKey="Id", OtherKey="AlbumId")]
+		public EntitySet<Song> Songs
+		{
+			get
+			{
+				return this._Songs;
+			}
+			set
+			{
+				this._Songs.Assign(value);
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Artist_Album", Storage="_Artist1", ThisKey="ArtistId", OtherKey="Id", IsForeignKey=true)]
+		public Artist Artist1
+		{
+			get
+			{
+				return this._Artist1.Entity;
+			}
+			set
+			{
+				Artist previousValue = this._Artist1.Entity;
+				if (((previousValue != value) 
+							|| (this._Artist1.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._Artist1.Entity = null;
+						previousValue.Albums.Remove(this);
+					}
+					this._Artist1.Entity = value;
+					if ((value != null))
+					{
+						value.Albums.Add(this);
+						this._ArtistId = value.Id;
+					}
+					else
+					{
+						this._ArtistId = default(Nullable<int>);
+					}
+					this.SendPropertyChanged("Artist1");
+				}
+			}
+		}
+		
+		public event PropertyChangingEventHandler PropertyChanging;
+		
+		public event PropertyChangedEventHandler PropertyChanged;
+		
+		protected virtual void SendPropertyChanging()
+		{
+			if ((this.PropertyChanging != null))
+			{
+				this.PropertyChanging(this, emptyChangingEventArgs);
+			}
+		}
+		
+		protected virtual void SendPropertyChanged(String propertyName)
+		{
+			if ((this.PropertyChanged != null))
+			{
+				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+			}
+		}
+		
+		private void attach_Songs(Song entity)
+		{
+			this.SendPropertyChanging();
+			entity.Album1 = this;
+		}
+		
+		private void detach_Songs(Song entity)
+		{
+			this.SendPropertyChanging();
+			entity.Album1 = null;
+		}
+	}
+	
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.Artists")]
+	public partial class Artist : INotifyPropertyChanging, INotifyPropertyChanged
+	{
+		
+		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
+		
+		private int _Id;
+		
+		private string _Name;
+		
+		private string _ImageUrl;
+		
+		private string _BackgroundImageUrl;
+		
+		private string _Description;
+		
+		private EntitySet<Album> _Albums;
+		
+    #region Extensibility Method Definitions
+    partial void OnLoaded();
+    partial void OnValidate(System.Data.Linq.ChangeAction action);
+    partial void OnCreated();
+    partial void OnIdChanging(int value);
+    partial void OnIdChanged();
+    partial void OnNameChanging(string value);
+    partial void OnNameChanged();
+    partial void OnImageUrlChanging(string value);
+    partial void OnImageUrlChanged();
+    partial void OnBackgroundImageUrlChanging(string value);
+    partial void OnBackgroundImageUrlChanged();
+    partial void OnDescriptionChanging(string value);
+    partial void OnDescriptionChanged();
+    #endregion
+		
+		public Artist()
+		{
+			this._Albums = new EntitySet<Album>(new Action<Album>(this.attach_Albums), new Action<Album>(this.detach_Albums));
+			OnCreated();
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Id", AutoSync=AutoSync.OnInsert, DbType="Int NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
+		public int Id
+		{
+			get
+			{
+				return this._Id;
+			}
+			set
+			{
+				if ((this._Id != value))
+				{
+					this.OnIdChanging(value);
+					this.SendPropertyChanging();
+					this._Id = value;
+					this.SendPropertyChanged("Id");
+					this.OnIdChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Name", DbType="NVarChar(255) NOT NULL", CanBeNull=false)]
 		public string Name
 		{
 			get
@@ -152,7 +462,192 @@ namespace MusicApp.Models
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Url", DbType="NVarChar(200)")]
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ImageUrl", DbType="NVarChar(500)")]
+		public string ImageUrl
+		{
+			get
+			{
+				return this._ImageUrl;
+			}
+			set
+			{
+				if ((this._ImageUrl != value))
+				{
+					this.OnImageUrlChanging(value);
+					this.SendPropertyChanging();
+					this._ImageUrl = value;
+					this.SendPropertyChanged("ImageUrl");
+					this.OnImageUrlChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_BackgroundImageUrl", DbType="NVarChar(500)")]
+		public string BackgroundImageUrl
+		{
+			get
+			{
+				return this._BackgroundImageUrl;
+			}
+			set
+			{
+				if ((this._BackgroundImageUrl != value))
+				{
+					this.OnBackgroundImageUrlChanging(value);
+					this.SendPropertyChanging();
+					this._BackgroundImageUrl = value;
+					this.SendPropertyChanged("BackgroundImageUrl");
+					this.OnBackgroundImageUrlChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Description", DbType="NVarChar(MAX)")]
+		public string Description
+		{
+			get
+			{
+				return this._Description;
+			}
+			set
+			{
+				if ((this._Description != value))
+				{
+					this.OnDescriptionChanging(value);
+					this.SendPropertyChanging();
+					this._Description = value;
+					this.SendPropertyChanged("Description");
+					this.OnDescriptionChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Artist_Album", Storage="_Albums", ThisKey="Id", OtherKey="ArtistId")]
+		public EntitySet<Album> Albums
+		{
+			get
+			{
+				return this._Albums;
+			}
+			set
+			{
+				this._Albums.Assign(value);
+			}
+		}
+		
+		public event PropertyChangingEventHandler PropertyChanging;
+		
+		public event PropertyChangedEventHandler PropertyChanged;
+		
+		protected virtual void SendPropertyChanging()
+		{
+			if ((this.PropertyChanging != null))
+			{
+				this.PropertyChanging(this, emptyChangingEventArgs);
+			}
+		}
+		
+		protected virtual void SendPropertyChanged(String propertyName)
+		{
+			if ((this.PropertyChanged != null))
+			{
+				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+			}
+		}
+		
+		private void attach_Albums(Album entity)
+		{
+			this.SendPropertyChanging();
+			entity.Artist1 = this;
+		}
+		
+		private void detach_Albums(Album entity)
+		{
+			this.SendPropertyChanging();
+			entity.Artist1 = null;
+		}
+	}
+	
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.Menu")]
+	public partial class Menu : INotifyPropertyChanging, INotifyPropertyChanged
+	{
+		
+		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
+		
+		private int _Id;
+		
+		private string _Name;
+		
+		private string _Url;
+		
+		private System.Nullable<int> _ParentId;
+		
+		private EntitySet<Menu> _Menus;
+		
+		private EntityRef<Menu> _Menu1;
+		
+    #region Extensibility Method Definitions
+    partial void OnLoaded();
+    partial void OnValidate(System.Data.Linq.ChangeAction action);
+    partial void OnCreated();
+    partial void OnIdChanging(int value);
+    partial void OnIdChanged();
+    partial void OnNameChanging(string value);
+    partial void OnNameChanged();
+    partial void OnUrlChanging(string value);
+    partial void OnUrlChanged();
+    partial void OnParentIdChanging(System.Nullable<int> value);
+    partial void OnParentIdChanged();
+    #endregion
+		
+		public Menu()
+		{
+			this._Menus = new EntitySet<Menu>(new Action<Menu>(this.attach_Menus), new Action<Menu>(this.detach_Menus));
+			this._Menu1 = default(EntityRef<Menu>);
+			OnCreated();
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Id", AutoSync=AutoSync.OnInsert, DbType="Int NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
+		public int Id
+		{
+			get
+			{
+				return this._Id;
+			}
+			set
+			{
+				if ((this._Id != value))
+				{
+					this.OnIdChanging(value);
+					this.SendPropertyChanging();
+					this._Id = value;
+					this.SendPropertyChanged("Id");
+					this.OnIdChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Name", DbType="NVarChar(100) NOT NULL", CanBeNull=false)]
+		public string Name
+		{
+			get
+			{
+				return this._Name;
+			}
+			set
+			{
+				if ((this._Name != value))
+				{
+					this.OnNameChanging(value);
+					this.SendPropertyChanging();
+					this._Name = value;
+					this.SendPropertyChanged("Name");
+					this.OnNameChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Url", DbType="NVarChar(200) NOT NULL", CanBeNull=false)]
 		public string Url
 		{
 			get
@@ -183,11 +678,62 @@ namespace MusicApp.Models
 			{
 				if ((this._ParentId != value))
 				{
+					if (this._Menu1.HasLoadedOrAssignedValue)
+					{
+						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
+					}
 					this.OnParentIdChanging(value);
 					this.SendPropertyChanging();
 					this._ParentId = value;
 					this.SendPropertyChanged("ParentId");
 					this.OnParentIdChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Menu_Menu", Storage="_Menus", ThisKey="Id", OtherKey="ParentId")]
+		public EntitySet<Menu> Menus
+		{
+			get
+			{
+				return this._Menus;
+			}
+			set
+			{
+				this._Menus.Assign(value);
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Menu_Menu", Storage="_Menu1", ThisKey="ParentId", OtherKey="Id", IsForeignKey=true)]
+		public Menu Menu1
+		{
+			get
+			{
+				return this._Menu1.Entity;
+			}
+			set
+			{
+				Menu previousValue = this._Menu1.Entity;
+				if (((previousValue != value) 
+							|| (this._Menu1.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._Menu1.Entity = null;
+						previousValue.Menus.Remove(this);
+					}
+					this._Menu1.Entity = value;
+					if ((value != null))
+					{
+						value.Menus.Add(this);
+						this._ParentId = value.Id;
+					}
+					else
+					{
+						this._ParentId = default(Nullable<int>);
+					}
+					this.SendPropertyChanged("Menu1");
 				}
 			}
 		}
@@ -210,6 +756,18 @@ namespace MusicApp.Models
 			{
 				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
 			}
+		}
+		
+		private void attach_Menus(Menu entity)
+		{
+			this.SendPropertyChanging();
+			entity.Menu1 = this;
+		}
+		
+		private void detach_Menus(Menu entity)
+		{
+			this.SendPropertyChanging();
+			entity.Menu1 = null;
 		}
 	}
 	
@@ -237,6 +795,10 @@ namespace MusicApp.Models
 		
 		private System.Nullable<bool> _IsFeatured;
 		
+		private System.Nullable<int> _AlbumId;
+		
+		private EntityRef<Album> _Album1;
+		
     #region Extensibility Method Definitions
     partial void OnLoaded();
     partial void OnValidate(System.Data.Linq.ChangeAction action);
@@ -259,10 +821,13 @@ namespace MusicApp.Models
     partial void OnUrlChanged();
     partial void OnIsFeaturedChanging(System.Nullable<bool> value);
     partial void OnIsFeaturedChanged();
+    partial void OnAlbumIdChanging(System.Nullable<int> value);
+    partial void OnAlbumIdChanged();
     #endregion
 		
 		public Song()
 		{
+			this._Album1 = default(EntityRef<Album>);
 			OnCreated();
 		}
 		
@@ -406,7 +971,7 @@ namespace MusicApp.Models
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Url", DbType="NVarChar(500)")]
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Url", DbType="NVarChar(500) NOT NULL", CanBeNull=false)]
 		public string Url
 		{
 			get
@@ -442,6 +1007,64 @@ namespace MusicApp.Models
 					this._IsFeatured = value;
 					this.SendPropertyChanged("IsFeatured");
 					this.OnIsFeaturedChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_AlbumId", DbType="Int")]
+		public System.Nullable<int> AlbumId
+		{
+			get
+			{
+				return this._AlbumId;
+			}
+			set
+			{
+				if ((this._AlbumId != value))
+				{
+					if (this._Album1.HasLoadedOrAssignedValue)
+					{
+						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
+					}
+					this.OnAlbumIdChanging(value);
+					this.SendPropertyChanging();
+					this._AlbumId = value;
+					this.SendPropertyChanged("AlbumId");
+					this.OnAlbumIdChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Album_Song", Storage="_Album1", ThisKey="AlbumId", OtherKey="Id", IsForeignKey=true)]
+		public Album Album1
+		{
+			get
+			{
+				return this._Album1.Entity;
+			}
+			set
+			{
+				Album previousValue = this._Album1.Entity;
+				if (((previousValue != value) 
+							|| (this._Album1.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._Album1.Entity = null;
+						previousValue.Songs.Remove(this);
+					}
+					this._Album1.Entity = value;
+					if ((value != null))
+					{
+						value.Songs.Add(this);
+						this._AlbumId = value.Id;
+					}
+					else
+					{
+						this._AlbumId = default(Nullable<int>);
+					}
+					this.SendPropertyChanged("Album1");
 				}
 			}
 		}

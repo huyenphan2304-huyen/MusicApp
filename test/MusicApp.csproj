@@ -14,7 +14,6 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <AssemblyName>MusicApp</AssemblyName>
     <RootNamespace>MusicApp</RootNamespace>
-
     <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <MvcBuildViews>false</MvcBuildViews>
     <UseIISExpress>true</UseIISExpress>
@@ -367,6 +366,10 @@
     <None Include="packages.config" />
     <Content Include="Scripts\jquery-3.4.1.slim.min.map" />
     <Content Include="Scripts\jquery-3.4.1.min.map" />
+    <Content Include="Views\Home\LatestAlbums.cshtml" />
+    <Content Include="Views\Home\RecommendedAlbums.cshtml" />
+    <Content Include="Views\Home\FirstFeaturedArtist.cshtml" />
+    <Content Include="Views\Home\RecommendLatestAlbums.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

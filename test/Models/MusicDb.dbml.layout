@@ -1,18 +1,51 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<ordesignerObjectsDiagram dslVersion="1.0.0.0" absoluteBounds="0, 0, 11, 8.5" name="MusicDb">
+<ordesignerObjectsDiagram dslVersion="1.0.0.0" absoluteBounds="0, 0, 11.5, 8.5" name="MusicDb">
   <DataContextMoniker Name="/MusicDbDataContext" />
   <nestedChildShapes>
-    <classShape Id="a6eac814-3366-40fc-8cd7-77d69c0424a3" absoluteBounds="1.25, 0.875, 2, 1.5785953776041666">
+    <classShape Id="4a32b137-c97b-417e-884b-e93556687acf" absoluteBounds="6.5, 1.25, 2, 2.1554996744791666">
+      <DataClassMoniker Name="/MusicDbDataContext/Album" />
+      <nestedChildShapes>
+        <elementListCompartment Id="e7239c69-acd6-43ac-8912-9bbf889b24d2" absoluteBounds="6.515, 1.71, 1.9700000000000002, 1.5954996744791665" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="5007b82c-694f-45aa-9c2f-aef81909193d" absoluteBounds="3.75, 1.5, 2, 1.7708968098958333">
+      <DataClassMoniker Name="/MusicDbDataContext/Artist" />
+      <nestedChildShapes>
+        <elementListCompartment Id="a8bd13a8-51a1-4855-875c-c316b054e316" absoluteBounds="3.765, 1.96, 1.9700000000000002, 1.2108968098958333" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="24e52f42-07d8-4f33-b385-9f2dbca9462e" absoluteBounds="0.75, 0.75, 2, 1.5785953776041666">
       <DataClassMoniker Name="/MusicDbDataContext/Menu" />
       <nestedChildShapes>
-        <elementListCompartment Id="e4016bd3-56a0-469d-8185-0d1991e248c5" absoluteBounds="1.2650000000000001, 1.335, 1.9700000000000002, 1.0185953776041665" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+        <elementListCompartment Id="6e55d387-8cec-4f2b-a03d-9ee1ffd71b8c" absoluteBounds="0.765, 1.21, 1.9700000000000002, 1.0185953776041665" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
       </nestedChildShapes>
     </classShape>
-    <classShape Id="9f73810b-4437-4693-9568-95b692b2fa97" absoluteBounds="4.625, 0.875, 2, 2.5401025390625">
+    <classShape Id="32637e1c-53c3-4813-bdfd-b9b3c01dc1e3" absoluteBounds="9.25, 1, 2, 2.7324039713541666">
       <DataClassMoniker Name="/MusicDbDataContext/Song" />
       <nestedChildShapes>
-        <elementListCompartment Id="cef49408-6a7d-4d48-bf55-50f3dbeb1367" absoluteBounds="4.64, 1.335, 1.9700000000000002, 1.9801025390625" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+        <elementListCompartment Id="98b84345-ea63-4ae1-b082-97fc47f2a779" absoluteBounds="9.265, 1.46, 1.9700000000000002, 2.1724039713541665" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
       </nestedChildShapes>
     </classShape>
+    <associationConnector edgePoints="[(5.75 : 2.38544840494792); (6.5 : 2.38544840494792)]" fixedFrom="Algorithm" fixedTo="Algorithm">
+      <AssociationMoniker Name="/MusicDbDataContext/Artist/Artist_Album" />
+      <nodes>
+        <classShapeMoniker Id="5007b82c-694f-45aa-9c2f-aef81909193d" />
+        <classShapeMoniker Id="4a32b137-c97b-417e-884b-e93556687acf" />
+      </nodes>
+    </associationConnector>
+    <associationConnector edgePoints="[(1.45242346379207 : 2.32859537760417); (1.45242346379207 : 2.57859537760417); (2.06174684745593 : 2.57859537760417); (2.06174684745593 : 2.32859537760417)]" fixedFrom="NotFixed" fixedTo="NotFixed">
+      <AssociationMoniker Name="/MusicDbDataContext/Menu/Menu_Menu" />
+      <nodes>
+        <classShapeMoniker Id="24e52f42-07d8-4f33-b385-9f2dbca9462e" />
+        <classShapeMoniker Id="24e52f42-07d8-4f33-b385-9f2dbca9462e" />
+      </nodes>
+    </associationConnector>
+    <associationConnector edgePoints="[(8.5 : 2.32774983723958); (9.25 : 2.32774983723958)]" fixedFrom="Algorithm" fixedTo="Algorithm">
+      <AssociationMoniker Name="/MusicDbDataContext/Album/Album_Song" />
+      <nodes>
+        <classShapeMoniker Id="4a32b137-c97b-417e-884b-e93556687acf" />
+        <classShapeMoniker Id="32637e1c-53c3-4813-bdfd-b9b3c01dc1e3" />
+      </nodes>
+    </associationConnector>
   </nestedChildShapes>
 </ordesignerObjectsDiagram>

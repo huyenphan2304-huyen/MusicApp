@@ -649,12 +649,13 @@ img {
   100% {
     -webkit-transform: scale(1);
     transform: scale(1); } }
-/* :: 6.0 Buy Now Area CSS */
-.oneMusic-buy-now-area.has-fluid {
-  padding-left: 4%;
-  padding-right: 4%;
-  position: relative;
-  z-index: 1; }
+/* :: 6.0 Recommended Area CSS */
+.oneMusic-recommended-albums.has-fluid {
+    padding-left: 4%;
+    padding-right: 4%;
+    position: relative;
+    z-index: 1;
+}
 
 /* :: 7.0 Events Area CSS */
 .single-event-area {
