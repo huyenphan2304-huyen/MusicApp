@@ -1,0 +1,77 @@
+﻿@model List<MusicApp.Models.Miscellaneous>
+
+<section class="miscellaneous-area section-padding-100-0">
+    <div class="container">
+        <div class="row">
+            <!-- ***** Weeks Top ***** -->
+            <div class="col-12 col-lg-4">
+                <div class="weeks-top-area mb-100">
+                    <div class="section-heading text-left mb-50 wow fadeInUp" data-wow-delay="50ms">
+                        <h2>@ViewBag.WeeksTopTitle</h2>
+                    </div>
+
+                    @foreach (var item in ViewBag.WeeksTop as List<MusicApp.Models.Miscellaneous>)
+                    {
+                        <div class="single-top-item d-flex wow fadeInUp">
+                            <div class="thumbnail">
+                                <img src="@item.ImageUrl" alt="">
+                            </div>
+                            <div class="content-">
+                                <h6>@item.Name</h6>
+                                <p>@item.Description</p>
+                            </div>
+                        </div>
+                    }
+                </div>
+            </div>
+
+            <!-- ***** New Hits Songs ***** -->
+            <div class="col-12 col-lg-4">
+                <div class="new-hits-area mb-100">
+                    <div class="section-heading text-left mb-50 wow fadeInUp" data-wow-delay="50ms">
+                        <h2>@ViewBag.NewHitsTitle</h2>
+                    </div>
+
+                    @foreach (var hit in ViewBag.NewHits as List<MusicApp.Models.Miscellaneous>)
+                    {
+                        <div class="single-new-item d-flex align-items-center justify-content-between wow fadeInUp">
+                            <div class="first-part d-flex align-items-center">
+                                <div class="thumbnail">
+                                    <img src="@hit.ImageUrl" alt="">
+                                </div>
+                                <div class="content-">
+                                    <h6>@hit.Name</h6>
+                                    <p>@hit.Description</p>
+                                </div>
+                            </div>
+                            <audio preload="auto" controls>
+                                <source src="@hit.AudioUrl">
+                            </audio>
+                        </div>
+                    }
+                </div>
+            </div>
+
+            <!-- ***** Popular Artists ***** -->
+            <div class="col-12 col-lg-4">
+                <div class="popular-artists-area mb-100">
+                    <div class="section-heading text-left mb-50 wow fadeInUp" data-wow-delay="50ms">
+                        <h2>@ViewBag.PopularArtistsTitle</h2>
+                    </div>
+
+                    @foreach (var artist in ViewBag.PopularArtists as List<MusicApp.Models.Miscellaneous>)
+                    {
+                        <div class="single-artists d-flex align-items-center wow fadeInUp">
+                            <div class="thumbnail">
+                                <img src="@artist.ImageUrl" alt="">
+                            </div>
+                            <div class="content-">
+                                <p>@artist.Name</p>
+                            </div>
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

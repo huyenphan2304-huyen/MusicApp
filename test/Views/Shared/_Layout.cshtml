@@ -10,62 +10,27 @@
 
     <!-- Favicon -->
     <link rel="icon" href="@Url.Content("~/Content/img/core-img/favicon.ico")">
+
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.carousel.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.theme.default.min.css">
     <!-- Stylesheet -->
-    <link rel="stylesheet" href="~/Content/style.css">
-    @Styles.Render("~/Content/css") <!-- Gọi bundle CSS -->
+    <link rel="stylesheet" href="~/Content/scss/style.css">
+
+
+    @Styles.Render("~/Content/css")
+    @Styles.Render("~/Content/scss") <!-- Gọi bundle CSS -->
+    <!-- Gọi bundle CSS -->
 </head>
 
 <!-- ##### Header Area Start ##### -->
-<header class="header-area">
+<header class="header-area" >
+    <!-- Navbar Area -->
     <div class="oneMusic-main-menu">
         <div class="classy-nav-container breakpoint-off">
             <div class="container">
-                <nav class="classy-navbar justify-content-between" id="oneMusicNav">
-
-                    <!-- Nav brand -->
-                    <a href="~/Views/Home/index.cshtml" class="nav-brand">
-                        <img src="@ViewBag.LogoUrl" alt="Logo">
-                    </a>
-
-                    <!-- Navbar Toggler -->
-                    <div class="classy-navbar-toggler">
-                        <span class="navbar-toggler-icon"></span>
-                    </div>
-
-                    <!-- Menu -->
-                    <div class="classy-menu">
-
-                        <!-- Close Button -->
-                        <div class="classycloseIcon">
-                            <div class="cross-wrap"><span class="top"></span><span class="bottom"></span></div>
-                        </div>
-
-                        <!-- Nav Start -->
-                        <div class="classynav">
-                            <ul>
-                                @Html.Action("GetMenu", "Menu") <!-- Gọi phương thức GetMenu của MenuController -->
-                            </ul>
-
-                            <!-- Login/Register & Cart Button -->
-                            <div class="login-register-cart-button d-flex align-items-center">
-                                <!-- Login/Register -->
-                                <div class="login-register-btn mr-50">
-                                    <a href="~/Views/Account/Login.cshtml" id="loginBtn">Login / Register</a>
-                                </div>
-
-                                <!-- Cart Button -->
-                                <div class="cart-btn">
-                                    <p><span class="icon-shopping-cart"></span> <span class="quantity">1</span></p>
-                                </div>
-                            </div>
-                        </div>
-                        <!-- Nav End -->
-
-                    </div>
-                </nav>
-            </div>
+                <!-- Menu -->
+                @Html.Action("GetMenu","Menu")
+                </div>
         </div>
     </div>
 </header>
@@ -76,26 +41,31 @@
 
     <hr /> <!-- Đường phân cách để tạo sự tách biệt giữa nội dung chính và footer -->
 </div>
-    <footer class="footer-area">
-        <div class="container">
-            <div class="row d-flex flex-wrap align-items-center">
-                <div class="col-12 col-md-6">
-                    <a href="#"><img src="~/Content/img/core-img/logo.png" alt=""></a>
-                    <p class="copywrite-text">
-                        Copyright &copy;
-                        <script>document.write(new Date().getFullYear());</script> All rights reserved | This template is made with <i class="fa fa-heart-o" aria-hidden="true"></i> by <a href="https://colorlib.com" target="_blank">Colorlib</a>
-                    </p>
-                </div>
+<!-- ##### Contact Area Start ##### -->
 
-                <div class="col-12 col-md-6">
-                    <div class="footer-nav">
-                        <!-- Lấy menu từ GetMenu của MenuController, loại trừ phần liên quan đến "Account" -->
-                        @Html.Action("GetMenuForFooter", "Menu")
-                    </div>
+@Html.Action("ContactSection", "Home")
+<!-- ##### Contact Area End ##### -->
+
+<footer class="footer-area">
+    <div class="container">
+        <div class="row d-flex flex-wrap align-items-center">
+            <div class="col-12 col-md-6">
+                <a href="#"><img src="~/Content/img/core-img/logo.png" alt=""></a>
+                <p class="copywrite-text">
+                    Copyright &copy;
+                    <script>document.write(new Date().getFullYear());</script> All rights reserved | This template is made with <i class="fa fa-heart-o" aria-hidden="true"></i> by <a href="https://colorlib.com" target="_blank">Colorlib</a>
+                </p>
+            </div>
+
+            <div class="col-12 col-md-6">
+                <div class="footer-nav">
+                    <!-- Lấy menu từ GetMenu của MenuController, loại trừ phần liên quan đến "Account" -->
+                    @Html.Action("GetMenuForFooter", "Menu")
                 </div>
             </div>
         </div>
-    </footer>
+    </div>
+</footer>
 
 <!-- ##### All Javascript Script ##### -->
 <script src="~/Scripts/js/jquery/jquery-2.2.4.min.js"></script>

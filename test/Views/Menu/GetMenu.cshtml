@@ -1,24 +1,44 @@
-﻿@using System.Collections.Generic  
-@model List<MusicApp.Models.Menu>
+﻿@model IEnumerable<MusicApp.Models.Menu>
 
-<ul>
-    @foreach (var menu in Model)
-    {
-        if (menu.ParentId == null) // Menu chính
-        {
-            <li>
-                <a href="@menu.Url">@menu.Name</a>
-                @* Kiểm tra xem menu có menu con không *@
-                @if (Model.Any(m => m.ParentId == menu.Id))
+<nav class="classy-navbar justify-content-between" id="oneMusicNav">
+    <!-- Nav brand -->
+    <a href="~/home" class="nav-brand"><img src="~/Content/img/core-img/logo.png" alt=""></a>
+
+    <!-- Navbar Toggler -->
+    <div class="classy-navbar-toggler">
+        <span class="navbarToggler"><span></span><span></span><span></span></span>
+    </div>
+
+    <!-- Menu -->
+    <div class="classy-menu">
+        <div class="classycloseIcon">
+            <div class="cross-wrap"><span class="top"></span><span class="bottom"></span></div>
+        </div>
+
+        <!-- Nav Start -->
+        <div class="classynav">
+            <ul>
+                @foreach (var mainMenu in ViewBag.MainMenus)
                 {
+                    if (ViewBag.SubMenus.ContainsKey(mainMenu.Id) && ViewBag.SubMenus[mainMenu.Id].Count > 0)
+                    {
+                <li>
+                    <a href="#">@mainMenu.Name</a>
                     <ul class="dropdown">
-                        @foreach (var subMenu in Model.Where(m => m.ParentId == menu.Id))
-                        {
-                            <li><a href="@subMenu.Url">@subMenu.Name</a></li>
-                        }
+                        @foreach (var subMenu in ViewBag.SubMenus[mainMenu.Id])
+                                {
+                        <li><a href="@subMenu.Url">@subMenu.Name</a></li>
+                                }
                     </ul>
+                </li>
+                    }
+                    else
+                    {
+                <li><a href="@mainMenu.Url">@mainMenu.Name</a></li>
+                    }
                 }
-            </li>
-        }
-    }
-</ul>
+            </ul>
+        </div>
+        <!-- Nav End -->
+    </div>
+</nav>

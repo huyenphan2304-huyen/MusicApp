@@ -1,0 +1,12 @@
+﻿
+@{
+    ViewBag.Title = "BreadcumbArea";
+}
+@model MusicApp.Models.Breadcrumb
+
+<section class="breadcumb-area bg-img bg-overlay" style="background-image: url('@Model.BackgroundImage');">
+    <div class="bradcumbContent">
+        <p>@Model.Subtitle</p>
+        <h2>@Model.Title</h2>
+    </div>
+</section>

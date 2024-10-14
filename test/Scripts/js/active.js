@@ -1,7 +1,8 @@
-(function ($) {
+﻿(function ($) {
     'use strict';
 
     var browserWindow = $(window);
+    
 
     // :: 1.0 Preloader Active Code
     browserWindow.on('load', function () {
@@ -146,14 +147,24 @@
             time: 2000
         });
     }
-
     // :: 8.0 Sticky Active Code
-    if ($.fn.sticky) {
-        $(".oneMusic-main-menu").sticky({
-            topSpacing: 0
-        });
-    }
+    $(document).ready(function () {
+        if ($.fn.sticky) {
+            $(".oneMusic-main-menu").sticky({
+                topSpacing: 0,
+                stickyClass: 'is-sticky', // Đặt tên lớp khi menu sticky
+                onStick: function () {
+                    $('.header-area').addClass('is-sticky'); // Thêm lớp khi menu sticky
+                },
+                onUnstick: function () {
+                    $('.header-area').removeClass('is-sticky'); // Xóa lớp khi không còn sticky
+                }
+            });
+        }
+    });
 
+
+    
     // :: 9.0 Progress Bar Active Code
     if ($.fn.circleProgress) {
         $('#circle').circleProgress({

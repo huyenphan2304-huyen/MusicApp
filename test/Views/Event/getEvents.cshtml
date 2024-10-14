@@ -1,0 +1,32 @@
+﻿@model IEnumerable<MusicApp.Models.Event>
+
+<div class="container">
+    <div class="row">
+        @foreach (var eventItem in Model)
+        {
+            <div class="col-12 col-md-6 col-lg-4">
+                <div class="single-event-area mb-30">
+                    <div class="event-thumbnail">
+                        <img src="@eventItem.ImageUrl" alt="">
+                    </div>
+                    <div class="event-text">
+                        <h4>@eventItem.Title</h4>
+                        <div class="event-meta-data">
+                            <a href="#" class="event-place">@eventItem.Place</a>
+                            <a href="#" class="event-date">@eventItem.Date.ToString("MMMM dd, yyyy")</a>
+                        </div>
+                        <a href="@Url.Action("Details", "Event", new { id = eventItem.Id })" class="btn see-more-btn">See Event</a>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+
+    <div class="row">
+        <div class="col-12">
+            <div class="load-more-btn text-center mt-70">
+                <a href="#" class="btn oneMusic-btn">Load More <i class="fa fa-angle-double-right"></i></a>
+            </div>
+        </div>
+    </div>
+</div>

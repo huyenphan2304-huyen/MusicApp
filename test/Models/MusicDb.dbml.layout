@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<ordesignerObjectsDiagram dslVersion="1.0.0.0" absoluteBounds="0, 0, 11.5, 8.5" name="MusicDb">
+<ordesignerObjectsDiagram dslVersion="1.0.0.0" absoluteBounds="0, 0, 11.5, 11.5" name="MusicDb">
   <DataContextMoniker Name="/MusicDbDataContext" />
   <nestedChildShapes>
     <classShape Id="4a32b137-c97b-417e-884b-e93556687acf" absoluteBounds="6.5, 1.25, 2, 2.1554996744791666">
@@ -14,37 +14,73 @@
         <elementListCompartment Id="a8bd13a8-51a1-4855-875c-c316b054e316" absoluteBounds="3.765, 1.96, 1.9700000000000002, 1.2108968098958333" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
       </nestedChildShapes>
     </classShape>
-    <classShape Id="24e52f42-07d8-4f33-b385-9f2dbca9462e" absoluteBounds="0.75, 0.75, 2, 1.5785953776041666">
-      <DataClassMoniker Name="/MusicDbDataContext/Menu" />
-      <nestedChildShapes>
-        <elementListCompartment Id="6e55d387-8cec-4f2b-a03d-9ee1ffd71b8c" absoluteBounds="0.765, 1.21, 1.9700000000000002, 1.0185953776041665" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
-      </nestedChildShapes>
-    </classShape>
     <classShape Id="32637e1c-53c3-4813-bdfd-b9b3c01dc1e3" absoluteBounds="9.25, 1, 2, 2.7324039713541666">
       <DataClassMoniker Name="/MusicDbDataContext/Song" />
       <nestedChildShapes>
         <elementListCompartment Id="98b84345-ea63-4ae1-b082-97fc47f2a779" absoluteBounds="9.265, 1.46, 1.9700000000000002, 2.1724039713541665" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
       </nestedChildShapes>
     </classShape>
-    <associationConnector edgePoints="[(5.75 : 2.38544840494792); (6.5 : 2.38544840494792)]" fixedFrom="Algorithm" fixedTo="Algorithm">
+    <associationConnector edgePoints="[(5.75 : 2.95599609375); (6.5 : 2.95599609375)]" fixedFrom="Algorithm" fixedTo="Algorithm">
       <AssociationMoniker Name="/MusicDbDataContext/Artist/Artist_Album" />
       <nodes>
         <classShapeMoniker Id="5007b82c-694f-45aa-9c2f-aef81909193d" />
         <classShapeMoniker Id="4a32b137-c97b-417e-884b-e93556687acf" />
       </nodes>
     </associationConnector>
-    <associationConnector edgePoints="[(1.45242346379207 : 2.32859537760417); (1.45242346379207 : 2.57859537760417); (2.06174684745593 : 2.57859537760417); (2.06174684745593 : 2.32859537760417)]" fixedFrom="NotFixed" fixedTo="NotFixed">
-      <AssociationMoniker Name="/MusicDbDataContext/Menu/Menu_Menu" />
-      <nodes>
-        <classShapeMoniker Id="24e52f42-07d8-4f33-b385-9f2dbca9462e" />
-        <classShapeMoniker Id="24e52f42-07d8-4f33-b385-9f2dbca9462e" />
-      </nodes>
-    </associationConnector>
-    <associationConnector edgePoints="[(8.5 : 2.32774983723958); (9.25 : 2.32774983723958)]" fixedFrom="Algorithm" fixedTo="Algorithm">
+    <associationConnector edgePoints="[(8.5 : 2.32774983723958); (9.25 : 2.32774983723958)]" fixedFrom="NotFixed" fixedTo="NotFixed">
       <AssociationMoniker Name="/MusicDbDataContext/Album/Album_Song" />
       <nodes>
         <classShapeMoniker Id="4a32b137-c97b-417e-884b-e93556687acf" />
         <classShapeMoniker Id="32637e1c-53c3-4813-bdfd-b9b3c01dc1e3" />
+      </nodes>
+    </associationConnector>
+    <classShape Id="e4ecd790-eb4c-44fa-88f7-164a1fa9d53b" absoluteBounds="2.125, 3, 2, 2.1554996744791666">
+      <DataClassMoniker Name="/MusicDbDataContext/Contact" />
+      <nestedChildShapes>
+        <elementListCompartment Id="8f59a8ee-b644-45c2-994a-a51a31b3dc5d" absoluteBounds="2.1399999999999997, 3.46, 1.9700000000000002, 1.5954996744791665" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="88d5ead7-827f-495c-8394-3b1f84779792" absoluteBounds="5.25, 4, 2, 3.3093082682291666">
+      <DataClassMoniker Name="/MusicDbDataContext/Miscellaneous" />
+      <nestedChildShapes>
+        <elementListCompartment Id="ad0e0d19-345d-49a4-a40c-e824b599bd38" absoluteBounds="5.265, 4.46, 1.9700000000000002, 2.7493082682291665" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="2a29a105-a75e-4df1-8be2-22511df35aef" absoluteBounds="8.25, 3.875, 2, 2.7324039713541666">
+      <DataClassMoniker Name="/MusicDbDataContext/Event" />
+      <nestedChildShapes>
+        <elementListCompartment Id="3dc8e978-5b03-48a4-b2d9-1d821c1b7fe9" absoluteBounds="8.265, 4.335, 1.9700000000000002, 2.1724039713541665" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="77866c83-c111-4a3f-b5c3-b5c0b0db0730" absoluteBounds="2.625, 5.75, 2, 1.5785953776041666">
+      <DataClassMoniker Name="/MusicDbDataContext/Breadcrumb" />
+      <nestedChildShapes>
+        <elementListCompartment Id="393d6df0-8fa4-4ac8-92e4-361270338466" absoluteBounds="2.6399999999999997, 6.21, 1.9700000000000002, 1.0185953776041665" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="27cd2667-1698-4832-835d-ba6805864596" absoluteBounds="0.75, 8.75, 2, 2.3478011067708344">
+      <DataClassMoniker Name="/MusicDbDataContext/Login" />
+      <nestedChildShapes>
+        <elementListCompartment Id="91dacd7a-1bb3-4f45-a800-0e17087da914" absoluteBounds="0.765, 9.21, 1.9700000000000002, 1.7878011067708335" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="2f8e7b90-fa0e-400f-9d30-bbaeb441ea4c" absoluteBounds="3.75, 8.75, 2, 2.5401025390624987">
+      <DataClassMoniker Name="/MusicDbDataContext/Register" />
+      <nestedChildShapes>
+        <elementListCompartment Id="64c53644-faf5-46aa-9a32-e097c7aed0c1" absoluteBounds="3.765, 9.21, 1.9700000000000002, 1.9801025390625" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="1c898be7-7111-4994-906a-a75bfd6fa15d" absoluteBounds="0.75, 1.125, 2, 1.5785953776041666">
+      <DataClassMoniker Name="/MusicDbDataContext/Menu" />
+      <nestedChildShapes>
+        <elementListCompartment Id="db4b8ace-0015-4778-b9b5-0e45a201ced1" absoluteBounds="0.76500000000000057, 1.5850000000000009, 1.9700000000000002, 1.0185953776041665" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <associationConnector edgePoints="[(1.45242346379207 : 2.70359537760417); (1.45242346379207 : 2.95359537760417); (2.06174684745593 : 2.95359537760417); (2.06174684745593 : 2.70359537760417)]" fixedFrom="NotFixed" fixedTo="NotFixed">
+      <AssociationMoniker Name="/MusicDbDataContext/Menu/Menu_Menu" />
+      <nodes>
+        <classShapeMoniker Id="1c898be7-7111-4994-906a-a75bfd6fa15d" />
+        <classShapeMoniker Id="1c898be7-7111-4994-906a-a75bfd6fa15d" />
       </nodes>
     </associationConnector>
   </nestedChildShapes>

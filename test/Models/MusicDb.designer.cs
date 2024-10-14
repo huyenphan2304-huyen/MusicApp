@@ -36,12 +36,30 @@ namespace MusicApp.Models
     partial void InsertArtist(Artist instance);
     partial void UpdateArtist(Artist instance);
     partial void DeleteArtist(Artist instance);
-    partial void InsertMenu(Menu instance);
-    partial void UpdateMenu(Menu instance);
-    partial void DeleteMenu(Menu instance);
     partial void InsertSong(Song instance);
     partial void UpdateSong(Song instance);
     partial void DeleteSong(Song instance);
+    partial void InsertContact(Contact instance);
+    partial void UpdateContact(Contact instance);
+    partial void DeleteContact(Contact instance);
+    partial void InsertMiscellaneous(Miscellaneous instance);
+    partial void UpdateMiscellaneous(Miscellaneous instance);
+    partial void DeleteMiscellaneous(Miscellaneous instance);
+    partial void InsertEvent(Event instance);
+    partial void UpdateEvent(Event instance);
+    partial void DeleteEvent(Event instance);
+    partial void InsertBreadcrumb(Breadcrumb instance);
+    partial void UpdateBreadcrumb(Breadcrumb instance);
+    partial void DeleteBreadcrumb(Breadcrumb instance);
+    partial void InsertLogin(Login instance);
+    partial void UpdateLogin(Login instance);
+    partial void DeleteLogin(Login instance);
+    partial void InsertRegister(Register instance);
+    partial void UpdateRegister(Register instance);
+    partial void DeleteRegister(Register instance);
+    partial void InsertMenu(Menu instance);
+    partial void UpdateMenu(Menu instance);
+    partial void DeleteMenu(Menu instance);
     #endregion
 		
 		public MusicDbDataContext() : 
@@ -90,19 +108,67 @@ namespace MusicApp.Models
 			}
 		}
 		
-		public System.Data.Linq.Table<Menu> Menus
-		{
-			get
-			{
-				return this.GetTable<Menu>();
-			}
-		}
-		
 		public System.Data.Linq.Table<Song> Songs
 		{
 			get
 			{
 				return this.GetTable<Song>();
+			}
+		}
+		
+		public System.Data.Linq.Table<Contact> Contacts
+		{
+			get
+			{
+				return this.GetTable<Contact>();
+			}
+		}
+		
+		public System.Data.Linq.Table<Miscellaneous> Miscellaneous
+		{
+			get
+			{
+				return this.GetTable<Miscellaneous>();
+			}
+		}
+		
+		public System.Data.Linq.Table<Event> Events
+		{
+			get
+			{
+				return this.GetTable<Event>();
+			}
+		}
+		
+		public System.Data.Linq.Table<Breadcrumb> Breadcrumbs
+		{
+			get
+			{
+				return this.GetTable<Breadcrumb>();
+			}
+		}
+		
+		public System.Data.Linq.Table<Login> Logins
+		{
+			get
+			{
+				return this.GetTable<Login>();
+			}
+		}
+		
+		public System.Data.Linq.Table<Register> Registers
+		{
+			get
+			{
+				return this.GetTable<Register>();
+			}
+		}
+		
+		public System.Data.Linq.Table<Menu> Menus
+		{
+			get
+			{
+				return this.GetTable<Menu>();
 			}
 		}
 	}
@@ -568,209 +634,6 @@ namespace MusicApp.Models
 		}
 	}
 	
-	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.Menu")]
-	public partial class Menu : INotifyPropertyChanging, INotifyPropertyChanged
-	{
-		
-		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
-		
-		private int _Id;
-		
-		private string _Name;
-		
-		private string _Url;
-		
-		private System.Nullable<int> _ParentId;
-		
-		private EntitySet<Menu> _Menus;
-		
-		private EntityRef<Menu> _Menu1;
-		
-    #region Extensibility Method Definitions
-    partial void OnLoaded();
-    partial void OnValidate(System.Data.Linq.ChangeAction action);
-    partial void OnCreated();
-    partial void OnIdChanging(int value);
-    partial void OnIdChanged();
-    partial void OnNameChanging(string value);
-    partial void OnNameChanged();
-    partial void OnUrlChanging(string value);
-    partial void OnUrlChanged();
-    partial void OnParentIdChanging(System.Nullable<int> value);
-    partial void OnParentIdChanged();
-    #endregion
-		
-		public Menu()
-		{
-			this._Menus = new EntitySet<Menu>(new Action<Menu>(this.attach_Menus), new Action<Menu>(this.detach_Menus));
-			this._Menu1 = default(EntityRef<Menu>);
-			OnCreated();
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Id", AutoSync=AutoSync.OnInsert, DbType="Int NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
-		public int Id
-		{
-			get
-			{
-				return this._Id;
-			}
-			set
-			{
-				if ((this._Id != value))
-				{
-					this.OnIdChanging(value);
-					this.SendPropertyChanging();
-					this._Id = value;
-					this.SendPropertyChanged("Id");
-					this.OnIdChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Name", DbType="NVarChar(100) NOT NULL", CanBeNull=false)]
-		public string Name
-		{
-			get
-			{
-				return this._Name;
-			}
-			set
-			{
-				if ((this._Name != value))
-				{
-					this.OnNameChanging(value);
-					this.SendPropertyChanging();
-					this._Name = value;
-					this.SendPropertyChanged("Name");
-					this.OnNameChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Url", DbType="NVarChar(200) NOT NULL", CanBeNull=false)]
-		public string Url
-		{
-			get
-			{
-				return this._Url;
-			}
-			set
-			{
-				if ((this._Url != value))
-				{
-					this.OnUrlChanging(value);
-					this.SendPropertyChanging();
-					this._Url = value;
-					this.SendPropertyChanged("Url");
-					this.OnUrlChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ParentId", DbType="Int")]
-		public System.Nullable<int> ParentId
-		{
-			get
-			{
-				return this._ParentId;
-			}
-			set
-			{
-				if ((this._ParentId != value))
-				{
-					if (this._Menu1.HasLoadedOrAssignedValue)
-					{
-						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
-					}
-					this.OnParentIdChanging(value);
-					this.SendPropertyChanging();
-					this._ParentId = value;
-					this.SendPropertyChanged("ParentId");
-					this.OnParentIdChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Menu_Menu", Storage="_Menus", ThisKey="Id", OtherKey="ParentId")]
-		public EntitySet<Menu> Menus
-		{
-			get
-			{
-				return this._Menus;
-			}
-			set
-			{
-				this._Menus.Assign(value);
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Menu_Menu", Storage="_Menu1", ThisKey="ParentId", OtherKey="Id", IsForeignKey=true)]
-		public Menu Menu1
-		{
-			get
-			{
-				return this._Menu1.Entity;
-			}
-			set
-			{
-				Menu previousValue = this._Menu1.Entity;
-				if (((previousValue != value) 
-							|| (this._Menu1.HasLoadedOrAssignedValue == false)))
-				{
-					this.SendPropertyChanging();
-					if ((previousValue != null))
-					{
-						this._Menu1.Entity = null;
-						previousValue.Menus.Remove(this);
-					}
-					this._Menu1.Entity = value;
-					if ((value != null))
-					{
-						value.Menus.Add(this);
-						this._ParentId = value.Id;
-					}
-					else
-					{
-						this._ParentId = default(Nullable<int>);
-					}
-					this.SendPropertyChanged("Menu1");
-				}
-			}
-		}
-		
-		public event PropertyChangingEventHandler PropertyChanging;
-		
-		public event PropertyChangedEventHandler PropertyChanged;
-		
-		protected virtual void SendPropertyChanging()
-		{
-			if ((this.PropertyChanging != null))
-			{
-				this.PropertyChanging(this, emptyChangingEventArgs);
-			}
-		}
-		
-		protected virtual void SendPropertyChanged(String propertyName)
-		{
-			if ((this.PropertyChanged != null))
-			{
-				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
-			}
-		}
-		
-		private void attach_Menus(Menu entity)
-		{
-			this.SendPropertyChanging();
-			entity.Menu1 = this;
-		}
-		
-		private void detach_Menus(Menu entity)
-		{
-			this.SendPropertyChanging();
-			entity.Menu1 = null;
-		}
-	}
-	
 	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.Songs")]
 	public partial class Song : INotifyPropertyChanging, INotifyPropertyChanged
 	{
@@ -1087,6 +950,1661 @@ namespace MusicApp.Models
 			{
 				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
 			}
+		}
+	}
+	
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.Contact")]
+	public partial class Contact : INotifyPropertyChanging, INotifyPropertyChanged
+	{
+		
+		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
+		
+		private int _Id;
+		
+		private string _SectionTagline;
+		
+		private string _SectionTitle;
+		
+		private string _BackgroundImageUrl;
+		
+		private System.Nullable<bool> _Hide;
+		
+		private System.Nullable<int> _Order;
+		
+		private System.Nullable<System.DateTime> _DateBegin;
+		
+    #region Extensibility Method Definitions
+    partial void OnLoaded();
+    partial void OnValidate(System.Data.Linq.ChangeAction action);
+    partial void OnCreated();
+    partial void OnIdChanging(int value);
+    partial void OnIdChanged();
+    partial void OnSectionTaglineChanging(string value);
+    partial void OnSectionTaglineChanged();
+    partial void OnSectionTitleChanging(string value);
+    partial void OnSectionTitleChanged();
+    partial void OnBackgroundImageUrlChanging(string value);
+    partial void OnBackgroundImageUrlChanged();
+    partial void OnHideChanging(System.Nullable<bool> value);
+    partial void OnHideChanged();
+    partial void OnOrderChanging(System.Nullable<int> value);
+    partial void OnOrderChanged();
+    partial void OnDateBeginChanging(System.Nullable<System.DateTime> value);
+    partial void OnDateBeginChanged();
+    #endregion
+		
+		public Contact()
+		{
+			OnCreated();
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Id", AutoSync=AutoSync.OnInsert, DbType="Int NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
+		public int Id
+		{
+			get
+			{
+				return this._Id;
+			}
+			set
+			{
+				if ((this._Id != value))
+				{
+					this.OnIdChanging(value);
+					this.SendPropertyChanging();
+					this._Id = value;
+					this.SendPropertyChanged("Id");
+					this.OnIdChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_SectionTagline", DbType="NVarChar(255) NOT NULL", CanBeNull=false)]
+		public string SectionTagline
+		{
+			get
+			{
+				return this._SectionTagline;
+			}
+			set
+			{
+				if ((this._SectionTagline != value))
+				{
+					this.OnSectionTaglineChanging(value);
+					this.SendPropertyChanging();
+					this._SectionTagline = value;
+					this.SendPropertyChanged("SectionTagline");
+					this.OnSectionTaglineChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_SectionTitle", DbType="NVarChar(255) NOT NULL", CanBeNull=false)]
+		public string SectionTitle
+		{
+			get
+			{
+				return this._SectionTitle;
+			}
+			set
+			{
+				if ((this._SectionTitle != value))
+				{
+					this.OnSectionTitleChanging(value);
+					this.SendPropertyChanging();
+					this._SectionTitle = value;
+					this.SendPropertyChanged("SectionTitle");
+					this.OnSectionTitleChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_BackgroundImageUrl", DbType="NVarChar(500)")]
+		public string BackgroundImageUrl
+		{
+			get
+			{
+				return this._BackgroundImageUrl;
+			}
+			set
+			{
+				if ((this._BackgroundImageUrl != value))
+				{
+					this.OnBackgroundImageUrlChanging(value);
+					this.SendPropertyChanging();
+					this._BackgroundImageUrl = value;
+					this.SendPropertyChanged("BackgroundImageUrl");
+					this.OnBackgroundImageUrlChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Hide", DbType="Bit")]
+		public System.Nullable<bool> Hide
+		{
+			get
+			{
+				return this._Hide;
+			}
+			set
+			{
+				if ((this._Hide != value))
+				{
+					this.OnHideChanging(value);
+					this.SendPropertyChanging();
+					this._Hide = value;
+					this.SendPropertyChanged("Hide");
+					this.OnHideChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Name="[Order]", Storage="_Order", DbType="Int")]
+		public System.Nullable<int> Order
+		{
+			get
+			{
+				return this._Order;
+			}
+			set
+			{
+				if ((this._Order != value))
+				{
+					this.OnOrderChanging(value);
+					this.SendPropertyChanging();
+					this._Order = value;
+					this.SendPropertyChanged("Order");
+					this.OnOrderChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_DateBegin", DbType="Date")]
+		public System.Nullable<System.DateTime> DateBegin
+		{
+			get
+			{
+				return this._DateBegin;
+			}
+			set
+			{
+				if ((this._DateBegin != value))
+				{
+					this.OnDateBeginChanging(value);
+					this.SendPropertyChanging();
+					this._DateBegin = value;
+					this.SendPropertyChanged("DateBegin");
+					this.OnDateBeginChanged();
+				}
+			}
+		}
+		
+		public event PropertyChangingEventHandler PropertyChanging;
+		
+		public event PropertyChangedEventHandler PropertyChanged;
+		
+		protected virtual void SendPropertyChanging()
+		{
+			if ((this.PropertyChanging != null))
+			{
+				this.PropertyChanging(this, emptyChangingEventArgs);
+			}
+		}
+		
+		protected virtual void SendPropertyChanged(String propertyName)
+		{
+			if ((this.PropertyChanged != null))
+			{
+				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+			}
+		}
+	}
+	
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.Miscellaneous")]
+	public partial class Miscellaneous : INotifyPropertyChanging, INotifyPropertyChanged
+	{
+		
+		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
+		
+		private int _Id;
+		
+		private string _Type;
+		
+		private string _Name;
+		
+		private string _Description;
+		
+		private string _Link;
+		
+		private string _Meta;
+		
+		private bool _Hide;
+		
+		private int _OrderPosition;
+		
+		private System.Nullable<System.DateTime> _DateBegin;
+		
+		private string _PText;
+		
+		private string _H2Text;
+		
+		private string _ImageUrl;
+		
+		private string _AudioUrl;
+		
+    #region Extensibility Method Definitions
+    partial void OnLoaded();
+    partial void OnValidate(System.Data.Linq.ChangeAction action);
+    partial void OnCreated();
+    partial void OnIdChanging(int value);
+    partial void OnIdChanged();
+    partial void OnTypeChanging(string value);
+    partial void OnTypeChanged();
+    partial void OnNameChanging(string value);
+    partial void OnNameChanged();
+    partial void OnDescriptionChanging(string value);
+    partial void OnDescriptionChanged();
+    partial void OnLinkChanging(string value);
+    partial void OnLinkChanged();
+    partial void OnMetaChanging(string value);
+    partial void OnMetaChanged();
+    partial void OnHideChanging(bool value);
+    partial void OnHideChanged();
+    partial void OnOrderPositionChanging(int value);
+    partial void OnOrderPositionChanged();
+    partial void OnDateBeginChanging(System.Nullable<System.DateTime> value);
+    partial void OnDateBeginChanged();
+    partial void OnPTextChanging(string value);
+    partial void OnPTextChanged();
+    partial void OnH2TextChanging(string value);
+    partial void OnH2TextChanged();
+    partial void OnImageUrlChanging(string value);
+    partial void OnImageUrlChanged();
+    partial void OnAudioUrlChanging(string value);
+    partial void OnAudioUrlChanged();
+    #endregion
+		
+		public Miscellaneous()
+		{
+			OnCreated();
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Id", AutoSync=AutoSync.OnInsert, DbType="Int NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
+		public int Id
+		{
+			get
+			{
+				return this._Id;
+			}
+			set
+			{
+				if ((this._Id != value))
+				{
+					this.OnIdChanging(value);
+					this.SendPropertyChanging();
+					this._Id = value;
+					this.SendPropertyChanged("Id");
+					this.OnIdChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Type", DbType="NVarChar(50) NOT NULL", CanBeNull=false)]
+		public string Type
+		{
+			get
+			{
+				return this._Type;
+			}
+			set
+			{
+				if ((this._Type != value))
+				{
+					this.OnTypeChanging(value);
+					this.SendPropertyChanging();
+					this._Type = value;
+					this.SendPropertyChanged("Type");
+					this.OnTypeChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Name", DbType="NVarChar(255) NOT NULL", CanBeNull=false)]
+		public string Name
+		{
+			get
+			{
+				return this._Name;
+			}
+			set
+			{
+				if ((this._Name != value))
+				{
+					this.OnNameChanging(value);
+					this.SendPropertyChanging();
+					this._Name = value;
+					this.SendPropertyChanged("Name");
+					this.OnNameChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Description", DbType="NVarChar(MAX)")]
+		public string Description
+		{
+			get
+			{
+				return this._Description;
+			}
+			set
+			{
+				if ((this._Description != value))
+				{
+					this.OnDescriptionChanging(value);
+					this.SendPropertyChanging();
+					this._Description = value;
+					this.SendPropertyChanged("Description");
+					this.OnDescriptionChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Link", DbType="NVarChar(500)")]
+		public string Link
+		{
+			get
+			{
+				return this._Link;
+			}
+			set
+			{
+				if ((this._Link != value))
+				{
+					this.OnLinkChanging(value);
+					this.SendPropertyChanging();
+					this._Link = value;
+					this.SendPropertyChanged("Link");
+					this.OnLinkChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Meta", DbType="NVarChar(255)")]
+		public string Meta
+		{
+			get
+			{
+				return this._Meta;
+			}
+			set
+			{
+				if ((this._Meta != value))
+				{
+					this.OnMetaChanging(value);
+					this.SendPropertyChanging();
+					this._Meta = value;
+					this.SendPropertyChanged("Meta");
+					this.OnMetaChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Hide", DbType="Bit NOT NULL")]
+		public bool Hide
+		{
+			get
+			{
+				return this._Hide;
+			}
+			set
+			{
+				if ((this._Hide != value))
+				{
+					this.OnHideChanging(value);
+					this.SendPropertyChanging();
+					this._Hide = value;
+					this.SendPropertyChanged("Hide");
+					this.OnHideChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_OrderPosition", DbType="Int NOT NULL")]
+		public int OrderPosition
+		{
+			get
+			{
+				return this._OrderPosition;
+			}
+			set
+			{
+				if ((this._OrderPosition != value))
+				{
+					this.OnOrderPositionChanging(value);
+					this.SendPropertyChanging();
+					this._OrderPosition = value;
+					this.SendPropertyChanged("OrderPosition");
+					this.OnOrderPositionChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_DateBegin", DbType="DateTime")]
+		public System.Nullable<System.DateTime> DateBegin
+		{
+			get
+			{
+				return this._DateBegin;
+			}
+			set
+			{
+				if ((this._DateBegin != value))
+				{
+					this.OnDateBeginChanging(value);
+					this.SendPropertyChanging();
+					this._DateBegin = value;
+					this.SendPropertyChanged("DateBegin");
+					this.OnDateBeginChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_PText", DbType="NVarChar(MAX)")]
+		public string PText
+		{
+			get
+			{
+				return this._PText;
+			}
+			set
+			{
+				if ((this._PText != value))
+				{
+					this.OnPTextChanging(value);
+					this.SendPropertyChanging();
+					this._PText = value;
+					this.SendPropertyChanged("PText");
+					this.OnPTextChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_H2Text", DbType="NVarChar(MAX)")]
+		public string H2Text
+		{
+			get
+			{
+				return this._H2Text;
+			}
+			set
+			{
+				if ((this._H2Text != value))
+				{
+					this.OnH2TextChanging(value);
+					this.SendPropertyChanging();
+					this._H2Text = value;
+					this.SendPropertyChanged("H2Text");
+					this.OnH2TextChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ImageUrl", DbType="NVarChar(500)")]
+		public string ImageUrl
+		{
+			get
+			{
+				return this._ImageUrl;
+			}
+			set
+			{
+				if ((this._ImageUrl != value))
+				{
+					this.OnImageUrlChanging(value);
+					this.SendPropertyChanging();
+					this._ImageUrl = value;
+					this.SendPropertyChanged("ImageUrl");
+					this.OnImageUrlChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_AudioUrl", DbType="NVarChar(500)")]
+		public string AudioUrl
+		{
+			get
+			{
+				return this._AudioUrl;
+			}
+			set
+			{
+				if ((this._AudioUrl != value))
+				{
+					this.OnAudioUrlChanging(value);
+					this.SendPropertyChanging();
+					this._AudioUrl = value;
+					this.SendPropertyChanged("AudioUrl");
+					this.OnAudioUrlChanged();
+				}
+			}
+		}
+		
+		public event PropertyChangingEventHandler PropertyChanging;
+		
+		public event PropertyChangedEventHandler PropertyChanged;
+		
+		protected virtual void SendPropertyChanging()
+		{
+			if ((this.PropertyChanging != null))
+			{
+				this.PropertyChanging(this, emptyChangingEventArgs);
+			}
+		}
+		
+		protected virtual void SendPropertyChanged(String propertyName)
+		{
+			if ((this.PropertyChanged != null))
+			{
+				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+			}
+		}
+	}
+	
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.Events")]
+	public partial class Event : INotifyPropertyChanging, INotifyPropertyChanged
+	{
+		
+		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
+		
+		private int _Id;
+		
+		private string _Title;
+		
+		private string _Place;
+		
+		private System.DateTime _Date;
+		
+		private string _ImageUrl;
+		
+		private string _Description;
+		
+		private string _Meta;
+		
+		private System.Nullable<bool> _Hide;
+		
+		private System.Nullable<int> _Order;
+		
+		private System.Nullable<System.DateTime> _DateBegin;
+		
+    #region Extensibility Method Definitions
+    partial void OnLoaded();
+    partial void OnValidate(System.Data.Linq.ChangeAction action);
+    partial void OnCreated();
+    partial void OnIdChanging(int value);
+    partial void OnIdChanged();
+    partial void OnTitleChanging(string value);
+    partial void OnTitleChanged();
+    partial void OnPlaceChanging(string value);
+    partial void OnPlaceChanged();
+    partial void OnDateChanging(System.DateTime value);
+    partial void OnDateChanged();
+    partial void OnImageUrlChanging(string value);
+    partial void OnImageUrlChanged();
+    partial void OnDescriptionChanging(string value);
+    partial void OnDescriptionChanged();
+    partial void OnMetaChanging(string value);
+    partial void OnMetaChanged();
+    partial void OnHideChanging(System.Nullable<bool> value);
+    partial void OnHideChanged();
+    partial void OnOrderChanging(System.Nullable<int> value);
+    partial void OnOrderChanged();
+    partial void OnDateBeginChanging(System.Nullable<System.DateTime> value);
+    partial void OnDateBeginChanged();
+    #endregion
+		
+		public Event()
+		{
+			OnCreated();
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Id", AutoSync=AutoSync.OnInsert, DbType="Int NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
+		public int Id
+		{
+			get
+			{
+				return this._Id;
+			}
+			set
+			{
+				if ((this._Id != value))
+				{
+					this.OnIdChanging(value);
+					this.SendPropertyChanging();
+					this._Id = value;
+					this.SendPropertyChanged("Id");
+					this.OnIdChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Title", DbType="NVarChar(255) NOT NULL", CanBeNull=false)]
+		public string Title
+		{
+			get
+			{
+				return this._Title;
+			}
+			set
+			{
+				if ((this._Title != value))
+				{
+					this.OnTitleChanging(value);
+					this.SendPropertyChanging();
+					this._Title = value;
+					this.SendPropertyChanged("Title");
+					this.OnTitleChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Place", DbType="NVarChar(255) NOT NULL", CanBeNull=false)]
+		public string Place
+		{
+			get
+			{
+				return this._Place;
+			}
+			set
+			{
+				if ((this._Place != value))
+				{
+					this.OnPlaceChanging(value);
+					this.SendPropertyChanging();
+					this._Place = value;
+					this.SendPropertyChanged("Place");
+					this.OnPlaceChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Date", DbType="Date NOT NULL")]
+		public System.DateTime Date
+		{
+			get
+			{
+				return this._Date;
+			}
+			set
+			{
+				if ((this._Date != value))
+				{
+					this.OnDateChanging(value);
+					this.SendPropertyChanging();
+					this._Date = value;
+					this.SendPropertyChanged("Date");
+					this.OnDateChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ImageUrl", DbType="NVarChar(500)")]
+		public string ImageUrl
+		{
+			get
+			{
+				return this._ImageUrl;
+			}
+			set
+			{
+				if ((this._ImageUrl != value))
+				{
+					this.OnImageUrlChanging(value);
+					this.SendPropertyChanging();
+					this._ImageUrl = value;
+					this.SendPropertyChanged("ImageUrl");
+					this.OnImageUrlChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Description", DbType="NVarChar(MAX)")]
+		public string Description
+		{
+			get
+			{
+				return this._Description;
+			}
+			set
+			{
+				if ((this._Description != value))
+				{
+					this.OnDescriptionChanging(value);
+					this.SendPropertyChanging();
+					this._Description = value;
+					this.SendPropertyChanged("Description");
+					this.OnDescriptionChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Meta", DbType="NVarChar(255)")]
+		public string Meta
+		{
+			get
+			{
+				return this._Meta;
+			}
+			set
+			{
+				if ((this._Meta != value))
+				{
+					this.OnMetaChanging(value);
+					this.SendPropertyChanging();
+					this._Meta = value;
+					this.SendPropertyChanged("Meta");
+					this.OnMetaChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Hide", DbType="Bit")]
+		public System.Nullable<bool> Hide
+		{
+			get
+			{
+				return this._Hide;
+			}
+			set
+			{
+				if ((this._Hide != value))
+				{
+					this.OnHideChanging(value);
+					this.SendPropertyChanging();
+					this._Hide = value;
+					this.SendPropertyChanged("Hide");
+					this.OnHideChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Name="[Order]", Storage="_Order", DbType="Int")]
+		public System.Nullable<int> Order
+		{
+			get
+			{
+				return this._Order;
+			}
+			set
+			{
+				if ((this._Order != value))
+				{
+					this.OnOrderChanging(value);
+					this.SendPropertyChanging();
+					this._Order = value;
+					this.SendPropertyChanged("Order");
+					this.OnOrderChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_DateBegin", DbType="Date")]
+		public System.Nullable<System.DateTime> DateBegin
+		{
+			get
+			{
+				return this._DateBegin;
+			}
+			set
+			{
+				if ((this._DateBegin != value))
+				{
+					this.OnDateBeginChanging(value);
+					this.SendPropertyChanging();
+					this._DateBegin = value;
+					this.SendPropertyChanged("DateBegin");
+					this.OnDateBeginChanged();
+				}
+			}
+		}
+		
+		public event PropertyChangingEventHandler PropertyChanging;
+		
+		public event PropertyChangedEventHandler PropertyChanged;
+		
+		protected virtual void SendPropertyChanging()
+		{
+			if ((this.PropertyChanging != null))
+			{
+				this.PropertyChanging(this, emptyChangingEventArgs);
+			}
+		}
+		
+		protected virtual void SendPropertyChanged(String propertyName)
+		{
+			if ((this.PropertyChanged != null))
+			{
+				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+			}
+		}
+	}
+	
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.Breadcrumbs")]
+	public partial class Breadcrumb : INotifyPropertyChanging, INotifyPropertyChanged
+	{
+		
+		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
+		
+		private int _Id;
+		
+		private string _Title;
+		
+		private string _Subtitle;
+		
+		private string _BackgroundImage;
+		
+    #region Extensibility Method Definitions
+    partial void OnLoaded();
+    partial void OnValidate(System.Data.Linq.ChangeAction action);
+    partial void OnCreated();
+    partial void OnIdChanging(int value);
+    partial void OnIdChanged();
+    partial void OnTitleChanging(string value);
+    partial void OnTitleChanged();
+    partial void OnSubtitleChanging(string value);
+    partial void OnSubtitleChanged();
+    partial void OnBackgroundImageChanging(string value);
+    partial void OnBackgroundImageChanged();
+    #endregion
+		
+		public Breadcrumb()
+		{
+			OnCreated();
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Id", AutoSync=AutoSync.OnInsert, DbType="Int NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
+		public int Id
+		{
+			get
+			{
+				return this._Id;
+			}
+			set
+			{
+				if ((this._Id != value))
+				{
+					this.OnIdChanging(value);
+					this.SendPropertyChanging();
+					this._Id = value;
+					this.SendPropertyChanged("Id");
+					this.OnIdChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Title", DbType="NVarChar(255) NOT NULL", CanBeNull=false)]
+		public string Title
+		{
+			get
+			{
+				return this._Title;
+			}
+			set
+			{
+				if ((this._Title != value))
+				{
+					this.OnTitleChanging(value);
+					this.SendPropertyChanging();
+					this._Title = value;
+					this.SendPropertyChanged("Title");
+					this.OnTitleChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Subtitle", DbType="NVarChar(255) NOT NULL", CanBeNull=false)]
+		public string Subtitle
+		{
+			get
+			{
+				return this._Subtitle;
+			}
+			set
+			{
+				if ((this._Subtitle != value))
+				{
+					this.OnSubtitleChanging(value);
+					this.SendPropertyChanging();
+					this._Subtitle = value;
+					this.SendPropertyChanged("Subtitle");
+					this.OnSubtitleChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_BackgroundImage", DbType="NVarChar(500) NOT NULL", CanBeNull=false)]
+		public string BackgroundImage
+		{
+			get
+			{
+				return this._BackgroundImage;
+			}
+			set
+			{
+				if ((this._BackgroundImage != value))
+				{
+					this.OnBackgroundImageChanging(value);
+					this.SendPropertyChanging();
+					this._BackgroundImage = value;
+					this.SendPropertyChanged("BackgroundImage");
+					this.OnBackgroundImageChanged();
+				}
+			}
+		}
+		
+		public event PropertyChangingEventHandler PropertyChanging;
+		
+		public event PropertyChangedEventHandler PropertyChanged;
+		
+		protected virtual void SendPropertyChanging()
+		{
+			if ((this.PropertyChanging != null))
+			{
+				this.PropertyChanging(this, emptyChangingEventArgs);
+			}
+		}
+		
+		protected virtual void SendPropertyChanged(String propertyName)
+		{
+			if ((this.PropertyChanged != null))
+			{
+				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+			}
+		}
+	}
+	
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.Login")]
+	public partial class Login : INotifyPropertyChanging, INotifyPropertyChanged
+	{
+		
+		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
+		
+		private int _Id;
+		
+		private string _Title;
+		
+		private string _EmailLabel;
+		
+		private string _EmailPlaceholder;
+		
+		private string _EmailHelpText;
+		
+		private string _PasswordLabel;
+		
+		private string _PasswordPlaceholder;
+		
+		private string _ButtonText;
+		
+    #region Extensibility Method Definitions
+    partial void OnLoaded();
+    partial void OnValidate(System.Data.Linq.ChangeAction action);
+    partial void OnCreated();
+    partial void OnIdChanging(int value);
+    partial void OnIdChanged();
+    partial void OnTitleChanging(string value);
+    partial void OnTitleChanged();
+    partial void OnEmailLabelChanging(string value);
+    partial void OnEmailLabelChanged();
+    partial void OnEmailPlaceholderChanging(string value);
+    partial void OnEmailPlaceholderChanged();
+    partial void OnEmailHelpTextChanging(string value);
+    partial void OnEmailHelpTextChanged();
+    partial void OnPasswordLabelChanging(string value);
+    partial void OnPasswordLabelChanged();
+    partial void OnPasswordPlaceholderChanging(string value);
+    partial void OnPasswordPlaceholderChanged();
+    partial void OnButtonTextChanging(string value);
+    partial void OnButtonTextChanged();
+    #endregion
+		
+		public Login()
+		{
+			OnCreated();
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Id", AutoSync=AutoSync.OnInsert, DbType="Int NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
+		public int Id
+		{
+			get
+			{
+				return this._Id;
+			}
+			set
+			{
+				if ((this._Id != value))
+				{
+					this.OnIdChanging(value);
+					this.SendPropertyChanging();
+					this._Id = value;
+					this.SendPropertyChanged("Id");
+					this.OnIdChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Title", DbType="NVarChar(255)")]
+		public string Title
+		{
+			get
+			{
+				return this._Title;
+			}
+			set
+			{
+				if ((this._Title != value))
+				{
+					this.OnTitleChanging(value);
+					this.SendPropertyChanging();
+					this._Title = value;
+					this.SendPropertyChanged("Title");
+					this.OnTitleChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_EmailLabel", DbType="NVarChar(255)")]
+		public string EmailLabel
+		{
+			get
+			{
+				return this._EmailLabel;
+			}
+			set
+			{
+				if ((this._EmailLabel != value))
+				{
+					this.OnEmailLabelChanging(value);
+					this.SendPropertyChanging();
+					this._EmailLabel = value;
+					this.SendPropertyChanged("EmailLabel");
+					this.OnEmailLabelChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_EmailPlaceholder", DbType="NVarChar(255)")]
+		public string EmailPlaceholder
+		{
+			get
+			{
+				return this._EmailPlaceholder;
+			}
+			set
+			{
+				if ((this._EmailPlaceholder != value))
+				{
+					this.OnEmailPlaceholderChanging(value);
+					this.SendPropertyChanging();
+					this._EmailPlaceholder = value;
+					this.SendPropertyChanged("EmailPlaceholder");
+					this.OnEmailPlaceholderChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_EmailHelpText", DbType="NVarChar(255)")]
+		public string EmailHelpText
+		{
+			get
+			{
+				return this._EmailHelpText;
+			}
+			set
+			{
+				if ((this._EmailHelpText != value))
+				{
+					this.OnEmailHelpTextChanging(value);
+					this.SendPropertyChanging();
+					this._EmailHelpText = value;
+					this.SendPropertyChanged("EmailHelpText");
+					this.OnEmailHelpTextChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_PasswordLabel", DbType="NVarChar(255)")]
+		public string PasswordLabel
+		{
+			get
+			{
+				return this._PasswordLabel;
+			}
+			set
+			{
+				if ((this._PasswordLabel != value))
+				{
+					this.OnPasswordLabelChanging(value);
+					this.SendPropertyChanging();
+					this._PasswordLabel = value;
+					this.SendPropertyChanged("PasswordLabel");
+					this.OnPasswordLabelChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_PasswordPlaceholder", DbType="NVarChar(255)")]
+		public string PasswordPlaceholder
+		{
+			get
+			{
+				return this._PasswordPlaceholder;
+			}
+			set
+			{
+				if ((this._PasswordPlaceholder != value))
+				{
+					this.OnPasswordPlaceholderChanging(value);
+					this.SendPropertyChanging();
+					this._PasswordPlaceholder = value;
+					this.SendPropertyChanged("PasswordPlaceholder");
+					this.OnPasswordPlaceholderChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ButtonText", DbType="NVarChar(255)")]
+		public string ButtonText
+		{
+			get
+			{
+				return this._ButtonText;
+			}
+			set
+			{
+				if ((this._ButtonText != value))
+				{
+					this.OnButtonTextChanging(value);
+					this.SendPropertyChanging();
+					this._ButtonText = value;
+					this.SendPropertyChanged("ButtonText");
+					this.OnButtonTextChanged();
+				}
+			}
+		}
+		
+		public event PropertyChangingEventHandler PropertyChanging;
+		
+		public event PropertyChangedEventHandler PropertyChanged;
+		
+		protected virtual void SendPropertyChanging()
+		{
+			if ((this.PropertyChanging != null))
+			{
+				this.PropertyChanging(this, emptyChangingEventArgs);
+			}
+		}
+		
+		protected virtual void SendPropertyChanged(String propertyName)
+		{
+			if ((this.PropertyChanged != null))
+			{
+				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+			}
+		}
+	}
+	
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.Register")]
+	public partial class Register : INotifyPropertyChanging, INotifyPropertyChanged
+	{
+		
+		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
+		
+		private int _Id;
+		
+		private string _Title;
+		
+		private string _NameLabel;
+		
+		private string _NamePlaceholder;
+		
+		private string _EmailLabel;
+		
+		private string _EmailPlaceholder;
+		
+		private string _PasswordLabel;
+		
+		private string _PasswordPlaceholder;
+		
+		private string _ButtonText;
+		
+    #region Extensibility Method Definitions
+    partial void OnLoaded();
+    partial void OnValidate(System.Data.Linq.ChangeAction action);
+    partial void OnCreated();
+    partial void OnIdChanging(int value);
+    partial void OnIdChanged();
+    partial void OnTitleChanging(string value);
+    partial void OnTitleChanged();
+    partial void OnNameLabelChanging(string value);
+    partial void OnNameLabelChanged();
+    partial void OnNamePlaceholderChanging(string value);
+    partial void OnNamePlaceholderChanged();
+    partial void OnEmailLabelChanging(string value);
+    partial void OnEmailLabelChanged();
+    partial void OnEmailPlaceholderChanging(string value);
+    partial void OnEmailPlaceholderChanged();
+    partial void OnPasswordLabelChanging(string value);
+    partial void OnPasswordLabelChanged();
+    partial void OnPasswordPlaceholderChanging(string value);
+    partial void OnPasswordPlaceholderChanged();
+    partial void OnButtonTextChanging(string value);
+    partial void OnButtonTextChanged();
+    #endregion
+		
+		public Register()
+		{
+			OnCreated();
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Id", AutoSync=AutoSync.OnInsert, DbType="Int NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
+		public int Id
+		{
+			get
+			{
+				return this._Id;
+			}
+			set
+			{
+				if ((this._Id != value))
+				{
+					this.OnIdChanging(value);
+					this.SendPropertyChanging();
+					this._Id = value;
+					this.SendPropertyChanged("Id");
+					this.OnIdChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Title", DbType="NVarChar(255)")]
+		public string Title
+		{
+			get
+			{
+				return this._Title;
+			}
+			set
+			{
+				if ((this._Title != value))
+				{
+					this.OnTitleChanging(value);
+					this.SendPropertyChanging();
+					this._Title = value;
+					this.SendPropertyChanged("Title");
+					this.OnTitleChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_NameLabel", DbType="NVarChar(255)")]
+		public string NameLabel
+		{
+			get
+			{
+				return this._NameLabel;
+			}
+			set
+			{
+				if ((this._NameLabel != value))
+				{
+					this.OnNameLabelChanging(value);
+					this.SendPropertyChanging();
+					this._NameLabel = value;
+					this.SendPropertyChanged("NameLabel");
+					this.OnNameLabelChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_NamePlaceholder", DbType="NVarChar(255)")]
+		public string NamePlaceholder
+		{
+			get
+			{
+				return this._NamePlaceholder;
+			}
+			set
+			{
+				if ((this._NamePlaceholder != value))
+				{
+					this.OnNamePlaceholderChanging(value);
+					this.SendPropertyChanging();
+					this._NamePlaceholder = value;
+					this.SendPropertyChanged("NamePlaceholder");
+					this.OnNamePlaceholderChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_EmailLabel", DbType="NVarChar(255)")]
+		public string EmailLabel
+		{
+			get
+			{
+				return this._EmailLabel;
+			}
+			set
+			{
+				if ((this._EmailLabel != value))
+				{
+					this.OnEmailLabelChanging(value);
+					this.SendPropertyChanging();
+					this._EmailLabel = value;
+					this.SendPropertyChanged("EmailLabel");
+					this.OnEmailLabelChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_EmailPlaceholder", DbType="NVarChar(255)")]
+		public string EmailPlaceholder
+		{
+			get
+			{
+				return this._EmailPlaceholder;
+			}
+			set
+			{
+				if ((this._EmailPlaceholder != value))
+				{
+					this.OnEmailPlaceholderChanging(value);
+					this.SendPropertyChanging();
+					this._EmailPlaceholder = value;
+					this.SendPropertyChanged("EmailPlaceholder");
+					this.OnEmailPlaceholderChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_PasswordLabel", DbType="NVarChar(255)")]
+		public string PasswordLabel
+		{
+			get
+			{
+				return this._PasswordLabel;
+			}
+			set
+			{
+				if ((this._PasswordLabel != value))
+				{
+					this.OnPasswordLabelChanging(value);
+					this.SendPropertyChanging();
+					this._PasswordLabel = value;
+					this.SendPropertyChanged("PasswordLabel");
+					this.OnPasswordLabelChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_PasswordPlaceholder", DbType="NVarChar(255)")]
+		public string PasswordPlaceholder
+		{
+			get
+			{
+				return this._PasswordPlaceholder;
+			}
+			set
+			{
+				if ((this._PasswordPlaceholder != value))
+				{
+					this.OnPasswordPlaceholderChanging(value);
+					this.SendPropertyChanging();
+					this._PasswordPlaceholder = value;
+					this.SendPropertyChanged("PasswordPlaceholder");
+					this.OnPasswordPlaceholderChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ButtonText", DbType="NVarChar(255)")]
+		public string ButtonText
+		{
+			get
+			{
+				return this._ButtonText;
+			}
+			set
+			{
+				if ((this._ButtonText != value))
+				{
+					this.OnButtonTextChanging(value);
+					this.SendPropertyChanging();
+					this._ButtonText = value;
+					this.SendPropertyChanged("ButtonText");
+					this.OnButtonTextChanged();
+				}
+			}
+		}
+		
+		public event PropertyChangingEventHandler PropertyChanging;
+		
+		public event PropertyChangedEventHandler PropertyChanged;
+		
+		protected virtual void SendPropertyChanging()
+		{
+			if ((this.PropertyChanging != null))
+			{
+				this.PropertyChanging(this, emptyChangingEventArgs);
+			}
+		}
+		
+		protected virtual void SendPropertyChanged(String propertyName)
+		{
+			if ((this.PropertyChanged != null))
+			{
+				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+			}
+		}
+	}
+	
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.Menu")]
+	public partial class Menu : INotifyPropertyChanging, INotifyPropertyChanged
+	{
+		
+		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
+		
+		private int _Id;
+		
+		private string _Name;
+		
+		private string _Url;
+		
+		private System.Nullable<int> _ParentId;
+		
+		private EntitySet<Menu> _Menus;
+		
+		private EntityRef<Menu> _Menu1;
+		
+    #region Extensibility Method Definitions
+    partial void OnLoaded();
+    partial void OnValidate(System.Data.Linq.ChangeAction action);
+    partial void OnCreated();
+    partial void OnIdChanging(int value);
+    partial void OnIdChanged();
+    partial void OnNameChanging(string value);
+    partial void OnNameChanged();
+    partial void OnUrlChanging(string value);
+    partial void OnUrlChanged();
+    partial void OnParentIdChanging(System.Nullable<int> value);
+    partial void OnParentIdChanged();
+    #endregion
+		
+		public Menu()
+		{
+			this._Menus = new EntitySet<Menu>(new Action<Menu>(this.attach_Menus), new Action<Menu>(this.detach_Menus));
+			this._Menu1 = default(EntityRef<Menu>);
+			OnCreated();
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Id", AutoSync=AutoSync.OnInsert, DbType="Int NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
+		public int Id
+		{
+			get
+			{
+				return this._Id;
+			}
+			set
+			{
+				if ((this._Id != value))
+				{
+					this.OnIdChanging(value);
+					this.SendPropertyChanging();
+					this._Id = value;
+					this.SendPropertyChanged("Id");
+					this.OnIdChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Name", DbType="NVarChar(100) NOT NULL", CanBeNull=false)]
+		public string Name
+		{
+			get
+			{
+				return this._Name;
+			}
+			set
+			{
+				if ((this._Name != value))
+				{
+					this.OnNameChanging(value);
+					this.SendPropertyChanging();
+					this._Name = value;
+					this.SendPropertyChanged("Name");
+					this.OnNameChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Url", DbType="NVarChar(200) NOT NULL", CanBeNull=false)]
+		public string Url
+		{
+			get
+			{
+				return this._Url;
+			}
+			set
+			{
+				if ((this._Url != value))
+				{
+					this.OnUrlChanging(value);
+					this.SendPropertyChanging();
+					this._Url = value;
+					this.SendPropertyChanged("Url");
+					this.OnUrlChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ParentId", DbType="Int")]
+		public System.Nullable<int> ParentId
+		{
+			get
+			{
+				return this._ParentId;
+			}
+			set
+			{
+				if ((this._ParentId != value))
+				{
+					if (this._Menu1.HasLoadedOrAssignedValue)
+					{
+						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
+					}
+					this.OnParentIdChanging(value);
+					this.SendPropertyChanging();
+					this._ParentId = value;
+					this.SendPropertyChanged("ParentId");
+					this.OnParentIdChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Menu_Menu", Storage="_Menus", ThisKey="Id", OtherKey="ParentId")]
+		public EntitySet<Menu> Menus
+		{
+			get
+			{
+				return this._Menus;
+			}
+			set
+			{
+				this._Menus.Assign(value);
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Menu_Menu", Storage="_Menu1", ThisKey="ParentId", OtherKey="Id", IsForeignKey=true)]
+		public Menu Menu1
+		{
+			get
+			{
+				return this._Menu1.Entity;
+			}
+			set
+			{
+				Menu previousValue = this._Menu1.Entity;
+				if (((previousValue != value) 
+							|| (this._Menu1.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._Menu1.Entity = null;
+						previousValue.Menus.Remove(this);
+					}
+					this._Menu1.Entity = value;
+					if ((value != null))
+					{
+						value.Menus.Add(this);
+						this._ParentId = value.Id;
+					}
+					else
+					{
+						this._ParentId = default(Nullable<int>);
+					}
+					this.SendPropertyChanged("Menu1");
+				}
+			}
+		}
+		
+		public event PropertyChangingEventHandler PropertyChanging;
+		
+		public event PropertyChangedEventHandler PropertyChanged;
+		
+		protected virtual void SendPropertyChanging()
+		{
+			if ((this.PropertyChanging != null))
+			{
+				this.PropertyChanging(this, emptyChangingEventArgs);
+			}
+		}
+		
+		protected virtual void SendPropertyChanged(String propertyName)
+		{
+			if ((this.PropertyChanged != null))
+			{
+				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+			}
+		}
+		
+		private void attach_Menus(Menu entity)
+		{
+			this.SendPropertyChanging();
+			entity.Menu1 = this;
+		}
+		
+		private void detach_Menus(Menu entity)
+		{
+			this.SendPropertyChanging();
+			entity.Menu1 = null;
 		}
 	}
 }

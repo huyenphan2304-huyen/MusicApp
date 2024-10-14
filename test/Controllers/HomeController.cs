@@ -5,6 +5,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using MusicApp.Models;
+
 namespace MusicApp.Controllers
 {
     public class HomeController : Controller
@@ -19,52 +20,70 @@ namespace MusicApp.Controllers
         public ActionResult About()
         {
             ViewBag.Message = "Your application description page.";
-
             return View();
         }
 
         public ActionResult Contact()
         {
             ViewBag.Message = "Your contact page.";
-
             return View();
         }
+
         public ActionResult RecommendLatestAlbums()
         {
-            // Lấy danh sách các bài hát nổi bật (IsFeatured = 1)
             var recommendLatestAlbums = db.Albums.OrderByDescending(album => album.ReleaseDate).Take(2).ToList();
-
-            // Trả về view với dữ liệu các bài hát nổi bật
             return PartialView("RecommendLatestAlbums", recommendLatestAlbums);
         }
 
         public ActionResult LatestAlbums()
         {
-            // Lấy danh sách các album từ database
             var latestAlbums = db.Albums.ToList();
-
-            // Truyền danh sách album vào View
-            return PartialView("LatestAlbums",latestAlbums);
+            return PartialView("LatestAlbums", latestAlbums);
         }
 
         public ActionResult RecommendedAlbums()
         {
-            // Lấy danh sách các album được đề xuất từ database
-            var recommendedAlbums = db.Albums.ToList(); // Có thể thay đổi điều kiện nếu cần
-
-            // Truyền danh sách album vào View
+            var recommendedAlbums = db.Albums.ToList();
             return PartialView("RecommendedAlbums", recommendedAlbums);
         }
 
         public ActionResult FirstFeaturedArtist()
         {
-            // Lấy nghệ sĩ nổi bật (giả sử có điều kiện cho nghệ sĩ nổi bật)
             var featuredArtist = db.Artists.FirstOrDefault();
-
-            // Trả về PartialView với dữ liệu nghệ sĩ nổi bật
             return PartialView("FirstFeaturedArtist", featuredArtist);
         }
 
+        public ActionResult ContactSection()
+        {
+            var contactInfo = db.Contacts.FirstOrDefault();
+            return PartialView("ContactSection", contactInfo);
+        }
+
+        public ActionResult MiscellaneousArea()
+        {
+            // Lấy danh sách các mục từ bảng Miscellaneous
+            var miscellaneousItems = db.Miscellaneous
+                .Where(m => !m.Hide) // Chỉ lấy những mục không bị ẩn
+                .OrderBy(m => m.OrderPosition) // Sắp xếp theo OrderPosition
+                .ToList();
+
+            // Chia thành các nhóm
+            var weeksTop = miscellaneousItems.Where(m => m.Type == "Top").ToList();
+            var newHits = miscellaneousItems.Where(m => m.Type == "NewHits").ToList();
+            var popularArtists = miscellaneousItems.Where(m => m.Type == "PopularArtists").ToList();
+
+            // Trả về PartialView với dữ liệu đã phân loại
+            ViewBag.WeeksTop = weeksTop;
+            ViewBag.NewHits = newHits;
+            ViewBag.PopularArtists = popularArtists;
+
+            // Lấy tiêu đề cho từng nhóm
+            ViewBag.WeeksTopTitle = weeksTop.FirstOrDefault()?.H2Text ?? "Tuần này nổi bật";
+            ViewBag.NewHitsTitle = newHits.FirstOrDefault()?.H2Text ?? "Bài hát mới";
+            ViewBag.PopularArtistsTitle = popularArtists.FirstOrDefault()?.H2Text ?? "Nghệ sĩ nổi bật";
+
+            return PartialView("MiscellaneousArea", miscellaneousItems);
+        }
 
     }
 }

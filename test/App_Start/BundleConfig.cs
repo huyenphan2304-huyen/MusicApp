@@ -33,6 +33,15 @@ namespace MusicApp
                         "~/Content/css/one-music-icon.css",
                         "~/Content/style.css"));
 
+            // Bundle cho SCSS
+            bundles.Add(new StyleBundle("~/Content/scss").Include(
+                "~/Content/scss/fonts.scss",
+                "~/Content/scss/mixin.scss",
+                "~/Content/scss/responsive.scss",
+                "~/Content/scss/theme_color.scss",
+                "~/Content/scss/style.scss"
+            ));
+
             // Modernizr (nếu bạn cần dùng)
             bundles.Add(new ScriptBundle("~/bundles/modernizr").Include(
                         "~/Scripts/modernizr-*"));

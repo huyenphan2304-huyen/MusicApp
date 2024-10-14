@@ -46,11 +46,11 @@ CREATE TABLE Menu (
 -- Thêm menu chính
 INSERT INTO Menu (Name, Url, ParentId) VALUES 
 ('Logo', '/Content/img/core-img/logo.png', NULL),
-('Home', '/home', NULL),
-('Album', '/albums', NULL),
-('Event', '/events', NULL),
-('Category', '#', NULL),  -- Đây là menu chính, có các menu con
-('Account', '/account', NULL);
+('Home', '/Home', NULL),
+('Album', '/Album', NULL),
+('Event', '/Event', NULL),
+('Category', 'Category', NULL),  -- Đây là menu chính, có các menu con
+('Account', '/Account', NULL);
 
 -- Thêm menu con cho "Category"
 INSERT INTO Menu (Name, Url, ParentId) VALUES 
@@ -84,7 +84,138 @@ INSERT INTO Albums (Title, Artist, CoverImageUrl, Url, ReleaseDate, ArtistId) VA
 -- Thêm bài hát
 INSERT INTO Songs (Title, Artist, Album, Genre, ReleaseDate, CoverImageUrl, Url, IsFeatured, AlbumId)
 VALUES 
-('Beyond Time', 'Artist A', 'Album 1', 'Pop', '2022-01-01', '/img/bg-img/bg-1.jpg', '/Song/Play/1', 1, NULL),
-('Colorlib Music', 'Artist B', 'Album 2', 'Rock', '2023-03-15', '/img/bg-img/bg-2.jpg', '/Song/Play/2', 1, NULL),
-('New Era', 'Artist C', 'Album 3', 'Jazz', '2024-05-21', '/img/bg-img/bg-3.jpg', '/Song/Play/3', 0, NULL);
+('Beyond Time', 'Artist A', 'Album 1', 'Pop', '2022-01-01', '/Content/img/bg-img/bg-1.jpg', '/Song/Play/1', 1, NULL),
+('Colorlib Music', 'Artist B', 'Album 2', 'Rock', '2023-03-15', '/Content/img/bg-img/bg-2.jpg', '/Song/Play/2', 1, NULL),
+('New Era', 'Artist C', 'Album 3', 'Jazz', '2024-05-21', '/Content/img/bg-img/bg-3.jpg', '/Song/Play/3', 0, NULL);
 
+
+CREATE TABLE Contact (
+    Id INT PRIMARY KEY IDENTITY(1,1),
+    SectionTagline NVARCHAR(255) NOT NULL,
+    SectionTitle NVARCHAR(255) NOT NULL,
+    BackgroundImageUrl NVARCHAR(500),
+    Hide BIT DEFAULT 0,
+    [Order] INT DEFAULT 1,
+    DateBegin DATE DEFAULT GETDATE()
+);
+
+INSERT INTO Contact (SectionTagline, SectionTitle, BackgroundImageUrl, Hide, [Order], DateBegin)
+VALUES 
+('See what’s new', 'Get In Touch', '/Content/img/bg-img/bg-2.jpg', 0, 1, '2024-10-10');
+
+
+CREATE TABLE Miscellaneous (
+    Id INT PRIMARY KEY IDENTITY(1,1),
+    Type NVARCHAR(50) NOT NULL,             -- Loại mục (vd: Bài Hát Mới, Nghệ Sĩ Phổ Biến)
+    Name NVARCHAR(255) NOT NULL,            -- Tên hiển thị
+    Description NVARCHAR(MAX),               -- Mô tả cho bài hát hoặc nghệ sĩ
+    Link NVARCHAR(500),                      -- Liên kết ngoài (nếu có)
+    Meta NVARCHAR(255),                      -- Hiển thị trên địa chỉ của trình duyệt (SEO)
+    Hide BIT NOT NULL DEFAULT 0,             -- Hiển thị hay ẩn đi (0: hiển thị, 1: ẩn)
+    OrderPosition INT NOT NULL DEFAULT 0,    -- Vị trí xuất hiện
+    DateBegin DATETIME DEFAULT GETDATE(),    -- Ngày tạo
+    PText NVARCHAR(MAX),                      -- Nội dung cho thẻ <p>
+    H2Text NVARCHAR(MAX),                     -- Nội dung cho thẻ <h2>
+    ImageUrl NVARCHAR(500),                   -- Liên kết đến hình ảnh
+    AudioUrl NVARCHAR(500)                    -- Liên kết đến audio
+);
+
+-- Chèn dữ liệu cho phần Tuần Tốt Nhất
+INSERT INTO Miscellaneous (Type, Name, Description, Link, Meta, Hide, OrderPosition, DateBegin, PText, H2Text, ImageUrl, AudioUrl) VALUES 
+('Top', 'Sam Smith', 'Underground', NULL, 'sam-smith-underground', 0, 1, GETDATE(), NULL, NULL, '/Content/img/bg-img/wt1.jpg', '/Content/audio/dummy-audio.mp3'),
+('Top', 'Power Play', 'In my mind', NULL, 'power-play-in-my-mind', 0, 2, GETDATE(), NULL, NULL, '/Content/img/bg-img/wt2.jpg', '/Content/audio/dummy-audio.mp3'),
+('Top', 'Cristinne Smith', 'My Music', NULL, 'cristinne-smith-my-music', 0, 3, GETDATE(), NULL, NULL, '/Content/img/bg-img/wt3.jpg', '/Content/audio/dummy-audio.mp3'),
+('Top', 'The Music Band', 'Underground', NULL, 'the-music-band-underground', 0, 4, GETDATE(), NULL, NULL, '/Content/img/bg-img/wt4.jpg', '/Content/audio/dummy-audio.mp3'),
+('Top', 'Creative Lyrics', 'Songs and stuff', NULL, 'creative-lyrics-songs-and-stuff', 0, 5, GETDATE(), NULL, NULL, '/Content/img/bg-img/wt5.jpg', '/Content/audio/dummy-audio.mp3'),
+('Top', 'The Culture', 'Pop Songs', NULL, 'the-culture-pop-songs', 0, 6, GETDATE(), NULL, NULL, '/Content/img/bg-img/wt6.jpg', '/Content/audio/dummy-audio.mp3');
+
+-- Chèn dữ liệu cho phần Bài Hát Mới
+INSERT INTO Miscellaneous (Type, Name, Description, Link, Meta, Hide, OrderPosition, DateBegin, PText, H2Text, ImageUrl, AudioUrl) VALUES 
+('NewHits', 'Sam Smith', 'Underground', NULL, 'sam-smith-underground', 0, 1, GETDATE(), NULL, NULL, '/Content/img/bg-img/wt7.jpg', '/Content/audio/dummy-audio.mp3'),
+('NewHits', 'Power Play', 'In my mind', NULL, 'power-play-in-my-mind', 0, 2, GETDATE(), NULL, NULL, '/Content/img/bg-img/wt8.jpg', '/Content/audio/dummy-audio.mp3'),
+('NewHits', 'Cristinne Smith', 'My Music', NULL, 'cristinne-smith-my-music', 0, 3, GETDATE(), NULL, NULL, '/Content/img/bg-img/wt9.jpg', '/Content/audio/dummy-audio.mp3'),
+('NewHits', 'The Music Band', 'Underground', NULL, 'the-music-band-underground', 0, 4, GETDATE(), NULL, NULL, '/Content/img/bg-img/wt10.jpg', '/Content/audio/dummy-audio.mp3'),
+('NewHits', 'Creative Lyrics', 'Songs and stuff', NULL, 'creative-lyrics-songs-and-stuff', 0, 5, GETDATE(), NULL, NULL, '/Content/img/bg-img/wt11.jpg', '/Content/audio/dummy-audio.mp3'),
+('NewHits', 'The Culture', 'Pop Songs', NULL, 'the-culture-pop-songs', 0, 6, GETDATE(), NULL, NULL, '/Content/img/bg-img/wt12.jpg', '/Content/audio/dummy-audio.mp3');
+
+-- Chèn dữ liệu cho phần Nghệ Sĩ Phổ Biến
+INSERT INTO Miscellaneous (Type, Name, Description, Link, Meta, Hide, OrderPosition, DateBegin, PText, H2Text, ImageUrl, AudioUrl) VALUES 
+('PopularArtists', 'Sam Smith', NULL, NULL, 'sam-smith', 0, 1, GETDATE(), NULL, NULL, '/Content/img/bg-img/pa1.jpg', NULL),
+('PopularArtists', 'William Parker', NULL, NULL, 'william-parker', 0, 2, GETDATE(), NULL, NULL, '/Content/img/bg-img/pa2.jpg', NULL),
+('PopularArtists', 'Jessica Walsh', NULL, NULL, 'jessica-walsh', 0, 3, GETDATE(), NULL, NULL, '/Content/img/bg-img/pa3.jpg', NULL),
+('PopularArtists', 'Tha Stoves', NULL, NULL, 'tha-stoves', 0, 4, GETDATE(), NULL, NULL, '/Content/img/bg-img/pa4.jpg', NULL),
+('PopularArtists', 'DJ Ajay', NULL, NULL, 'dj-ajay', 0, 5, GETDATE(), NULL, NULL, '/Content/img/bg-img/pa5.jpg', NULL),
+('PopularArtists', 'Radio Vibez', NULL, NULL, 'radio-vibez', 0, 6, GETDATE(), NULL, NULL, '/Content/img/bg-img/pa6.jpg', NULL),
+('PopularArtists', 'Music 4u', NULL, NULL, 'music-4u', 0, 7, GETDATE(), NULL, NULL, '/Content/img/bg-img/pa7.jpg', NULL);
+
+
+CREATE TABLE Events (
+    Id INT PRIMARY KEY IDENTITY(1,1),
+    Title NVARCHAR(255) NOT NULL,
+    Place NVARCHAR(255) NOT NULL,
+    Date DATE NOT NULL,
+    ImageUrl NVARCHAR(500),
+    Description NVARCHAR(MAX),
+    Meta NVARCHAR(255),
+    Hide BIT,
+    [Order] INT,
+    DateBegin DATE
+);
+
+INSERT INTO Events (Title, Place, Date, ImageUrl, Description, Meta, Hide, [Order], DateBegin)
+VALUES 
+('Dj Night Party', 'VIP Sala', '2018-06-15', '/Content/img/bg-img/e1.jpg', 'Join us for an unforgettable night.', 'dj-night-party', 0, 1, '2018-06-01'),
+('The Mission', 'Gold Arena', '2018-06-15', '/Content/img/bg-img/e2.jpg', 'Experience the best mission-themed party.', 'the-mission', 0, 2, '2018-06-01'),
+('Planet Ibiza', 'Space Ibiza', '2018-06-15', '/Content/img/bg-img/e3.jpg', 'An Ibiza style event you don’t want to miss.', 'planet-ibiza', 0, 3, '2018-06-01'),
+('Dj Night Party', 'VIP Sala', '2018-06-15', '/Content/img/bg-img/e4.jpg', 'Get ready for another epic DJ night!', 'dj-night-party-2', 0, 4, '2018-06-01'),
+('The Mission', 'Gold Arena', '2018-06-15', '/Content/img/bg-img/e5.jpg', 'Another mission, another night of fun!', 'the-mission-2', 0, 5, '2018-06-01'),
+('Planet Ibiza', 'Space Ibiza', '2018-06-15', '/Content/img/bg-img/e6.jpg', 'Ibiza vibes in full swing at Space.', 'planet-ibiza-2', 0, 6, '2018-06-01'),
+('Dj Night Party', 'VIP Sala', '2018-06-15', '/Content/img/bg-img/e7.jpg', 'Yet another DJ night to party hard!', 'dj-night-party-3', 0, 7, '2018-06-01'),
+('The Mission', 'Gold Arena', '2018-06-15', '/Content/img/bg-img/e8.jpg', 'A golden night at the Gold Arena.', 'the-mission-3', 0, 8, '2018-06-01'),
+('Planet Ibiza', 'Space Ibiza', '2018-06-15', '/Content/img/bg-img/e9.jpg', 'Party like never before at Planet Ibiza.', 'planet-ibiza-3', 0, 9, '2018-06-01');
+
+
+select * from menu
+
+CREATE TABLE Breadcrumbs (
+    Id INT PRIMARY KEY IDENTITY(1,1),
+    Title NVARCHAR(255) NOT NULL,
+    Subtitle NVARCHAR(255) NOT NULL,
+    BackgroundImage NVARCHAR(500) NOT NULL
+);
+
+INSERT INTO Breadcrumbs (Title, Subtitle, BackgroundImage)
+VALUES 
+('Events', 'See what’s new', '/Content/img/bg-img/breadcumb3.jpg'),
+('Concerts', 'Live Music Events', '/Content/img/bg-img/breadcumb4.jpg'),
+('Festivals', 'Celebrating Together', '/Content/img/bg-img/breadcumb5.jpg');
+
+
+CREATE TABLE Login (
+    Id INT PRIMARY KEY IDENTITY(1,1),
+    Title NVARCHAR(255),
+    EmailLabel NVARCHAR(255),
+    EmailPlaceholder NVARCHAR(255),
+    EmailHelpText NVARCHAR(255),
+    PasswordLabel NVARCHAR(255),
+    PasswordPlaceholder NVARCHAR(255),
+    ButtonText NVARCHAR(255)
+);
+
+INSERT INTO Login (Title, EmailLabel, EmailPlaceholder, EmailHelpText, PasswordLabel, PasswordPlaceholder, ButtonText)
+VALUES ('Welcome Back', 'Email address', 'Enter E-mail', 'We will never share your email with anyone else.', 'Password', 'Enter Password', 'Login');
+
+CREATE TABLE Register (
+    Id INT PRIMARY KEY IDENTITY(1,1),
+    Title NVARCHAR(255),
+    NameLabel NVARCHAR(255),
+    NamePlaceholder NVARCHAR(255),
+    EmailLabel NVARCHAR(255),
+    EmailPlaceholder NVARCHAR(255),
+    PasswordLabel NVARCHAR(255),
+    PasswordPlaceholder NVARCHAR(255),
+    ButtonText NVARCHAR(255)
+);
+
+INSERT INTO Register (Title, NameLabel, NamePlaceholder, EmailLabel, EmailPlaceholder, PasswordLabel, PasswordPlaceholder, ButtonText)
+VALUES ('Create Your Account', 'Full Name', 'Enter your full name', 'Email address', 'Enter your email', 'Password', 'Enter your password', 'Register');

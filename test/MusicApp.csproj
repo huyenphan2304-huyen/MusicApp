@@ -175,6 +175,7 @@
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\AlbumController.cs" />
     <Compile Include="Controllers\DefaultController.cs" />
+    <Compile Include="Controllers\EventController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\LayoutController.cs" />
     <Compile Include="Controllers\MenuController.cs" />
@@ -270,7 +271,12 @@
     <Content Include="Content\img\bg-img\wt9.jpg" />
     <Content Include="Content\img\core-img\favicon.ico" />
     <Content Include="Content\img\core-img\logo.png" />
-    <Content Include="Content\style.css" />
+    <Content Include="Content\scss\style.css">
+      <DependentUpon>style.scss</DependentUpon>
+    </Content>
+    <Content Include="Content\scss\style.min.css">
+      <DependentUpon>style.css</DependentUpon>
+    </Content>
     <Content Include="favicon.ico" />
     <Content Include="fonts\classy.svg" />
     <Content Include="fonts\fontawesome-webfont.svg" />
@@ -319,6 +325,10 @@
     <Content Include="Content\bootstrap.css.map" />
     <Content Include="Content\bootstrap-theme.min.css.map" />
     <Content Include="Content\bootstrap-theme.css.map" />
+    <None Include="compilerconfig.json" />
+    <None Include="compilerconfig.json.defaults">
+      <DependentUpon>compilerconfig.json</DependentUpon>
+    </None>
     <None Include="Models\MusicDb.dbml.layout">
       <DependentUpon>MusicDb.dbml</DependentUpon>
     </None>
@@ -370,6 +380,14 @@
     <Content Include="Views\Home\RecommendedAlbums.cshtml" />
     <Content Include="Views\Home\FirstFeaturedArtist.cshtml" />
     <Content Include="Views\Home\RecommendLatestAlbums.cshtml" />
+    <Content Include="Views\Home\ContactSection.cshtml" />
+    <Content Include="Views\Home\MiscellaneousArea.cshtml" />
+    <Content Include="Views\Event\getEvents.cshtml" />
+    <Content Include="Views\Event\events.cshtml" />
+    <Content Include="Views\Event\BreadcumbArea.cshtml" />
+    <Content Include="Views\Account\LoginForm.cshtml" />
+    <Content Include="Views\Account\RegisterForm.cshtml" />
+    <Content Include="Views\Account\Account.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
