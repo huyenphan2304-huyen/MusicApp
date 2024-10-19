@@ -1,0 +1,39 @@
+﻿@{
+}
+
+<!-- ##### Event Detail Area Start ##### -->
+<div class="event-detail-area section-padding-100">
+    <div class="container">
+        <div class="row">
+            <div class="col-12 col-lg-9">
+                <!-- Single Event Start -->
+                <div class="event-detail mb-100 wow fadeInUp" data-wow-delay="100ms">
+                    <!-- Event Thumbnail -->
+                    <div class="event-thumbnail mt-30">
+                        <a href="#"><img src="@ViewBag.ImageUrl" alt="@ViewBag.Title"></a>
+                        <!-- Event Date -->
+                        <div class="event-date">
+                            <span>@((ViewBag.Date as DateTime?)?.ToString("dd") ?? "N/A")</span>
+                            <span>@((ViewBag.Date as DateTime?)?.ToString("MMMM ‘yy") ?? "N/A")</span>
+                        </div>
+                    </div>
+
+                    <!-- Event Content -->
+                    <div class="event-content">
+                        <!-- Event Title -->
+                        <h4 class="event-title">@ViewBag.Title</h4>
+                        <!-- Event Meta -->
+                        <div class="event-meta d-flex mb-30">
+                            <p class="event-author">Tổ chức bởi <a href="#">Admin</a></p>
+                            <p class="event-location">Nơi tổ chức: <a href="#">@ViewBag.Place</a></p>
+                        </div>
+                        <!-- Event Description -->
+                        <p class="event-description">@ViewBag.Description</p>
+                    </div>
+                </div>
+                <!-- Single Event End -->
+            </div>
+        </div>
+    </div>
+</div>
+<!-- ##### Event Detail Area End ##### -->

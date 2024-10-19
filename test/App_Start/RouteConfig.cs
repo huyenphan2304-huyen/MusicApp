@@ -9,28 +9,49 @@ namespace MusicApp
         {
             routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
 
-            // Định nghĩa route mặc định cho Home
+            // Route AlbumDetail cần đặt trước route Default
+            routes.MapRoute(
+                 name: "AlbumDetail",
+                 url: "{type}/{meta}/{id}",
+                 defaults: new { controller = "Album", action = "AlbumDetail", id = UrlParameter.Optional },
+                 constraints: new { type = "album" } // Chỉ áp dụng route này cho 'album'
+            );
+            // Định nghĩa route cho EventDetail
+            routes.MapRoute(
+                name: "EventDetail",
+                 url: "{type}/{meta}/{id}",
+                defaults: new { controller = "Event", action = "EventDetail", id = UrlParameter.Optional },
+                constraints: new { type = "event" } 
+            );
+            // Định nghĩa route cho SongDetail
+            routes.MapRoute(
+                name: "SongDetail",
+                 url: "{type}/{meta}/{id}",
+                defaults: new { controller = "Song", action = "SongDetail", id = UrlParameter.Optional },
+                constraints: new { type = "Song" }
+            );
             routes.MapRoute(
                 name: "Home",
                 url: "",
                 defaults: new { controller = "Home", action = "Index" }
             );
-
-            // Định nghĩa route cho Event
+            routes.MapRoute(
+                name: "Song",
+                url: "Song/{action}/{id}",
+                defaults: new { controller = "Song", action = "Index", id = UrlParameter.Optional }
+            );
             routes.MapRoute(
                 name: "Event",
                 url: "Event/{action}/{id}",
                 defaults: new { controller = "Event", action = "Index", id = UrlParameter.Optional }
             );
 
-            // Định nghĩa route cho Account
             routes.MapRoute(
                 name: "Account",
                 url: "Account/{action}/{id}",
                 defaults: new { controller = "Account", action = "Index", id = UrlParameter.Optional }
             );
 
-            // Định nghĩa route mặc định cho tất cả các controller còn lại
             routes.MapRoute(
                 name: "Default",
                 url: "{controller}/{action}/{id}",

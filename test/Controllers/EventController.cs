@@ -30,6 +30,26 @@ namespace MusicApp.Controllers
 
             return PartialView("BreadcumbArea",breadcrumb);
         }
+        public ActionResult EventDetail(int id)
+        {
+            // Truy vấn sự kiện từ cơ sở dữ liệu
+            var eventDetail = db.Events.SingleOrDefault(e => e.Id == id);
+
+            if (eventDetail == null)
+            {
+                return HttpNotFound();
+            }
+
+            // Lưu thông tin sự kiện vào ViewBag
+            ViewBag.Id = eventDetail.Id;
+            ViewBag.Title = eventDetail.Title;
+            ViewBag.Description = eventDetail.Description;
+            ViewBag.ImageUrl = eventDetail.ImageUrl;
+            ViewBag.Date = eventDetail.Date; // Đảm bảo Date là DateTime
+
+            return View(); // Trả về view
+        }
+
 
     }
 }

@@ -9,6 +9,10 @@
       <Column Name="Url" Type="System.String" DbType="NVarChar(500) NOT NULL" CanBeNull="false" />
       <Column Name="ReleaseDate" Type="System.DateTime" DbType="Date" CanBeNull="true" />
       <Column Name="ArtistId" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="Meta" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="Hide" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Column Name="[Order]" Member="Order" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="DateBegin" Type="System.DateTime" DbType="SmallDateTime" CanBeNull="true" />
       <Association Name="Album_Song" Member="Songs" ThisKey="Id" OtherKey="AlbumId" Type="Song" />
       <Association Name="Artist_Album" Member="Artist1" ThisKey="ArtistId" OtherKey="Id" Type="Artist" IsForeignKey="true" />
     </Type>
@@ -20,22 +24,36 @@
       <Column Name="ImageUrl" Type="System.String" DbType="NVarChar(500)" CanBeNull="true" />
       <Column Name="BackgroundImageUrl" Type="System.String" DbType="NVarChar(500)" CanBeNull="true" />
       <Column Name="Description" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
+      <Column Name="Meta" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="Hide" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Column Name="[Order]" Member="Order" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="DateBegin" Type="System.DateTime" DbType="SmallDateTime" CanBeNull="true" />
       <Association Name="Artist_Album" Member="Albums" ThisKey="Id" OtherKey="ArtistId" Type="Album" />
+      <Association Name="Artist_Miscellaneous" Member="Miscellaneous" ThisKey="Id" OtherKey="ArtistId" Type="Miscellaneous" />
+      <Association Name="Artist_Song" Member="Songs" ThisKey="Id" OtherKey="ArtistId" Type="Song" />
     </Type>
   </Table>
-  <Table Name="dbo.Songs" Member="Songs">
-    <Type Name="Song">
+  <Table Name="dbo.Breadcrumbs" Member="Breadcrumbs">
+    <Type Name="Breadcrumb">
       <Column Name="Id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
       <Column Name="Title" Type="System.String" DbType="NVarChar(255) NOT NULL" CanBeNull="false" />
-      <Column Name="Artist" Type="System.String" DbType="NVarChar(255) NOT NULL" CanBeNull="false" />
-      <Column Name="Album" Type="System.String" DbType="NVarChar(255)" CanBeNull="true" />
-      <Column Name="Genre" Type="System.String" DbType="NVarChar(100)" CanBeNull="true" />
-      <Column Name="ReleaseDate" Type="System.DateTime" DbType="Date" CanBeNull="true" />
-      <Column Name="CoverImageUrl" Type="System.String" DbType="NVarChar(500)" CanBeNull="true" />
-      <Column Name="Url" Type="System.String" DbType="NVarChar(500) NOT NULL" CanBeNull="false" />
-      <Column Name="IsFeatured" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
-      <Column Name="AlbumId" Type="System.Int32" DbType="Int" CanBeNull="true" />
-      <Association Name="Album_Song" Member="Album1" ThisKey="AlbumId" OtherKey="Id" Type="Album" IsForeignKey="true" />
+      <Column Name="Subtitle" Type="System.String" DbType="NVarChar(255) NOT NULL" CanBeNull="false" />
+      <Column Name="BackgroundImage" Type="System.String" DbType="NVarChar(500) NOT NULL" CanBeNull="false" />
+      <Column Name="Meta" Type="System.String" DbType="NVarChar(255)" CanBeNull="true" />
+      <Column Name="Hide" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Column Name="[Order]" Member="Order" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="DateBegin" Type="System.DateTime" DbType="Date" CanBeNull="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.BrowserCategories" Member="BrowserCategories">
+    <Type Name="BrowserCategory">
+      <Column Name="Id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="Name" Type="System.String" DbType="NVarChar(5)" CanBeNull="true" />
+      <Column Name="Filter" Type="System.String" DbType="NVarChar(10)" CanBeNull="true" />
+      <Column Name="Meta" Type="System.String" DbType="NVarChar(255)" CanBeNull="true" />
+      <Column Name="Hide" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Column Name="[Order]" Member="Order" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="DateBegin" Type="System.DateTime" DbType="Date" CanBeNull="true" />
     </Type>
   </Table>
   <Table Name="dbo.Contact" Member="Contacts">
@@ -47,6 +65,50 @@
       <Column Name="Hide" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
       <Column Name="[Order]" Member="Order" Type="System.Int32" DbType="Int" CanBeNull="true" />
       <Column Name="DateBegin" Type="System.DateTime" DbType="Date" CanBeNull="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Events" Member="Events">
+    <Type Name="Event">
+      <Column Name="Id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="Title" Type="System.String" DbType="NVarChar(255) NOT NULL" CanBeNull="false" />
+      <Column Name="Place" Type="System.String" DbType="NVarChar(255) NOT NULL" CanBeNull="false" />
+      <Column Name="Date" Type="System.DateTime" DbType="Date NOT NULL" CanBeNull="false" />
+      <Column Name="ImageUrl" Type="System.String" DbType="NVarChar(500)" CanBeNull="true" />
+      <Column Name="Description" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
+      <Column Name="Meta" Type="System.String" DbType="NVarChar(255)" CanBeNull="true" />
+      <Column Name="Hide" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Column Name="[Order]" Member="Order" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="DateBegin" Type="System.DateTime" DbType="Date" CanBeNull="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.LoginForm" Member="LoginForms">
+    <Type Name="LoginForm">
+      <Column Name="Id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="Title" Type="System.String" DbType="NVarChar(255)" CanBeNull="true" />
+      <Column Name="EmailLabel" Type="System.String" DbType="NVarChar(255)" CanBeNull="true" />
+      <Column Name="EmailPlaceholder" Type="System.String" DbType="NVarChar(255)" CanBeNull="true" />
+      <Column Name="EmailHelpText" Type="System.String" DbType="NVarChar(255)" CanBeNull="true" />
+      <Column Name="PasswordLabel" Type="System.String" DbType="NVarChar(255)" CanBeNull="true" />
+      <Column Name="PasswordPlaceholder" Type="System.String" DbType="NVarChar(255)" CanBeNull="true" />
+      <Column Name="ButtonText" Type="System.String" DbType="NVarChar(255)" CanBeNull="true" />
+      <Column Name="Meta" Type="System.String" DbType="NVarChar(255)" CanBeNull="true" />
+      <Column Name="Hide" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Column Name="[Order]" Member="Order" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="DateBegin" Type="System.DateTime" DbType="Date" CanBeNull="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Menu" Member="Menus">
+    <Type Name="Menu">
+      <Column Name="Id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="Name" Type="System.String" DbType="NVarChar(100) NOT NULL" CanBeNull="false" />
+      <Column Name="Url" Type="System.String" DbType="NVarChar(200) NOT NULL" CanBeNull="false" />
+      <Column Name="ParentId" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="Meta" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="Hide" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Column Name="[Order]" Member="Order" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="DateBegin" Type="System.DateTime" DbType="SmallDateTime" CanBeNull="true" />
+      <Association Name="Menu_Menu" Member="Menus" ThisKey="Id" OtherKey="ParentId" Type="Menu" />
+      <Association Name="Menu_Menu" Member="Menu1" ThisKey="ParentId" OtherKey="Id" Type="Menu" IsForeignKey="true" />
     </Type>
   </Table>
   <Table Name="dbo.Miscellaneous" Member="Miscellaneous">
@@ -64,44 +126,14 @@
       <Column Name="H2Text" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
       <Column Name="ImageUrl" Type="System.String" DbType="NVarChar(500)" CanBeNull="true" />
       <Column Name="AudioUrl" Type="System.String" DbType="NVarChar(500)" CanBeNull="true" />
+      <Column Name="SongId" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="ArtistId" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Association Name="Artist_Miscellaneous" Member="Artist" ThisKey="ArtistId" OtherKey="Id" Type="Artist" IsForeignKey="true" />
+      <Association Name="Song_Miscellaneous" Member="Song" ThisKey="SongId" OtherKey="Id" Type="Song" IsForeignKey="true" />
     </Type>
   </Table>
-  <Table Name="dbo.Events" Member="Events">
-    <Type Name="Event">
-      <Column Name="Id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
-      <Column Name="Title" Type="System.String" DbType="NVarChar(255) NOT NULL" CanBeNull="false" />
-      <Column Name="Place" Type="System.String" DbType="NVarChar(255) NOT NULL" CanBeNull="false" />
-      <Column Name="Date" Type="System.DateTime" DbType="Date NOT NULL" CanBeNull="false" />
-      <Column Name="ImageUrl" Type="System.String" DbType="NVarChar(500)" CanBeNull="true" />
-      <Column Name="Description" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
-      <Column Name="Meta" Type="System.String" DbType="NVarChar(255)" CanBeNull="true" />
-      <Column Name="Hide" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
-      <Column Name="[Order]" Member="Order" Type="System.Int32" DbType="Int" CanBeNull="true" />
-      <Column Name="DateBegin" Type="System.DateTime" DbType="Date" CanBeNull="true" />
-    </Type>
-  </Table>
-  <Table Name="dbo.Breadcrumbs" Member="Breadcrumbs">
-    <Type Name="Breadcrumb">
-      <Column Name="Id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
-      <Column Name="Title" Type="System.String" DbType="NVarChar(255) NOT NULL" CanBeNull="false" />
-      <Column Name="Subtitle" Type="System.String" DbType="NVarChar(255) NOT NULL" CanBeNull="false" />
-      <Column Name="BackgroundImage" Type="System.String" DbType="NVarChar(500) NOT NULL" CanBeNull="false" />
-    </Type>
-  </Table>
-  <Table Name="dbo.Login" Member="Logins">
-    <Type Name="Login">
-      <Column Name="Id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
-      <Column Name="Title" Type="System.String" DbType="NVarChar(255)" CanBeNull="true" />
-      <Column Name="EmailLabel" Type="System.String" DbType="NVarChar(255)" CanBeNull="true" />
-      <Column Name="EmailPlaceholder" Type="System.String" DbType="NVarChar(255)" CanBeNull="true" />
-      <Column Name="EmailHelpText" Type="System.String" DbType="NVarChar(255)" CanBeNull="true" />
-      <Column Name="PasswordLabel" Type="System.String" DbType="NVarChar(255)" CanBeNull="true" />
-      <Column Name="PasswordPlaceholder" Type="System.String" DbType="NVarChar(255)" CanBeNull="true" />
-      <Column Name="ButtonText" Type="System.String" DbType="NVarChar(255)" CanBeNull="true" />
-    </Type>
-  </Table>
-  <Table Name="dbo.Register" Member="Registers">
-    <Type Name="Register">
+  <Table Name="dbo.RegisterForm" Member="RegisterForms">
+    <Type Name="RegisterForm">
       <Column Name="Id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
       <Column Name="Title" Type="System.String" DbType="NVarChar(255)" CanBeNull="true" />
       <Column Name="NameLabel" Type="System.String" DbType="NVarChar(255)" CanBeNull="true" />
@@ -111,16 +143,31 @@
       <Column Name="PasswordLabel" Type="System.String" DbType="NVarChar(255)" CanBeNull="true" />
       <Column Name="PasswordPlaceholder" Type="System.String" DbType="NVarChar(255)" CanBeNull="true" />
       <Column Name="ButtonText" Type="System.String" DbType="NVarChar(255)" CanBeNull="true" />
+      <Column Name="Meta" Type="System.String" DbType="NVarChar(255)" CanBeNull="true" />
+      <Column Name="Hide" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Column Name="[Order]" Member="Order" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="DateBegin" Type="System.DateTime" DbType="Date" CanBeNull="true" />
     </Type>
   </Table>
-  <Table Name="dbo.Menu" Member="Menus">
-    <Type Name="Menu">
+  <Table Name="dbo.Songs" Member="Songs">
+    <Type Name="Song">
       <Column Name="Id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
-      <Column Name="Name" Type="System.String" DbType="NVarChar(100) NOT NULL" CanBeNull="false" />
-      <Column Name="Url" Type="System.String" DbType="NVarChar(200) NOT NULL" CanBeNull="false" />
-      <Column Name="ParentId" Type="System.Int32" DbType="Int" CanBeNull="true" />
-      <Association Name="Menu_Menu" Member="Menus" ThisKey="Id" OtherKey="ParentId" Type="Menu" />
-      <Association Name="Menu_Menu" Member="Menu1" ThisKey="ParentId" OtherKey="Id" Type="Menu" IsForeignKey="true" />
+      <Column Name="Title" Type="System.String" DbType="NVarChar(255) NOT NULL" CanBeNull="false" />
+      <Column Name="ArtistId" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="Genre" Type="System.String" DbType="NVarChar(100)" CanBeNull="true" />
+      <Column Name="ReleaseDate" Type="System.DateTime" DbType="Date" CanBeNull="true" />
+      <Column Name="CoverImageUrl" Type="System.String" DbType="NVarChar(500)" CanBeNull="true" />
+      <Column Name="Url" Type="System.String" DbType="NVarChar(500) NOT NULL" CanBeNull="false" />
+      <Column Name="IsFeatured" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Column Name="AlbumId" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="Meta" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="Hide" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Column Name="[Order]" Member="Order" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="DateBegin" Type="System.DateTime" DbType="SmallDateTime" CanBeNull="true" />
+      <Column Name="Lyrics" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
+      <Association Name="Song_Miscellaneous" Member="Miscellaneous" ThisKey="Id" OtherKey="SongId" Type="Miscellaneous" />
+      <Association Name="Album_Song" Member="Album" ThisKey="AlbumId" OtherKey="Id" Type="Album" IsForeignKey="true" />
+      <Association Name="Artist_Song" Member="Artist" ThisKey="ArtistId" OtherKey="Id" Type="Artist" IsForeignKey="true" />
     </Type>
   </Table>
 </Database>

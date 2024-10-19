@@ -174,11 +174,12 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\AlbumController.cs" />
-    <Compile Include="Controllers\DefaultController.cs" />
     <Compile Include="Controllers\EventController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\LayoutController.cs" />
     <Compile Include="Controllers\MenuController.cs" />
+    <Compile Include="Controllers\SongController.cs" />
+    <Compile Include="Controllers\UserController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -188,6 +189,11 @@
       <DependentUpon>MusicDb.dbml</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ViewModels\AlbumDetailPageViewModel.cs" />
+    <Compile Include="ViewModels\AlbumDetailViewModel.cs" />
+    <Compile Include="ViewModels\EventDetailViewModel.cs" />
+    <Compile Include="ViewModels\MiscellaneousViewModel.cs" />
+    <Compile Include="ViewModels\SongDetailViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\audio\dummy-audio.mp3" />
@@ -206,6 +212,7 @@
     <Content Include="Content\fonts\classy.svg" />
     <Content Include="Content\fonts\fontawesome-webfont.svg" />
     <Content Include="Content\fonts\icomoon.svg" />
+    <Content Include="Content\fonts\magnifying-glass-solid.svg" />
     <Content Include="Content\img\bg-img\a1.jpg" />
     <Content Include="Content\img\bg-img\a10.jpg" />
     <Content Include="Content\img\bg-img\a11.jpg" />
@@ -271,11 +278,8 @@
     <Content Include="Content\img\bg-img\wt9.jpg" />
     <Content Include="Content\img\core-img\favicon.ico" />
     <Content Include="Content\img\core-img\logo.png" />
-    <Content Include="Content\scss\style.css">
+    <Content Include="Content\style.css">
       <DependentUpon>style.scss</DependentUpon>
-    </Content>
-    <Content Include="Content\scss\style.min.css">
-      <DependentUpon>style.css</DependentUpon>
     </Content>
     <Content Include="favicon.ico" />
     <Content Include="fonts\classy.svg" />
@@ -284,7 +288,7 @@
     <Content Include="fonts\icomoon.svg" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
-    <Content Include="Content\scss\style.scss" />
+    <Content Include="Content\style.scss" />
     <Content Include="Content\scss\_fonts.scss" />
     <Content Include="Content\scss\_mixin.scss" />
     <Content Include="Content\scss\_responsive.scss" />
@@ -368,8 +372,6 @@
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Menu\FooterMenu.cshtml" />
     <Content Include="Views\Menu\GetMenu.cshtml" />
-    <Content Include="Views\Default\Index.cshtml" />
-    <Content Include="Views\Default\_FeaturedSongsSlide.cshtml" />
     <Content Include="Views\Menu\GetMenuForFooter.cshtml" />
     <Content Include="Views\Home\GetFeaturedSongs.cshtml" />
     <Content Include="Views\Shared\_Menu.cshtml" />
@@ -388,6 +390,15 @@
     <Content Include="Views\Account\LoginForm.cshtml" />
     <Content Include="Views\Account\RegisterForm.cshtml" />
     <Content Include="Views\Account\Account.cshtml" />
+    <Content Include="Views\User\GetFavoriteSongs.cshtml" />
+    <Content Include="Views\Album\Album.cshtml" />
+    <Content Include="Views\Album\BrowserCategories.cshtml" />
+    <Content Include="Views\Album\AlbumDetail.cshtml" />
+    <Content Include="Views\Account\Index.cshtml" />
+    <Content Include="Views\Event\EventDetail.cshtml" />
+    <Content Include="Views\Song\Song.cshtml" />
+    <Content Include="Views\Song\ListSong.cshtml" />
+    <Content Include="Views\Song\SongDetail.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

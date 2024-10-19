@@ -1,0 +1,9 @@
+﻿@model IEnumerable<MusicApp.Models.BrowserCategory>
+
+
+<div class="browse-by-catagories category-menu d-flex flex-wrap align-items-center mb-70">
+    @foreach (var category in Model)
+    {
+        <a href="#" data-filter=".@category.Filter">@category.Name</a>
+    }
+</div>

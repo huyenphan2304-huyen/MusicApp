@@ -1,7 +1,7 @@
-﻿@import 'theme_color';
-@import 'fonts';
-@import 'mixin';
-@import 'responsive';
+﻿@import 'scss/theme_color';
+@import 'scss/fonts';
+@import 'scss/mixin';
+@import 'scss/responsive';
 
 /* [Master Stylesheet - v1.0] */
 
@@ -443,33 +443,77 @@ img {
         }
     }
 }
+
 /* :: 4.0 Header Area CSS */
+
 .header-area {
-    position: fixed;
+    position: absolute;
     z-index: 1000;
     width: 100%;
     top: 0;
     left: 0;
-    background-color: transparent; // Màu nền ban đầu ẩn
-    transition: background-color 0.3s ease; // Hiệu ứng chuyển đổi
-    .is-sticky {
-        background-color: $dark-color; // Màu nền khi sticky
-        box-shadow: 0 5px 50px 15px rgba(0, 0, 0, 0.2); // Đổ bóng cho header khi sticky
+    background-color: black; // Màu nền ban đầu ẩn
+    transition: background-color 0.3s ease;
+
+    .form-inline {
+        display: flex; /* Sử dụng flexbox */
+        align-items: center; /* Căn giữa theo chiều dọc */
+        width: 100%; /* Chiều rộng của form */
+        max-width: 500px; /* Chiều rộng tối đa của form */
+
+        .form-control {
+            border: 1px solid white; /* Đường viền trắng */
+            background-color: transparent; /* Nền trong suốt */
+            color: white; /* Màu chữ */
+            width: 100%; /* Chiều rộng của input */
+            height: 40px; /* Chiều cao của input */
+            line-height: 40px; /* Căn giữa chữ theo chiều dọc */
+            padding: 0 10px; /* Padding cho input */
+        }
+
+        .btn {
+            color: white; /* Màu chữ nút */
+            border: 1px solid white; /* Đường viền trắng */
+            background-color: transparent; /* Nền trong suốt */
+            height: 40px; /* Đặt chiều cao của nút */
+            display: flex; /* Đảm bảo nút có đủ không gian */
+            align-items: center; /* Căn giữa nội dung nút */
+            justify-content: center; /* Căn giữa nội dung nút */
+            transition: background-color 0.3s, color 0.3s; /* Hiệu ứng chuyển đổi cho nền và màu chữ */
+            /* Đặt màu trắng cho icon tìm kiếm */
+            img {
+                width: 16px; /* Chiều rộng của icon */
+                height: 16px; /* Chiều cao của icon */
+                filter: brightness(0) invert(1); /* Chuyển màu icon sang trắng */
+            }
+
+            &:hover {
+                background-color: white; /* Nền trắng khi di chuột */
+                color: black; /* Chữ đen khi di chuột */
+                /* Đặt màu icon sang đen khi hover */
+                img {
+                    filter: none; /* Trở về màu gốc */
+                }
+            }
+        
     }
+}
+
+
 
     .oneMusic-main-menu {
         position: relative;
         top: 0;
         width: 100%;
         height: 85px;
-        background-color: transparent;
+        background-color: black;
 
         @media #{$breakpoint-xs} {
             height: 70px;
         }
 
         .classy-nav-container {
-            background-color: transparent;
+            background-color: black;
         }
 
         .classy-navbar {
@@ -996,35 +1040,41 @@ img {
 .browse-by-catagories {
     position: relative;
     z-index: 1;
+
     a {
-        display: inline-block;
-        background-color: #f4f4f4;
-        border: 2px solid transparent;
-        padding: 6px 9px;
-        font-size: 15px;
-        margin-right: 5px;
+        display: inline-block !important;
+        background-color: #f4f4f4 !important;
+        border: 2px solid transparent !important;
+        padding: 6px 9px !important;
+        font-size: 15px !important;
+        margin-right: 5px !important;
+
         @media #{$breakpoint-lg} {
             padding: 4px 7px;
             font-size: 14px;
             margin-right: 4px;
         }
+
         @media #{$breakpoint-md} {
             padding: 4px 7px;
             font-size: 14px;
             margin-right: 5px;
             margin-bottom: 5px;
         }
+
         @media #{$breakpoint-xs} {
             padding: 2px 5px;
             font-size: 13px;
             margin-right: 5px;
             margin-bottom: 5px;
         }
+
         &:hover,
         &:focus,
         &.active {
             border: 2px solid $dark-color;
         }
+
         &:first-child {
             border-color: transparent;
             background-color: transparent;
@@ -1167,9 +1217,54 @@ img {
 
 /* :: 10.0 Songs Area CSS */
 
-.single-song-area {
+.song-detail-area {
     position: relative;
     z-index: 1;
+    padding-top: 100px; /* Đảm bảo có đủ khoảng cách từ header sticky */
+
+    display: flex; /* Thêm display flex để dễ dàng căn chỉnh nội dung */
+    flex-direction: column; /* Đặt chiều dọc cho flex */
+    height: 100%; /* Để phần song-play-area có thể đẩy xuống dưới cùng */
+    .artist-song-section {
+        background-color: rgba(0, 0, 0, 0.7); /* Màu nền */
+        padding: 40px 20px; /* Padding cho không gian */
+        border-radius: 8px; /* Bo góc nếu cần */
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5); /* Bóng đổ */
+        height: auto; /* Đảm bảo chiều cao tự động */
+        position: relative;
+        z-index: 2;
+    }
+
+    .artist-song-section-content {
+        position: relative;
+        z-index: 1;
+
+        @media #{$breakpoint-xs} {
+            margin-top: 50px;
+        }
+
+        p {
+            color: #fff;
+        }
+    }
+
+    .artist-song-section {
+        width: 100%; /* Đảm bảo section chiếm toàn bộ chiều rộng */
+        background-color: rgba(0, 0, 0, 0.7); /* Màu nền */
+        padding: 40px 20px; /* Padding cho không gian */
+        border-radius: 8px; /* Bo góc nếu cần */
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5); /* Bóng đổ */
+        margin-bottom: 20px; /* Thêm khoảng cách phía dưới section */
+    }
+
+    .row.lyrics {
+        background-color: #e1e6e6 !important; /* Màu xám nhẹ */
+        padding: 20px;
+        border-radius: 8px;
+        margin-top: 20px;
+    }
+
+
     .song-thumbnail {
         position: relative;
         z-index: 1;
@@ -1177,9 +1272,11 @@ img {
         max-width: 135px;
         width: 135px;
         margin-right: 50px;
+
         img {
             width: 100%;
         }
+
         @media #{$breakpoint-xs} {
             margin-right: 0;
             @include flex(0 0 100%);
@@ -1187,23 +1284,28 @@ img {
             width: 100%;
         }
     }
+
     .song-play-area {
         position: relative;
         z-index: 1;
         @include flex(0 0 calc(100% - 185px));
         max-width: calc(100% - 185px);
-        width: calc(100% - 185px);
+        width: 100%;
         background-color: #262626;
         padding: 15px 30px 20px;
+        border: 1px solid #363636; /* Đường viền */
+
         @media #{$breakpoint-xs} {
             @include flex(0 0 100%);
             max-width: 100%;
             width: 100%;
         }
+
         .song-name p {
             color: #b8b8b8;
             margin-bottom: 5px;
         }
+
         .audioplayer {
             margin: 0;
             padding: 0;
@@ -1214,11 +1316,13 @@ img {
             border-radius: 0;
             background: transparent;
         }
+
         .audioplayer-playing .audioplayer-playpause,
         .audioplayer:not(.audioplayer-playing) .audioplayer-playpause:hover,
         .audioplayer:not(.audioplayer-playing) .audioplayer-playpause {
             background: #fff;
         }
+
         .audioplayer-time {
             font-size: 14px;
             color: #fff;
@@ -1783,6 +1887,112 @@ img {
                     }
                 }
             }
+        }
+    }
+}
+
+/* :: Event Detail CSS */
+
+.event-detail {
+    position: relative;
+    z-index: 1;
+
+    .event-thumbnail {
+        position: relative;
+        z-index: 1;
+
+        .img {
+            width: 100% !important;
+        }
+
+        .event-date {
+            width: 76px;
+            height: 106px;
+            border: 1px solid $dark-color;
+            text-align: center;
+            background-color: #fff;
+            position: absolute;
+            z-index: 10;
+            top: -30px;
+            left: 30px;
+            padding: 17px 0;
+
+            span {
+                display: block;
+                font-size: 14px;
+                font-weight: 700;
+                line-height: 1.3;
+
+                &:first-child {
+                    font-size: 36px; /* Kích thước cho ngày */
+                }
+            }
+        }
+    }
+
+    .event-content {
+        background-color: #f5f9fa;
+        padding: 45px 40px;
+        border: 1px solid #d8d8d8;
+
+        @media #{$breakpoint-xs} {
+            padding: 30px 20px;
+        }
+
+        .event-title {
+            font-size: 24px;
+            display: block;
+
+            @media #{$breakpoint-xs} {
+                font-size: 20px;
+            }
+
+            &:hover,
+            &:focus {
+                color: $hover-color;
+            }
+        }
+
+        .event-meta {
+            position: relative;
+            z-index: 1;
+            margin-bottom: 10px;
+
+            p {
+                color: #8d8d8d;
+                font-size: 13px;
+                padding-right: 25px;
+                position: relative;
+                z-index: 1;
+
+                &::after {
+                    content: '|';
+                    position: absolute;
+                    right: 12px;
+                    top: 0;
+                    z-index: 5;
+                }
+
+                &:last-child::after {
+                    display: none;
+                }
+
+                a {
+                    color: #8d8d8d;
+                    font-size: 13px;
+                    margin-bottom: 0;
+                    font-weight: 400;
+
+                    &:hover,
+                    &:focus {
+                        color: $dark-color;
+                    }
+                }
+            }
+        }
+
+        .event-description {
+            margin-bottom: 0;
         }
     }
 }

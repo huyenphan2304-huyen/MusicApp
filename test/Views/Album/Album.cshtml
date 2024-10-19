@@ -1,0 +1,37 @@
+﻿
+@{
+    ViewBag.Title = "Album";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+
+}
+
+<!-- ##### Album Catagory Area Start ##### -->
+<section class="album-catagory section-padding-100-0">
+    <div class="container">
+
+
+        <div class="row oneMusic-albums">
+            @foreach (var album in ViewBag.Albums) // Hiển thị danh sách album
+            {
+                <div class="col-12 col-sm-4 col-md-3 col-lg-2 single-album-item a b">
+                    <div class="single-album">
+                        <img src="@album.CoverImageUrl" alt="@album.Title">
+                        <div class="album-info">
+                            <a href="@Url.RouteUrl("AlbumDetail", new { type = "album", meta = album.Meta, id = album.Id })">
+                                <h5>@album.Title</h5>
+                            </a>
+
+                            <p>@album.Artist</p> <!-- Hiển thị tên nghệ sĩ -->
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+        <div class="row">
+            <div class="col-12">
+                @Html.Action("BrowserCategories", "Album") <!-- Gọi phương thức BrowserCategories để hiển thị danh sách thể loại -->
+            </div>
+        </div>
+    </div>
+</section>
+<!-- ##### Album Catagory Area End ##### -->

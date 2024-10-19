@@ -78,9 +78,9 @@ namespace MusicApp.Controllers
             ViewBag.PopularArtists = popularArtists;
 
             // Lấy tiêu đề cho từng nhóm
-            ViewBag.WeeksTopTitle = weeksTop.FirstOrDefault()?.H2Text ?? "Tuần này nổi bật";
-            ViewBag.NewHitsTitle = newHits.FirstOrDefault()?.H2Text ?? "Bài hát mới";
-            ViewBag.PopularArtistsTitle = popularArtists.FirstOrDefault()?.H2Text ?? "Nghệ sĩ nổi bật";
+            ViewBag.WeeksTopTitle = weeksTop.FirstOrDefault()?.Type ?? "WeeksTop";
+            ViewBag.NewHitsTitle = newHits.FirstOrDefault()?.Type ?? "New Hits";
+            ViewBag.PopularArtistsTitle = popularArtists.FirstOrDefault()?.Type ?? "Popular Artist";
 
             return PartialView("MiscellaneousArea", miscellaneousItems);
         }

@@ -1,5 +1,6 @@
 ﻿@using System.Collections.Generic
-@model List<MusicApp.Models.Menu>
+@{ var menus = ViewBag.Menus as List<MusicApp.Models.Menu>; }
+
 <head>
     <meta charset="UTF-8">
     <meta name="description" content="">
@@ -13,24 +14,24 @@
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.carousel.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.theme.default.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+
     <!-- Stylesheet -->
-    <link rel="stylesheet" href="~/Content/scss/style.css">
 
 
     @Styles.Render("~/Content/css")
-    @Styles.Render("~/Content/scss") <!-- Gọi bundle CSS -->
     <!-- Gọi bundle CSS -->
 </head>
 
 <!-- ##### Header Area Start ##### -->
-<header class="header-area" >
+<header class="header-area">
     <!-- Navbar Area -->
     <div class="oneMusic-main-menu">
         <div class="classy-nav-container breakpoint-off">
             <div class="container">
                 <!-- Menu -->
-                @Html.Action("GetMenu","Menu")
-                </div>
+                @Html.Action("GetMenu", "Menu")
+            </div>
         </div>
     </div>
 </header>

@@ -6,7 +6,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 
-namespace Database1.Controllers
+namespace MusicApp.Controllers
 {
     public class AccountController : Controller
     {
@@ -14,17 +14,17 @@ namespace Database1.Controllers
         // GET: Account
         public ActionResult Index()
         {
-            return View("Account");
+            return View();
         }
         public ActionResult LoginForm()
         {
-            var loginform = db.Logins.FirstOrDefault();
+            var loginform = db.LoginForms.FirstOrDefault();
             return PartialView("LoginForm",loginform);
 
         }
         public ActionResult RegisterForm()
         {
-            var registerform = db.Registers.FirstOrDefault();
+            var registerform = db.RegisterForms.FirstOrDefault();
 
             return PartialView("RegisterForm",registerform);
 

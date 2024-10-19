@@ -1,0 +1,47 @@
+﻿
+@{
+    ViewBag.Title = "ListSong";
+}
+@model List<MusicApp.Models.Song>
+
+<!-- ##### Latest Songs Area Start ##### -->
+<section class="latest-songs-area section-padding-100">
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <div class="section-heading style-2">
+                    <p>Check out what's hot</p>
+                    <h2>Latest Songs</h2>
+                </div>
+            </div>
+        </div>
+        <div class="row justify-content-center">
+            <div class="col-12 col-lg-9">
+                <div class="ablums-text text-center mb-70">
+                    <p>Discover the newest songs in our collection. Explore and enjoy!</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-12">
+                <div class="albums-slideshow owl-carousel">
+                    @foreach (var song in Model)
+                    {
+                        <!-- Single Song -->
+                        <div class="single-album">
+                            <img src="@song.CoverImageUrl" alt="@song.Title">
+                            <div class="album-info">
+                                <a href="@Url.Action("SongDetail", "Song", new { id = song.Id })">
+                                    <h5>@song.Title</h5>
+                                </a>
+                                <p>@song.Artist</p>
+                            </div>
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- ##### Latest Songs Area End ##### -->

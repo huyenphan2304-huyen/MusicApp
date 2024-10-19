@@ -12,18 +12,19 @@
 
                     @foreach (var item in ViewBag.WeeksTop as List<MusicApp.Models.Miscellaneous>)
                     {
-                        <div class="single-top-item d-flex wow fadeInUp">
-                            <div class="thumbnail">
-                                <img src="@item.ImageUrl" alt="">
-                            </div>
-                            <div class="content-">
-                                <h6>@item.Name</h6>
-                                <p>@item.Description</p>
-                            </div>
-                        </div>
-                    }
+
+                <div class="single-top-item d-flex wow fadeInUp" onclick="location.href='@Url.Action("SongDetail", "Song", new { meta = item.Meta, id = item.Id })'" style="cursor: pointer;">
+                    <div class="thumbnail">
+                        <img src="@item.ImageUrl" alt="">
+                    </div>
+                    <div class="content-">
+                        <h6>@item.Name</h6>
+                        <p>@item.Description</p>
+                    </div>
                 </div>
-            </div>
+                            }
+                        </div>
+                    </div>
 
             <!-- ***** New Hits Songs ***** -->
             <div class="col-12 col-lg-4">
@@ -34,20 +35,20 @@
 
                     @foreach (var hit in ViewBag.NewHits as List<MusicApp.Models.Miscellaneous>)
                     {
-                        <div class="single-new-item d-flex align-items-center justify-content-between wow fadeInUp">
-                            <div class="first-part d-flex align-items-center">
-                                <div class="thumbnail">
-                                    <img src="@hit.ImageUrl" alt="">
-                                </div>
-                                <div class="content-">
-                                    <h6>@hit.Name</h6>
-                                    <p>@hit.Description</p>
-                                </div>
-                            </div>
-                            <audio preload="auto" controls>
-                                <source src="@hit.AudioUrl">
-                            </audio>
+                <div class="single-new-item d-flex align-items-center justify-content-between wow fadeInUp" onclick="location.href='@Url.Action("SongDetail", "Song", new { meta = hit.Meta, id = hit.Id })'" style="cursor: pointer;">
+                    <div class="first-part d-flex align-items-center">
+                        <div class="thumbnail">
+                            <img src="@hit.ImageUrl" alt="">
                         </div>
+                        <div class="content-">
+                            <h6>@hit.Name</h6>
+                            <p>@hit.Description</p>
+                        </div>
+                    </div>
+                    <audio preload="auto" controls>
+                        <source src="@hit.AudioUrl">
+                    </audio>
+                </div>
                     }
                 </div>
             </div>

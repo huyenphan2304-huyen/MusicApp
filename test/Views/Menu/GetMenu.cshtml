@@ -2,12 +2,28 @@
 
 <nav class="classy-navbar justify-content-between" id="oneMusicNav">
     <!-- Nav brand -->
-    <a href="~/home" class="nav-brand"><img src="~/Content/img/core-img/logo.png" alt=""></a>
+    <a href="~/home" class="nav-brand">
+        <!-- Hiển thị logo nếu menu.name là "Logo" -->
+        @foreach (var mainMenu in ViewBag.MainMenus)
+        {
+            if (mainMenu.Name == "Logo")
+            {
+                <img src="@mainMenu.Url" alt="" />
+            }
+        }
+    </a>
 
     <!-- Navbar Toggler -->
     <div class="classy-navbar-toggler">
         <span class="navbarToggler"><span></span><span></span><span></span></span>
     </div>
+
+    <form class="form-inline my-2 my-lg-0">
+        <input class="form-control" type="search" placeholder="Search" aria-label="Search" style="width: 300px; border: 1px solid white;">
+        <button class="btn btn-outline-success" type="submit" style="color: white; border-color: white;">
+            <img src="~/Content/fonts/magnifying-glass-solid.svg" alt="Search" style="width: 16px; height: 16px;">
+        </button>
+    </form>
 
     <!-- Menu -->
     <div class="classy-menu">
@@ -15,30 +31,31 @@
             <div class="cross-wrap"><span class="top"></span><span class="bottom"></span></div>
         </div>
 
-        <!-- Nav Start -->
         <div class="classynav">
             <ul>
                 @foreach (var mainMenu in ViewBag.MainMenus)
                 {
-                    if (ViewBag.SubMenus.ContainsKey(mainMenu.Id) && ViewBag.SubMenus[mainMenu.Id].Count > 0)
+                    if (mainMenu.Name != "Logo")
                     {
-                <li>
-                    <a href="#">@mainMenu.Name</a>
-                    <ul class="dropdown">
-                        @foreach (var subMenu in ViewBag.SubMenus[mainMenu.Id])
-                                {
-                        <li><a href="@subMenu.Url">@subMenu.Name</a></li>
-                                }
-                    </ul>
-                </li>
-                    }
-                    else
-                    {
-                <li><a href="@mainMenu.Url">@mainMenu.Name</a></li>
+                        if (ViewBag.SubMenus.ContainsKey(mainMenu.Id) && ViewBag.SubMenus[mainMenu.Id].Count > 0)
+                        {
+                            <li>
+                                <a href="#">@mainMenu.Name</a>
+                                <ul class="dropdown">
+                                    @foreach (var subMenu in ViewBag.SubMenus[mainMenu.Id])
+                                    {
+                                        <li><a href="@subMenu.Url">@subMenu.Name</a></li>
+                                    }
+                                </ul>
+                            </li>
+                        }
+                        else
+                        {
+                            <li><a href="@mainMenu.Url">@mainMenu.Name</a></li>
+                        }
                     }
                 }
             </ul>
         </div>
-        <!-- Nav End -->
     </div>
 </nav>

@@ -7,6 +7,7 @@ namespace MusicApp
     {
         public static void RegisterBundles(BundleCollection bundles)
         {
+
             // Bundles cho jQuery
             bundles.Add(new ScriptBundle("~/bundles/jquery").Include(
                         "~/Scripts/jquery/jquery-2.2.4.min.js"));
@@ -33,18 +34,20 @@ namespace MusicApp
                         "~/Content/css/one-music-icon.css",
                         "~/Content/style.css"));
 
+
             // Bundle cho SCSS
             bundles.Add(new StyleBundle("~/Content/scss").Include(
                 "~/Content/scss/fonts.scss",
                 "~/Content/scss/mixin.scss",
                 "~/Content/scss/responsive.scss",
                 "~/Content/scss/theme_color.scss",
-                "~/Content/scss/style.scss"
+                "~/Content/style.scss"
             ));
 
             // Modernizr (nếu bạn cần dùng)
             bundles.Add(new ScriptBundle("~/bundles/modernizr").Include(
                         "~/Scripts/modernizr-*"));
+
         }
     }
 }
