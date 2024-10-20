@@ -1,5 +1,4 @@
-﻿
-@{
+﻿@{
     ViewBag.Title = "LatestAlbums";
 }
 
@@ -17,13 +16,12 @@
                     @foreach (var album in Model)
                     {
                         <!-- Single Album -->
-                        <div class="single-album">
+                        <div class="single-album"
+                             onclick="location.href='@Url.RouteUrl("AlbumDetail", new { type = "album", meta = album.Meta, id = album.Id })'"
+                             style="cursor: pointer;">
                             <img src="@album.CoverImageUrl" alt="@album.Title">
                             <div class="album-info">
-                                <a href="@Url.RouteUrl("AlbumDetail", new { type = "album", meta = album.Meta, id = album.Id })">
-                                    <h5>@album.Title</h5>
-                                </a>
-
+                                <h5>@album.Title</h5>
                                 <p>@album.Artist</p>
                             </div>
                         </div>

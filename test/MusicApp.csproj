@@ -194,6 +194,7 @@
     <Compile Include="ViewModels\EventDetailViewModel.cs" />
     <Compile Include="ViewModels\MiscellaneousViewModel.cs" />
     <Compile Include="ViewModels\SongDetailViewModel.cs" />
+    <Compile Include="ViewModels\SongViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\audio\dummy-audio.mp3" />
@@ -399,6 +400,9 @@
     <Content Include="Views\Song\Song.cshtml" />
     <Content Include="Views\Song\ListSong.cshtml" />
     <Content Include="Views\Song\SongDetail.cshtml" />
+    <Content Include="Views\Song\LastestSongs.cshtml" />
+    <Content Include="Views\Home\LatestSongs.cshtml" />
+    <Content Include="Views\Song\SongDetails.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

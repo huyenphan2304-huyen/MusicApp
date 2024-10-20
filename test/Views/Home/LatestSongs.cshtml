@@ -1,0 +1,35 @@
+﻿@{
+    ViewBag.Title = "LatestSongs";
+}
+
+@model List<MusicApp.ViewModels.SongViewModel>
+
+<section class="latest-albums-area section-padding-100">
+    <div class="container">
+        <div class="row">
+            <h2>Latest Songs</h2>
+        </div>
+        <div class="row">
+            <div class="col-12">
+                <div class="albums-slideshow owl-carousel">
+                    @foreach (var songViewModel in Model)
+                    {
+                    <div class="single-album">
+                        <img src="@songViewModel.Song.CoverImageUrl" alt="@songViewModel.Song.Title" style="width:100%; height:auto;">
+                        <div class="album-info">
+                            <a href="@songViewModel.Song.Url">
+                                <h5>@songViewModel.Song.Title</h5>
+                            </a>
+                            <p>Artist: @songViewModel.ArtistName</p>
+                            <p>Genre: @songViewModel.Song.Genre</p>
+                            <p>Release Date: @songViewModel.Song.ReleaseDate.ToString("MMMM dd, yyyy")</p>
+                        </div>
+                    </div>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+

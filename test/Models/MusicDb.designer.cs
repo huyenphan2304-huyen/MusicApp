@@ -42,6 +42,9 @@ namespace MusicApp.Models
     partial void InsertBrowserCategory(BrowserCategory instance);
     partial void UpdateBrowserCategory(BrowserCategory instance);
     partial void DeleteBrowserCategory(BrowserCategory instance);
+    partial void InsertCategory(Category instance);
+    partial void UpdateCategory(Category instance);
+    partial void DeleteCategory(Category instance);
     partial void InsertContact(Contact instance);
     partial void UpdateContact(Contact instance);
     partial void DeleteContact(Contact instance);
@@ -124,6 +127,14 @@ namespace MusicApp.Models
 			get
 			{
 				return this.GetTable<BrowserCategory>();
+			}
+		}
+		
+		public System.Data.Linq.Table<Category> Categories
+		{
+			get
+			{
+				return this.GetTable<Category>();
 			}
 		}
 		
@@ -1329,6 +1340,148 @@ namespace MusicApp.Models
 		}
 	}
 	
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.Category")]
+	public partial class Category : INotifyPropertyChanging, INotifyPropertyChanged
+	{
+		
+		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
+		
+		private int _Id;
+		
+		private string _Name;
+		
+		private EntitySet<Menu> _Menus;
+		
+		private EntitySet<Song> _Songs;
+		
+    #region Extensibility Method Definitions
+    partial void OnLoaded();
+    partial void OnValidate(System.Data.Linq.ChangeAction action);
+    partial void OnCreated();
+    partial void OnIdChanging(int value);
+    partial void OnIdChanged();
+    partial void OnNameChanging(string value);
+    partial void OnNameChanged();
+    #endregion
+		
+		public Category()
+		{
+			this._Menus = new EntitySet<Menu>(new Action<Menu>(this.attach_Menus), new Action<Menu>(this.detach_Menus));
+			this._Songs = new EntitySet<Song>(new Action<Song>(this.attach_Songs), new Action<Song>(this.detach_Songs));
+			OnCreated();
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Id", AutoSync=AutoSync.OnInsert, DbType="Int NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
+		public int Id
+		{
+			get
+			{
+				return this._Id;
+			}
+			set
+			{
+				if ((this._Id != value))
+				{
+					this.OnIdChanging(value);
+					this.SendPropertyChanging();
+					this._Id = value;
+					this.SendPropertyChanged("Id");
+					this.OnIdChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Name", DbType="NVarChar(100) NOT NULL", CanBeNull=false)]
+		public string Name
+		{
+			get
+			{
+				return this._Name;
+			}
+			set
+			{
+				if ((this._Name != value))
+				{
+					this.OnNameChanging(value);
+					this.SendPropertyChanging();
+					this._Name = value;
+					this.SendPropertyChanged("Name");
+					this.OnNameChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Category_Menu", Storage="_Menus", ThisKey="Id", OtherKey="CategoryId")]
+		public EntitySet<Menu> Menus
+		{
+			get
+			{
+				return this._Menus;
+			}
+			set
+			{
+				this._Menus.Assign(value);
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Category_Song", Storage="_Songs", ThisKey="Id", OtherKey="CategoryId")]
+		public EntitySet<Song> Songs
+		{
+			get
+			{
+				return this._Songs;
+			}
+			set
+			{
+				this._Songs.Assign(value);
+			}
+		}
+		
+		public event PropertyChangingEventHandler PropertyChanging;
+		
+		public event PropertyChangedEventHandler PropertyChanged;
+		
+		protected virtual void SendPropertyChanging()
+		{
+			if ((this.PropertyChanging != null))
+			{
+				this.PropertyChanging(this, emptyChangingEventArgs);
+			}
+		}
+		
+		protected virtual void SendPropertyChanged(String propertyName)
+		{
+			if ((this.PropertyChanged != null))
+			{
+				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+			}
+		}
+		
+		private void attach_Menus(Menu entity)
+		{
+			this.SendPropertyChanging();
+			entity.Category = this;
+		}
+		
+		private void detach_Menus(Menu entity)
+		{
+			this.SendPropertyChanging();
+			entity.Category = null;
+		}
+		
+		private void attach_Songs(Song entity)
+		{
+			this.SendPropertyChanging();
+			entity.Category = this;
+		}
+		
+		private void detach_Songs(Song entity)
+		{
+			this.SendPropertyChanging();
+			entity.Category = null;
+		}
+	}
+	
 	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.Contact")]
 	public partial class Contact : INotifyPropertyChanging, INotifyPropertyChanged
 	{
@@ -2153,6 +2306,8 @@ namespace MusicApp.Models
 		
 		private System.Nullable<int> _ParentId;
 		
+		private System.Nullable<int> _CategoryId;
+		
 		private string _Meta;
 		
 		private System.Nullable<bool> _Hide;
@@ -2161,9 +2316,7 @@ namespace MusicApp.Models
 		
 		private System.Nullable<System.DateTime> _DateBegin;
 		
-		private EntitySet<Menu> _Menus;
-		
-		private EntityRef<Menu> _Menu1;
+		private EntityRef<Category> _Category;
 		
     #region Extensibility Method Definitions
     partial void OnLoaded();
@@ -2177,6 +2330,8 @@ namespace MusicApp.Models
     partial void OnUrlChanged();
     partial void OnParentIdChanging(System.Nullable<int> value);
     partial void OnParentIdChanged();
+    partial void OnCategoryIdChanging(System.Nullable<int> value);
+    partial void OnCategoryIdChanged();
     partial void OnMetaChanging(string value);
     partial void OnMetaChanged();
     partial void OnHideChanging(System.Nullable<bool> value);
@@ -2189,8 +2344,7 @@ namespace MusicApp.Models
 		
 		public Menu()
 		{
-			this._Menus = new EntitySet<Menu>(new Action<Menu>(this.attach_Menus), new Action<Menu>(this.detach_Menus));
-			this._Menu1 = default(EntityRef<Menu>);
+			this._Category = default(EntityRef<Category>);
 			OnCreated();
 		}
 		
@@ -2214,7 +2368,7 @@ namespace MusicApp.Models
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Name", DbType="NVarChar(100) NOT NULL", CanBeNull=false)]
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Name", DbType="NVarChar(255) NOT NULL", CanBeNull=false)]
 		public string Name
 		{
 			get
@@ -2234,7 +2388,7 @@ namespace MusicApp.Models
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Url", DbType="NVarChar(200) NOT NULL", CanBeNull=false)]
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Url", DbType="NVarChar(500)")]
 		public string Url
 		{
 			get
@@ -2265,15 +2419,35 @@ namespace MusicApp.Models
 			{
 				if ((this._ParentId != value))
 				{
-					if (this._Menu1.HasLoadedOrAssignedValue)
-					{
-						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
-					}
 					this.OnParentIdChanging(value);
 					this.SendPropertyChanging();
 					this._ParentId = value;
 					this.SendPropertyChanged("ParentId");
 					this.OnParentIdChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_CategoryId", DbType="Int")]
+		public System.Nullable<int> CategoryId
+		{
+			get
+			{
+				return this._CategoryId;
+			}
+			set
+			{
+				if ((this._CategoryId != value))
+				{
+					if (this._Category.HasLoadedOrAssignedValue)
+					{
+						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
+					}
+					this.OnCategoryIdChanging(value);
+					this.SendPropertyChanging();
+					this._CategoryId = value;
+					this.SendPropertyChanged("CategoryId");
+					this.OnCategoryIdChanged();
 				}
 			}
 		}
@@ -2358,49 +2532,36 @@ namespace MusicApp.Models
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Menu_Menu", Storage="_Menus", ThisKey="Id", OtherKey="ParentId")]
-		public EntitySet<Menu> Menus
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Category_Menu", Storage="_Category", ThisKey="CategoryId", OtherKey="Id", IsForeignKey=true)]
+		public Category Category
 		{
 			get
 			{
-				return this._Menus;
+				return this._Category.Entity;
 			}
 			set
 			{
-				this._Menus.Assign(value);
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Menu_Menu", Storage="_Menu1", ThisKey="ParentId", OtherKey="Id", IsForeignKey=true)]
-		public Menu Menu1
-		{
-			get
-			{
-				return this._Menu1.Entity;
-			}
-			set
-			{
-				Menu previousValue = this._Menu1.Entity;
+				Category previousValue = this._Category.Entity;
 				if (((previousValue != value) 
-							|| (this._Menu1.HasLoadedOrAssignedValue == false)))
+							|| (this._Category.HasLoadedOrAssignedValue == false)))
 				{
 					this.SendPropertyChanging();
 					if ((previousValue != null))
 					{
-						this._Menu1.Entity = null;
+						this._Category.Entity = null;
 						previousValue.Menus.Remove(this);
 					}
-					this._Menu1.Entity = value;
+					this._Category.Entity = value;
 					if ((value != null))
 					{
 						value.Menus.Add(this);
-						this._ParentId = value.Id;
+						this._CategoryId = value.Id;
 					}
 					else
 					{
-						this._ParentId = default(Nullable<int>);
+						this._CategoryId = default(Nullable<int>);
 					}
-					this.SendPropertyChanged("Menu1");
+					this.SendPropertyChanged("Category");
 				}
 			}
 		}
@@ -2423,18 +2584,6 @@ namespace MusicApp.Models
 			{
 				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
 			}
-		}
-		
-		private void attach_Menus(Menu entity)
-		{
-			this.SendPropertyChanging();
-			entity.Menu1 = this;
-		}
-		
-		private void detach_Menus(Menu entity)
-		{
-			this.SendPropertyChanging();
-			entity.Menu1 = null;
 		}
 	}
 	
@@ -3280,7 +3429,7 @@ namespace MusicApp.Models
 		
 		private int _ArtistId;
 		
-		private string _Genre;
+		private System.Nullable<int> _CategoryId;
 		
 		private System.Nullable<System.DateTime> _ReleaseDate;
 		
@@ -3308,6 +3457,8 @@ namespace MusicApp.Models
 		
 		private EntityRef<Artist> _Artist;
 		
+		private EntityRef<Category> _Category;
+		
     #region Extensibility Method Definitions
     partial void OnLoaded();
     partial void OnValidate(System.Data.Linq.ChangeAction action);
@@ -3318,8 +3469,8 @@ namespace MusicApp.Models
     partial void OnTitleChanged();
     partial void OnArtistIdChanging(int value);
     partial void OnArtistIdChanged();
-    partial void OnGenreChanging(string value);
-    partial void OnGenreChanged();
+    partial void OnCategoryIdChanging(System.Nullable<int> value);
+    partial void OnCategoryIdChanged();
     partial void OnReleaseDateChanging(System.Nullable<System.DateTime> value);
     partial void OnReleaseDateChanged();
     partial void OnCoverImageUrlChanging(string value);
@@ -3347,6 +3498,7 @@ namespace MusicApp.Models
 			this._Miscellaneous = new EntitySet<Miscellaneous>(new Action<Miscellaneous>(this.attach_Miscellaneous), new Action<Miscellaneous>(this.detach_Miscellaneous));
 			this._Album = default(EntityRef<Album>);
 			this._Artist = default(EntityRef<Artist>);
+			this._Category = default(EntityRef<Category>);
 			OnCreated();
 		}
 		
@@ -3414,22 +3566,26 @@ namespace MusicApp.Models
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Genre", DbType="NVarChar(100)")]
-		public string Genre
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_CategoryId", DbType="Int")]
+		public System.Nullable<int> CategoryId
 		{
 			get
 			{
-				return this._Genre;
+				return this._CategoryId;
 			}
 			set
 			{
-				if ((this._Genre != value))
+				if ((this._CategoryId != value))
 				{
-					this.OnGenreChanging(value);
+					if (this._Category.HasLoadedOrAssignedValue)
+					{
+						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
+					}
+					this.OnCategoryIdChanging(value);
 					this.SendPropertyChanging();
-					this._Genre = value;
-					this.SendPropertyChanged("Genre");
-					this.OnGenreChanged();
+					this._CategoryId = value;
+					this.SendPropertyChanged("CategoryId");
+					this.OnCategoryIdChanged();
 				}
 			}
 		}
@@ -3715,6 +3871,40 @@ namespace MusicApp.Models
 						this._ArtistId = default(int);
 					}
 					this.SendPropertyChanged("Artist");
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Category_Song", Storage="_Category", ThisKey="CategoryId", OtherKey="Id", IsForeignKey=true)]
+		public Category Category
+		{
+			get
+			{
+				return this._Category.Entity;
+			}
+			set
+			{
+				Category previousValue = this._Category.Entity;
+				if (((previousValue != value) 
+							|| (this._Category.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._Category.Entity = null;
+						previousValue.Songs.Remove(this);
+					}
+					this._Category.Entity = value;
+					if ((value != null))
+					{
+						value.Songs.Add(this);
+						this._CategoryId = value.Id;
+					}
+					else
+					{
+						this._CategoryId = default(Nullable<int>);
+					}
+					this.SendPropertyChanged("Category");
 				}
 			}
 		}

@@ -30,6 +30,7 @@ namespace MusicApp
                 defaults: new { controller = "Song", action = "SongDetail", id = UrlParameter.Optional },
                 constraints: new { type = "Song" }
             );
+
             routes.MapRoute(
                 name: "Home",
                 url: "",

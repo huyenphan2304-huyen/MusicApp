@@ -24,6 +24,10 @@ CREATE TABLE Artists (
     [Order] INT NULL,
     DateBegin SMALLDATETIME NULL
 );
+CREATE TABLE Category (
+    Id INT PRIMARY KEY IDENTITY(1,1),  -- Khóa chính tự động tăng
+    Name NVARCHAR(100) NOT NULL        -- Tên thể loại (category)
+);
 
 -- Tạo bảng Albums, tham chiếu đến bảng Artists
 CREATE TABLE Albums (
@@ -45,34 +49,35 @@ CREATE TABLE Albums (
 CREATE TABLE Songs (
     Id INT PRIMARY KEY IDENTITY(1,1),               -- Khóa chính, tự động tăng
     Title NVARCHAR(255) NOT NULL,                   -- Tiêu đề bài hát
-    ArtistId INT NOT NULL,                           -- Khóa ngoại tham chiếu đến bảng Artists
-    Genre NVARCHAR(100),                             -- Thể loại
+    ArtistId INT NOT NULL,                          -- Khóa ngoại tham chiếu đến bảng Artists
+    CategoryId INT NULL,                            -- Khóa ngoại tham chiếu đến bảng Category
     ReleaseDate DATE,                               -- Ngày phát hành
     CoverImageUrl NVARCHAR(500),                    -- Đường dẫn đến ảnh bìa
     Url NVARCHAR(500) NOT NULL,                     -- Đường dẫn đến tệp âm thanh
-    IsFeatured BIT,                                  -- Đánh dấu bài hát nổi bật
-    AlbumId INT NULL,                                -- Khóa ngoại tham chiếu đến bảng Albums (có thể null)
-    Meta NVARCHAR(50) NULL,                          -- Thông tin meta
-    Hide BIT NULL,                                   -- Trạng thái ẩn
-    [Order] INT NULL,                                -- Thứ tự bài hát
-    DateBegin SMALLDATETIME NULL,                    -- Ngày bắt đầu
-    Lyrics NVARCHAR(MAX) NULL,                       -- Lời bài hát
+    IsFeatured BIT,                                 -- Đánh dấu bài hát nổi bật
+    AlbumId INT NULL,                               -- Khóa ngoại tham chiếu đến bảng Albums (có thể null)
+    Meta NVARCHAR(50) NULL,                         -- Thông tin meta
+    Hide BIT NULL,                                  -- Trạng thái ẩn
+    [Order] INT NULL,                               -- Thứ tự bài hát
+    DateBegin SMALLDATETIME NULL,                   -- Ngày bắt đầu
+    Lyrics NVARCHAR(MAX) NULL,                      -- Lời bài hát
     CONSTRAINT FK_Songs_Albums FOREIGN KEY (AlbumId) REFERENCES Albums(Id),   -- Ràng buộc khóa ngoại với bảng Albums
-    CONSTRAINT FK_Songs_Artists FOREIGN KEY (ArtistId) REFERENCES Artists(Id)  -- Ràng buộc khóa ngoại với bảng Artists
+    CONSTRAINT FK_Songs_Artists FOREIGN KEY (ArtistId) REFERENCES Artists(Id), -- Ràng buộc khóa ngoại với bảng Artists
+    CONSTRAINT FK_Songs_Category FOREIGN KEY (CategoryId) REFERENCES Category(Id) -- Ràng buộc khóa ngoại với bảng Category
 );
-
 
 -- Tạo bảng Menu
 CREATE TABLE Menu (
-    Id INT PRIMARY KEY IDENTITY(1,1),
-    Name NVARCHAR(100) NOT NULL,
-    Url NVARCHAR(200) NOT NULL,
-    ParentId INT NULL,
-    Meta NVARCHAR(50) NULL,
-    Hide BIT NULL,
-    [Order] INT NULL,
-    DateBegin SMALLDATETIME NULL,
-    CONSTRAINT FK_Menu_Parent FOREIGN KEY (ParentId) REFERENCES Menu(Id)
+    Id INT PRIMARY KEY IDENTITY(1,1),               -- Khóa chính, tự động tăng
+    Name NVARCHAR(255) NOT NULL,                    -- Tên của menu
+    Url NVARCHAR(500),                              -- Đường dẫn URL
+    ParentId INT NULL,                              -- Khóa ngoại tham chiếu đến chính bảng Menu (menu cha)
+    CategoryId INT NULL,                            -- Khóa ngoại tham chiếu đến bảng Category (nếu menu liên quan đến thể loại)
+    Meta NVARCHAR(50) NULL,                         -- Thông tin meta
+    Hide BIT NULL,                                  -- Trạng thái ẩn
+    [Order] INT NULL,                               -- Thứ tự menu
+    DateBegin SMALLDATETIME NULL,                   -- Ngày bắt đầu
+    CONSTRAINT FK_Menu_Category FOREIGN KEY (CategoryId) REFERENCES Category(Id) -- Ràng buộc khóa ngoại với bảng Category
 );
 
 
@@ -168,6 +173,16 @@ CREATE TABLE BrowserCategories (
     [Order] INT,
     DateBegin DATE DEFAULT GETDATE()  
 );
+
+-- Thêm các thể loại vào bảng Category
+INSERT INTO Category (Name) VALUES 
+('Pop'), 
+('Rock'), 
+('Jazz'), 
+('Hip Hop'), 
+('Classical'), 
+('Electronic');
+
 -- Thêm menu chính
 INSERT INTO Menu (Name, Url, ParentId, Meta, Hide, [Order], DateBegin) VALUES 
 ('Logo', '/Content/img/core-img/logo.png', NULL, 'logo', NULL, 1, GETDATE()),
@@ -177,14 +192,16 @@ INSERT INTO Menu (Name, Url, ParentId, Meta, Hide, [Order], DateBegin) VALUES
 ('Category', '/Category', NULL, 'category', NULL, 5, GETDATE()),
 ('Account', '/Account', NULL, 'account', NULL, 6, GETDATE());
 
--- Thêm menu con cho "Category"
-INSERT INTO Menu (Name, Url, ParentId, Meta, Hide, [Order], DateBegin) VALUES 
-('Pop', '/category/pop', (SELECT Id FROM Menu WHERE Name = 'Category'), 'pop', NULL, 1, GETDATE()),
-('Rock', '/category/rock', (SELECT Id FROM Menu WHERE Name = 'Category'), 'rock', NULL, 2, GETDATE()),
-('Jazz', '/category/jazz', (SELECT Id FROM Menu WHERE Name = 'Category'), 'jazz', NULL, 3, GETDATE()),
-('Hip Hop', '/category/hiphop', (SELECT Id FROM Menu WHERE Name = 'Category'), 'hip-hop', NULL, 4, GETDATE()),
-('Classical', '/category/classical', (SELECT Id FROM Menu WHERE Name = 'Category'), 'classical', NULL, 5, GETDATE()),
-('Electronic', '/category/electronic', (SELECT Id FROM Menu WHERE Name = 'Category'), 'electronic', NULL, 6, GETDATE());
+-- Thêm menu con cho Category và liên kết với bảng Category
+INSERT INTO Menu (Name, Url, ParentId, CategoryId, Meta, Hide, [Order], DateBegin) 
+VALUES 
+('Pop', '/category/pop', (SELECT Id FROM Menu WHERE Name = 'Category'), (SELECT Id FROM Category WHERE Name = 'Pop'), 'pop', NULL, 1, GETDATE()),
+('Rock', '/category/rock', (SELECT Id FROM Menu WHERE Name = 'Category'), (SELECT Id FROM Category WHERE Name = 'Rock'), 'rock', NULL, 2, GETDATE()),
+('Jazz', '/category/jazz', (SELECT Id FROM Menu WHERE Name = 'Category'), (SELECT Id FROM Category WHERE Name = 'Jazz'), 'jazz', NULL, 3, GETDATE()),
+('Hip Hop', '/category/hiphop', (SELECT Id FROM Menu WHERE Name = 'Category'), (SELECT Id FROM Category WHERE Name = 'Hip Hop'), 'hiphop', NULL, 4, GETDATE()),
+('Classical', '/category/classical', (SELECT Id FROM Menu WHERE Name = 'Category'), (SELECT Id FROM Category WHERE Name = 'Classical'), 'classical', NULL, 5, GETDATE()),
+('Electronic', '/category/electronic', (SELECT Id FROM Menu WHERE Name = 'Category'), (SELECT Id FROM Category WHERE Name = 'Electronic'), 'electronic', NULL, 6, GETDATE());
+
 
 -- Thêm nghệ sĩ
 INSERT INTO Artists (Name, ImageUrl, BackgroundImageUrl, Description, Meta, Hide, [Order], DateBegin) VALUES
@@ -207,8 +224,9 @@ INSERT INTO Albums (Title, Artist, CoverImageUrl, Url, ReleaseDate, ArtistId, Me
 ('Beyonce', 'Songs', '/Content/img/bg-img/a7.jpg', '/Album/Details/7', '2024-10-01', (SELECT Id FROM Artists WHERE Name = 'Music 4u'), 'beyonce-songs', 0, 7, GETDATE());
 
 -- Thêm bài hát 
-INSERT INTO Songs (Title, ArtistId, Genre, ReleaseDate, CoverImageUrl, Url, IsFeatured, AlbumId, Meta, Hide, [Order], DateBegin, Lyrics) VALUES 
-('Beyond Time', (SELECT TOP 1 Id FROM Artists WHERE Name = 'Sam Smith'), 'Pop', '2022-01-01', '/Content/img/bg-img/a1.jpg', '/Content/audio/dummy-audio.mp3', 1, (SELECT TOP 1 Id FROM Albums WHERE Title = 'The Cure'), 'beyond-time', 0, 1, GETDATE(), 
+-- Thêm bài hát với CategoryId liên kết từ bảng Category
+INSERT INTO Songs (Title, ArtistId, CategoryId, ReleaseDate, CoverImageUrl, Url, IsFeatured, AlbumId, Meta, Hide, [Order], DateBegin, Lyrics) VALUES 
+('Beyond Time', (SELECT TOP 1 Id FROM Artists WHERE Name = 'Sam Smith'), (SELECT Id FROM Category WHERE Name = 'Pop'), '2022-01-01', '/Content/img/bg-img/a1.jpg', '/Content/audio/dummy-audio.mp3', 1, (SELECT TOP 1 Id FROM Albums WHERE Title = 'The Cure'), 'beyond-time', 0, 1, GETDATE(), 
 'Walking away
 In the soft rain
 Chasing the sun
@@ -219,7 +237,7 @@ Time flies so fast
 Moments we share
 Under the stars
 Together we rise'),
-('Underground', (SELECT TOP 1 Id FROM Artists WHERE Name = 'William Parker'), 'Pop', '2022-03-15', '/Content/img/bg-img/a2.jpg', '/Content/audio/dummy-audio.mp3', 1, (SELECT TOP 1 Id FROM Albums WHERE Title = 'Sam Smith'), 'underground', 0, 2, GETDATE(),
+('Underground', (SELECT TOP 1 Id FROM Artists WHERE Name = 'William Parker'), (SELECT Id FROM Category WHERE Name = 'Pop'), '2022-03-15', '/Content/img/bg-img/a2.jpg', '/Content/audio/dummy-audio.mp3', 1, (SELECT TOP 1 Id FROM Albums WHERE Title = 'Sam Smith'), 'underground', 0, 2, GETDATE(),
 'Walking away
 In the soft rain
 Chasing the sun
@@ -230,7 +248,7 @@ Time flies so fast
 Moments we share
 Under the stars
 Together we rise'),
-('First', (SELECT TOP 1 Id FROM Artists WHERE Name = 'Jessica Walsh'), 'Pop', '2023-05-21', '/Content/img/bg-img/a3.jpg', '/Content/audio/dummy-audio.mp3', 0, (SELECT TOP 1 Id FROM Albums WHERE Title = 'Will I Am'), 'first', 0, 3, GETDATE(),
+('First', (SELECT TOP 1 Id FROM Artists WHERE Name = 'Jessica Walsh'), (SELECT Id FROM Category WHERE Name = 'Pop'), '2023-05-21', '/Content/img/bg-img/a3.jpg', '/Content/audio/dummy-audio.mp3', 0, (SELECT TOP 1 Id FROM Albums WHERE Title = 'Will I Am'), 'first', 0, 3, GETDATE(),
 'Walking away
 In the soft rain
 Chasing the sun
@@ -241,7 +259,7 @@ Time flies so fast
 Moments we share
 Under the stars
 Together we rise'),
-('Second Song', (SELECT TOP 1 Id FROM Artists WHERE Name = 'Tha Stoves'), 'Pop', '2023-07-19', '/Content/img/bg-img/a4.jpg', '/Content/audio/dummy-audio.mp3', 0, (SELECT TOP 1 Id FROM Albums WHERE Title = 'The Cure'), 'second-song', 0, 4, GETDATE(),
+('Second Song', (SELECT TOP 1 Id FROM Artists WHERE Name = 'Tha Stoves'), (SELECT Id FROM Category WHERE Name = 'Pop'), '2023-07-19', '/Content/img/bg-img/a4.jpg', '/Content/audio/dummy-audio.mp3', 0, (SELECT TOP 1 Id FROM Albums WHERE Title = 'The Cure'), 'second-song', 0, 4, GETDATE(),
 'Walking away
 In the soft rain
 Chasing the sun
@@ -252,7 +270,7 @@ Time flies so fast
 Moments we share
 Under the stars
 Together we rise'),
-('The Album', (SELECT TOP 1 Id FROM Artists WHERE Name = 'DJ Ajay'), 'Pop', '2024-08-12', '/Content/img/bg-img/a5.jpg', '/Content/audio/dummy-audio.mp3', 1, (SELECT TOP 1 Id FROM Albums WHERE Title = 'DJ Smith'), 'the-album', 0, 5, GETDATE(),
+('The Album', (SELECT TOP 1 Id FROM Artists WHERE Name = 'DJ Ajay'), (SELECT Id FROM Category WHERE Name = 'Pop'), '2024-08-12', '/Content/img/bg-img/a5.jpg', '/Content/audio/dummy-audio.mp3', 1, (SELECT TOP 1 Id FROM Albums WHERE Title = 'DJ Smith'), 'the-album', 0, 5, GETDATE(),
 'Walking away
 In the soft rain
 Chasing the sun
@@ -262,76 +280,7 @@ Hearts beat as one
 Time flies so fast
 Moments we share
 Under the stars
-Together we rise'),
-('Unplugged', (SELECT TOP 1 Id FROM Artists WHERE Name = 'Radio Vibez'), 'Pop', '2024-09-25', '/Content/img/bg-img/a6.jpg', '/Content/audio/dummy-audio.mp3', 0, (SELECT TOP 1 Id FROM Albums WHERE Title = 'The Unstoppable'), 'unplugged', 0, 6, GETDATE(),
-'Walking away
-In the soft rain
-Chasing the sun
-With dreams so high
-Love in the air
-Hearts beat as one
-Time flies so fast
-Moments we share
-Under the stars
-Together we rise'),
-('Songs', (SELECT TOP 1 Id FROM Artists WHERE Name = 'Music 4u'), 'Pop', '2024-10-01', '/Content/img/bg-img/a7.jpg', '/Content/audio/dummy-audio.mp3', 0, (SELECT TOP 1 Id FROM Albums WHERE Title = 'Beyonce'), 'songs', 0, 7, GETDATE(),
-'Walking away
-In the soft rain
-Chasing the sun
-With dreams so high
-Love in the air
-Hearts beat as one
-Time flies so fast
-Moments we share
-Under the stars
-Together we rise'),
-('Echoes of Silence', (SELECT TOP 1 Id FROM Artists WHERE Name = 'Sam Smith'), 'Pop', '2023-11-01', '/Content/img/bg-img/a1.jpg', '/Content/audio/dummy-audio.mp3', 1, (SELECT TOP 1 Id FROM Albums WHERE Title = 'The Cure'), 'echoes-of-silence', 0, 8, GETDATE(),
-'Walking away
-In the soft rain
-Chasing the sun
-With dreams so high
-Love in the air
-Hearts beat as one
-Time flies so fast
-Moments we share
-Under the stars
-Together we rise'),
-('Midnight Dreams', (SELECT TOP 1 Id FROM Artists WHERE Name = 'William Parker'), 'Rock', '2023-11-10', '/Content/img/bg-img/a2.jpg', '/Content/audio/dummy-audio.mp3', 0, (SELECT TOP 1 Id FROM Albums WHERE Title = 'Sam Smith'), 'midnight-dreams', 0, 9, GETDATE(),
-'Walking away
-In the soft rain
-Chasing the sun
-With dreams so high
-Love in the air
-Hearts beat as one
-Time flies so fast
-Moments we share
-Under the stars
-Together we rise'),
-('Chasing Stars', (SELECT TOP 1 Id FROM Artists WHERE Name = 'Jessica Walsh'), 'Jazz', '2023-11-15', '/Content/img/bg-img/a3.jpg', '/Content/audio/dummy-audio.mp3', 1, (SELECT TOP 1 Id FROM Albums WHERE Title = 'Will I Am'), 'chasing-stars', 0, 10, GETDATE(),
-'Walking away
-In the soft rain
-Chasing the sun
-With dreams so high
-Love in the air
-Hearts beat as one
-Time flies so fast
-Moments we share
-Under the stars
-Together we rise'),
-('Rhythm of the Night', (SELECT TOP 1 Id FROM Artists WHERE Name = 'Tha Stoves'), 'R&B', '2023-11-20', '/Content/img/bg-img/a4.jpg', '/Content/audio/dummy-audio.mp3', 0, (SELECT TOP 1 Id FROM Albums WHERE Title = 'The Cure'), 'rhythm-of-the-night', 0, 11, GETDATE(),
-'Walking away
-In the soft rain
-Chasing the sun
-With dreams so high
-Love in the air
-Hearts beat as one
-Time flies so fast
-Moments we share
-Under the stars
-Together we rise'),
-('Remix Magic', (SELECT TOP 1 Id FROM Artists WHERE Name = 'DJ Ajay'), 'EDM', '2023-11-25', '/Content/img/bg-img/a5.jpg', '/Content/audio/dummy-audio.mp3', 1, (SELECT TOP 1 Id FROM Albums WHERE Title = 'DJ Smith'), 'remix-magic', 0, 12, GETDATE(), null),
-('Unforgettable Moments', (SELECT TOP 1 Id FROM Artists WHERE Name = 'Radio Vibez'), 'Pop', '2023-11-30', '/Content/img/bg-img/a6.jpg', '/Content/audio/dummy-audio.mp3', 0, (SELECT TOP 1 Id FROM Albums WHERE Title = 'The Unstoppable'), 'unforgettable-moments', 0, 13, GETDATE(), null),
-('Harmonious Vibes', (SELECT TOP 1 Id FROM Artists WHERE Name = 'Music 4u'), 'Pop', '2023-12-05', '/Content/img/bg-img/a7.jpg', '/Content/audio/dummy-audio.mp3', 0, (SELECT TOP 1 Id FROM Albums WHERE Title = 'Beyonce'), 'harmonious-vibes', 0, 14, GETDATE(), null);
+Together we rise');
 
 INSERT INTO Contact (SectionTagline, SectionTitle, BackgroundImageUrl, Hide, [Order], DateBegin)
 VALUES 

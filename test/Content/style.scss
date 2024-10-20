@@ -30,6 +30,7 @@
 body {
     font-family: $fonts;
     font-size: 14px;
+
 }
 
 h1,
@@ -1037,6 +1038,24 @@ img {
     }
 }
 
+.featured-album-area {
+    position: relative;
+    z-index: 1;
+}
+
+.featured-album-content {
+    position: relative;
+    z-index: 1;
+
+    @media #{$breakpoint-xs} {
+        margin-top: 50px;
+    }
+
+    p {
+        color: #fff;
+    }
+}
+
 .browse-by-catagories {
     position: relative;
     z-index: 1;
@@ -1216,120 +1235,29 @@ img {
 }
 
 /* :: 10.0 Songs Area CSS */
-
-.song-detail-area {
+.artist-song-section {
     position: relative;
     z-index: 1;
-    padding-top: 100px; /* Đảm bảo có đủ khoảng cách từ header sticky */
-
-    display: flex; /* Thêm display flex để dễ dàng căn chỉnh nội dung */
-    flex-direction: column; /* Đặt chiều dọc cho flex */
-    height: 100%; /* Để phần song-play-area có thể đẩy xuống dưới cùng */
-    .artist-song-section {
-        background-color: rgba(0, 0, 0, 0.7); /* Màu nền */
-        padding: 40px 20px; /* Padding cho không gian */
-        border-radius: 8px; /* Bo góc nếu cần */
-        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5); /* Bóng đổ */
-        height: auto; /* Đảm bảo chiều cao tự động */
-        position: relative;
-        z-index: 2;
-    }
-
-    .artist-song-section-content {
-        position: relative;
-        z-index: 1;
-
-        @media #{$breakpoint-xs} {
-            margin-top: 50px;
-        }
-
-        p {
-            color: #fff;
-        }
-    }
-
-    .artist-song-section {
-        width: 100%; /* Đảm bảo section chiếm toàn bộ chiều rộng */
-        background-color: rgba(0, 0, 0, 0.7); /* Màu nền */
-        padding: 40px 20px; /* Padding cho không gian */
-        border-radius: 8px; /* Bo góc nếu cần */
-        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5); /* Bóng đổ */
-        margin-bottom: 20px; /* Thêm khoảng cách phía dưới section */
-    }
-
-    .row.lyrics {
-        background-color: #e1e6e6 !important; /* Màu xám nhẹ */
-        padding: 20px;
-        border-radius: 8px;
-        margin-top: 20px;
-    }
-
-
-    .song-thumbnail {
-        position: relative;
-        z-index: 1;
-        @include flex(0 0 135px);
-        max-width: 135px;
-        width: 135px;
-        margin-right: 50px;
-
-        img {
-            width: 100%;
-        }
-
-        @media #{$breakpoint-xs} {
-            margin-right: 0;
-            @include flex(0 0 100%);
-            max-width: 100%;
-            width: 100%;
-        }
-    }
-
-    .song-play-area {
-        position: relative;
-        z-index: 1;
-        @include flex(0 0 calc(100% - 185px));
-        max-width: calc(100% - 185px);
-        width: 100%;
-        background-color: #262626;
-        padding: 15px 30px 20px;
-        border: 1px solid #363636; /* Đường viền */
-
-        @media #{$breakpoint-xs} {
-            @include flex(0 0 100%);
-            max-width: 100%;
-            width: 100%;
-        }
-
-        .song-name p {
-            color: #b8b8b8;
-            margin-bottom: 5px;
-        }
-
-        .audioplayer {
-            margin: 0;
-            padding: 0;
-            width: 100%;
-            height: auto;
-            align-items: center;
-            border: none;
-            border-radius: 0;
-            background: transparent;
-        }
-
-        .audioplayer-playing .audioplayer-playpause,
-        .audioplayer:not(.audioplayer-playing) .audioplayer-playpause:hover,
-        .audioplayer:not(.audioplayer-playing) .audioplayer-playpause {
-            background: #fff;
-        }
-
-        .audioplayer-time {
-            font-size: 14px;
-            color: #fff;
-        }
-    }
 }
 
+.artist-song-section-content {
+    position: relative;
+    z-index: 1;
+
+    @media #{$breakpoint-xs} {
+        margin-top: 50px;
+    }
+
+    p {
+        color: #fff;
+    }
+}
+.row.lyrics {
+    background-color: #f0f0f0 !important; /* Màu xám nhẹ */
+    padding: 20px;
+    border-radius: 8px;
+    margin-top: 20px;
+}
 .song-play-area {
     position: relative;
     z-index: 1;
@@ -1361,6 +1289,99 @@ img {
         color: #fff;
     }
 }
+
+.latest-songs-area {
+    position: relative;
+    z-index: 1;
+    @include trans-duration(500ms);
+    margin-bottom: 30px;
+
+    .song-slideshow {
+        position: relative;
+        z-index: 1;
+
+        .single-song {
+            @include trans-duration(500ms);
+            margin-bottom: 0;
+            border: 1px solid transparent;
+
+            &:hover,
+            &:focus {
+                border: 1px solid $dark-color; // Thay đổi biến này nếu cần
+                box-shadow: 0 5px 70px 0 rgba(0, 0, 0, 0.15);
+                background-color: #f5f9fa;
+            }
+
+            img {
+                width: 100%;
+                height: auto; // Đảm bảo hình ảnh giữ tỉ lệ
+            }
+
+            .song-info {
+                position: relative;
+                z-index: 1;
+                text-align: center;
+                padding: 15px 0;
+
+                h5 {
+                    font-size: 18px;
+                    margin-bottom: 5px;
+                    text-transform: uppercase;
+                }
+
+                p {
+                    margin-bottom: 5px; // Thêm một khoảng cách nhỏ
+                }
+            }
+        }
+
+        .owl-prev,
+        .owl-next {
+            @include trans-duration(500ms);
+            background-color: #fff;
+            position: absolute;
+            width: 50px;
+            height: 50px;
+            border: 1px solid $dark-color; // Thay đổi biến này nếu cần
+            top: 50%;
+            margin-top: -25px; // Căn giữa
+            z-index: 50;
+            text-align: center;
+            line-height: 50px; // Căn giữa chữ bên trong
+            opacity: 0;
+            visibility: hidden;
+
+            @media #{$breakpoint-xs} {
+                left: 0; // Đặt lại vị trí cho màn hình nhỏ
+            }
+
+            &:hover,
+            &:focus {
+                background-color: $dark-color; // Thay đổi biến này nếu cần
+                color: #fff;
+            }
+        }
+
+        .owl-next {
+            left: auto;
+            right: -25px;
+
+            @media #{$breakpoint-xs} {
+                right: 0; // Đặt lại vị trí cho màn hình nhỏ
+            }
+        }
+
+        &:hover {
+            .owl-prev,
+            .owl-next {
+                opacity: 1;
+                visibility: visible;
+            }
+        }
+    }
+}
+
+
 
 /* :: 11.0 Miscellaneous Area CSS */
 
@@ -1599,50 +1620,61 @@ img {
     z-index: 1;
     background-color: $footer-color;
     padding: 30px 0;
+
     @media #{$breakpoint-xs} {
         text-align: center;
     }
+
     .copywrite-text {
         font-size: 12px;
         margin-bottom: 0;
         color: rgba(166, 165, 165, 0.54);
+
         a {
             color: rgba(166, 165, 165, 0.54);
             font-size: 12px;
+
             &:hover,
             &:focus {
                 color: #fff;
             }
         }
     }
+
     .footer-nav {
         ul {
             @include display-flex(flex);
             @include align-items(center);
             @include justify-content-end;
+
             @media #{$breakpoint-xs} {
                 @include justify-content-center;
                 margin-top: 30px;
             }
         }
+
         li {
             a {
                 color: #898888;
                 font-size: 16px;
                 padding: 0 20px;
+
                 @media #{$breakpoint-md} {
                     padding: 0 10px;
                     font-size: 14px;
                 }
+
                 @media #{$breakpoint-xs} {
                     padding: 0 10px;
                     font-size: 14px;
                 }
+
                 &:hover,
                 &:focus {
                     color: #fff;
                 }
             }
+
             &:last-child a {
                 padding-right: 0;
             }

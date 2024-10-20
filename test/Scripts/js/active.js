@@ -2,7 +2,6 @@
     'use strict';
 
     var browserWindow = $(window);
-    
 
     // :: 1.0 Preloader Active Code
     browserWindow.on('load', function () {
@@ -21,7 +20,9 @@
         var welcomeSlide = $('.hero-slides');
         var testimonials = $('.testimonials-slide');
         var albumSlides = $('.albums-slideshow');
+        var songSlides = $('.song-slideshow');
 
+        // Khởi tạo slideshow cho welcome slide
         welcomeSlide.owlCarousel({
             items: 1,
             margin: 0,
@@ -35,6 +36,7 @@
             animateOut: 'fadeOut'
         });
 
+        // Hiệu ứng chuyển động cho welcome slide
         welcomeSlide.on('translate.owl.carousel', function () {
             var slideLayer = $("[data-animation]");
             slideLayer.each(function () {
@@ -61,6 +63,7 @@
             $(this).css('animation-duration', anim_dur);
         });
 
+        // Khởi tạo slideshow cho testimonials
         testimonials.owlCarousel({
             items: 1,
             margin: 0,
@@ -69,6 +72,7 @@
             autoplay: true
         });
 
+        // Khởi tạo slideshow cho albums
         albumSlides.owlCarousel({
             items: 5,
             margin: 30,
@@ -97,6 +101,39 @@
                 }
             }
         });
+        console.log('Initializing song slideshow');
+
+        songSlides.owlCarousel({
+            items: 4,
+            margin: 30,
+            loop: true,
+            nav: true,
+            navText: ['<i class="fa fa-angle-double-left"></i>', '<i class="fa fa-angle-double-right"></i>'],
+            dots: false,
+            autoplay: true,
+            autoplayTimeout: 5000,
+            smartSpeed: 750,
+            responsive: {
+                0: {
+                    items: 1
+                },
+                480: {
+                    items: 2
+                },
+                768: {
+                    items: 3
+                },
+                992: {
+                    items: 4
+                },
+                1200: {
+                    items: 5
+                }
+            }
+        });
+            }
+        }
+
     }
 
     // :: 4.0 Masonary Gallery Active Code
@@ -147,24 +184,23 @@
             time: 2000
         });
     }
+
     // :: 8.0 Sticky Active Code
     $(document).ready(function () {
         if ($.fn.sticky) {
             $(".oneMusic-main-menu").sticky({
                 topSpacing: 0,
-                stickyClass: 'is-sticky', // Đặt tên lớp khi menu sticky
+                stickyClass: 'is-sticky',
                 onStick: function () {
-                    $('.header-area').addClass('is-sticky'); // Thêm lớp khi menu sticky
+                    $('.header-area').addClass('is-sticky');
                 },
                 onUnstick: function () {
-                    $('.header-area').removeClass('is-sticky'); // Xóa lớp khi không còn sticky
+                    $('.header-area').removeClass('is-sticky');
                 }
             });
         }
     });
 
-
-    
     // :: 9.0 Progress Bar Active Code
     if ($.fn.circleProgress) {
         $('#circle').circleProgress({
@@ -204,23 +240,23 @@
 
     // :: 11.0 Tooltip Active Code
     if ($.fn.tooltip) {
-        $('[data-toggle="tooltip"]').tooltip()
+        $('[data-toggle="tooltip"]').tooltip();
     }
 
     // :: 12.0 prevent default a click
-    $('a[href="#"]').on('click', function ($) {
-        $.preventDefault();
+    $('a[href="#"]').on('click', function (event) {
+        event.preventDefault();
     });
 
     // :: 13.0 wow Active Code
     if (browserWindow.width() > 767) {
         new WOW().init();
     }
-    
+
     // :: 14.0 Gallery Menu Active Code
     $('.catagory-menu a').on('click', function () {
         $('.catagory-menu a').removeClass('active');
         $(this).addClass('active');
-    })
+    });
 
 })(jQuery);
