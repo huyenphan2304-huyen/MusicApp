@@ -1398,6 +1398,49 @@ img {
     z-index: 1;
     padding: 45px 30px;
     @include trans-duration(500ms);
+    border: 1px solid #d8d8d8; /* Thêm border giống New Hits */
+    background-color: #f5f9fa; /* Thêm background giống New Hits */
+    .single-top-item {
+        position: relative;
+        z-index: 1;
+        margin-bottom: 21px;
+
+        &:last-child {
+            margin-bottom: 0;
+        }
+
+        .thumbnail {
+            @include flex(0 0 73px);
+            max-width: 73px;
+            width: 73px;
+            margin-right: 20px;
+        }
+
+        .content- {
+            h6 {
+                text-transform: uppercase;
+                margin-bottom: 0;
+            }
+
+            p {
+                font-size: 14px;
+                margin-bottom: 0;
+            }
+        }
+    }
+
+    &:hover,
+    &:focus {
+        background-color: #e8f4f8; /* Thêm hiệu ứng hover tương tự New Hits */
+        border-color: #d8d8d8;
+    }
+}
+
+/*.weeks-top-area {
+    position: relative;
+    z-index: 1;
+    padding: 45px 30px;
+    @include trans-duration(500ms);
     border: 1px solid transparent;
     .single-top-item {
         position: relative;
@@ -1429,7 +1472,7 @@ img {
         border-color: #d8d8d8;
     }
 }
-
+*/
 .popular-artists-area {
     position: relative;
     z-index: 1;
