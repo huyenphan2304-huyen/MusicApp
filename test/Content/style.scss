@@ -1398,38 +1398,43 @@ img {
     z-index: 1;
     padding: 45px 30px;
     @include trans-duration(500ms);
-    border: 1px solid transparent;
+    border: 1px solid #d8d8d8; 
+    background-color: #f5f9fa; 
     .single-top-item {
         position: relative;
         z-index: 1;
         margin-bottom: 21px;
+
         &:last-child {
             margin-bottom: 0;
         }
+
         .thumbnail {
             @include flex(0 0 73px);
             max-width: 73px;
             width: 73px;
             margin-right: 20px;
         }
+
         .content- {
             h6 {
                 text-transform: uppercase;
                 margin-bottom: 0;
             }
+
             p {
                 font-size: 14px;
                 margin-bottom: 0;
             }
         }
     }
+
     &:hover,
     &:focus {
-        background-color: #f5f9fa;
+        background-color: #e8f4f8;
         border-color: #d8d8d8;
     }
 }
-
 .popular-artists-area {
     position: relative;
     z-index: 1;
@@ -1437,23 +1442,33 @@ img {
     @include trans-duration(500ms);
     border: 1px solid #d8d8d8;
     background-color: #f5f9fa;
+
+    .section-heading h2 {
+        letter-spacing: 5px; 
+        text-transform: uppercase;
+    }
+
     .single-artists {
         position: relative;
         z-index: 1;
         margin-bottom: 17px;
+
         &:last-child {
             margin-bottom: 0;
         }
+
         .thumbnail {
             @include flex(0 0 63px);
             max-width: 63px;
             width: 63px;
             margin-right: 20px;
             border-radius: 50%;
+
             img {
                 border-radius: 50%;
             }
         }
+
         .content- {
             p {
                 font-size: 16px;
@@ -1462,6 +1477,8 @@ img {
         }
     }
 }
+
+
 
 .new-hits-area {
     position: relative;
@@ -1932,6 +1949,13 @@ img {
 }
 
 /* :: Event Detail CSS */
+.imgEvent {
+    width: 100%; // Đặt chiều rộng 100% để căn chỉnh với không gian chứa
+    max-width: 600px; // Giới hạn chiều rộng tối đa để đảm bảo hình ảnh không quá lớn
+    height: auto; // Đảm bảo hình ảnh không bị kéo giãn
+    display: block;
+    margin: 0 auto; // Căn giữa hình ảnh
+}
 
 .event-detail {
     position: relative;
