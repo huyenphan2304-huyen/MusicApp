@@ -1949,6 +1949,13 @@ img {
 }
 
 /* :: Event Detail CSS */
+.imgEvent {
+    width: 100%; // Đặt chiều rộng 100% để căn chỉnh với không gian chứa
+    max-width: 600px; // Giới hạn chiều rộng tối đa để đảm bảo hình ảnh không quá lớn
+    height: auto; // Đảm bảo hình ảnh không bị kéo giãn
+    display: block;
+    margin: 0 auto; // Căn giữa hình ảnh
+}
 
 .event-detail {
     position: relative;
