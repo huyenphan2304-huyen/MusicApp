@@ -11,23 +11,29 @@ namespace MusicApp.Controllers
     public class AccountController : Controller
     {
         private MusicDbDataContext db = new MusicDbDataContext(ConfigurationManager.ConnectionStrings["MusicDbDataContext"].ConnectionString);
+
         // GET: Account
-        public ActionResult Index()
+        public ActionResult Index(string formType = "login")
         {
-            return View();
+            if (formType == "register")
+            {
+                return RedirectToAction("Register");
+            }
+            return RedirectToAction("Login");
         }
-        public ActionResult LoginForm()
+
+        // Hiển thị form đăng nhập
+        public ActionResult Login()
         {
             var loginform = db.LoginForms.FirstOrDefault();
-            return PartialView("LoginForm",loginform);
-
+            return View("LoginForm", loginform);
         }
-        public ActionResult RegisterForm()
+
+        // Hiển thị form đăng ký
+        public ActionResult Register()
         {
             var registerform = db.RegisterForms.FirstOrDefault();
-
-            return PartialView("RegisterForm",registerform);
-
+            return View("RegisterForm", registerform);
         }
     }
 }

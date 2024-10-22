@@ -1,9 +1,23 @@
-﻿
-@{
+﻿@{
     ViewBag.Title = "Account";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
+<div class="account-page">
+    <div class="form-switch-buttons">
+        <!-- Button to show Login Form -->
+        <a href="@Url.Action("Index", "Account", new { formType = "login" })" class="btn btn-primary">
+            Login
+        </a>
 
-@Html.Action("LoginForm", "Account")
-@Html.Action("RegisterForm", "Account")
+        <!-- Button to show Register Form -->
+        <a href="@Url.Action("Index", "Account", new { formType = "register" })" class="btn btn-secondary">
+            Create Account
+        </a>
+    </div>
+
+    <!-- This will dynamically load either the login or register form -->
+    <div id="form-content">
+        @RenderBody()
+    </div>
+</div>

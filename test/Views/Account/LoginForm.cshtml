@@ -17,6 +17,9 @@
                                 <label for="exampleInputPassword1">@Model.PasswordLabel</label>
                                 <input type="password" class="form-control" id="exampleInputPassword1" placeholder="@Model.PasswordPlaceholder">
                             </div>
+                            <div class="form-group">
+                                <a href="@Url.Action("Index", "Account", new { formType = "register" })" class="text-muted">Don't have an account? Register now</a>
+                            </div>
                             <button type="submit" class="btn oneMusic-btn mt-30">@Model.ButtonText</button>
                         </form>
                     </div>

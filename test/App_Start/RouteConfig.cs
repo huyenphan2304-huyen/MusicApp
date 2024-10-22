@@ -52,6 +52,12 @@ namespace MusicApp
                 url: "Account/{action}/{id}",
                 defaults: new { controller = "Account", action = "Index", id = UrlParameter.Optional }
             );
+            routes.MapRoute(
+                 name: "AccountForm",  // Đổi tên route này để tránh trùng lặp
+                 url: "account/{formType}",
+                 defaults: new { controller = "Account", action = "Index", formType = UrlParameter.Optional }
+             );
+
 
             routes.MapRoute(
                 name: "Default",

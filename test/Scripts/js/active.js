@@ -133,7 +133,7 @@
                 }
             }
         });
-    } // Closing the owlCarousel condition properly here
+    }
 
     // :: 4.0 Masonry Gallery Active Code
     if ($.fn.imagesLoaded) {
@@ -256,6 +256,35 @@
     $('.catagory-menu a').on('click', function () {
         $('.catagory-menu a').removeClass('active');
         $(this).addClass('active');
+    });
+
+    // :: 15.0 Form Switcher Active Code
+    $(document).ready(function () {
+        const loginButton = document.querySelector(".btn-primary");
+        const registerButton = document.querySelector(".btn-secondary");
+        const formContent = document.getElementById("form-content");
+
+        if (loginButton && registerButton) {
+            loginButton.addEventListener("click", function (event) {
+                event.preventDefault();
+                fetch("@Url.Action('Login', 'Account')")
+                    .then(response => response.text())
+                    .then(html => {
+                        formContent.innerHTML = html;
+                        window.history.pushState({}, "", "/account/login");
+                    });
+            });
+
+            registerButton.addEventListener("click", function (event) {
+                event.preventDefault();
+                fetch("@Url.Action('Register', 'Account')")
+                    .then(response => response.text())
+                    .then(html => {
+                        formContent.innerHTML = html;
+                        window.history.pushState({}, "", "/account/register");
+                    });
+            });
+        }
     });
 
 })(jQuery);
