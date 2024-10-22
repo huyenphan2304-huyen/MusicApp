@@ -10,7 +10,7 @@
                 <div class="event-detail mb-100 wow fadeInUp" data-wow-delay="100ms">
                     <!-- Event Thumbnail -->
                     <div class="event-thumbnail mt-30">
-                        <a href="#"><img src="@ViewBag.ImageUrl" alt="@ViewBag.Title"></a>
+                        <a href="#"><img class="imgEvent" src="@ViewBag.ImageUrl" alt="@ViewBag.Title"></a>
                         <!-- Event Date -->
                         <div class="event-date">
                             <span>@((ViewBag.Date as DateTime?)?.ToString("dd") ?? "N/A")</span>
