@@ -356,7 +356,6 @@
     <Content Include="Scripts\js\owl.carousel.js" />
     <Content Include="Scripts\js\plugins\plugins.js" />
     <Content Include="Scripts\modernizr-2.8.3.js" />
-    <Content Include="Views\Home\index.html" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
@@ -401,8 +400,6 @@
     <Content Include="Views\Song\ListSong.cshtml" />
     <Content Include="Views\Song\SongDetail.cshtml" />
     <Content Include="Views\Song\LastestSongs.cshtml" />
-    <Content Include="Views\Home\LatestSongs.cshtml" />
-    <Content Include="Views\Song\SongDetails.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

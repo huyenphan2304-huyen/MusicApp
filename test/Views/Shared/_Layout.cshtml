@@ -42,28 +42,12 @@
 
     <hr /> <!-- Đường phân cách để tạo sự tách biệt giữa nội dung chính và footer -->
 </div>
-<!-- ##### Contact Area Start ##### -->
 
-<!-- ##### Contact Area End ##### -->
 
 <footer class="footer-area">
     <div class="container">
-        <div class="row d-flex flex-wrap align-items-center">
-            <div class="col-12 col-md-6">
-                <a href="#"><img src="~/Content/img/core-img/logo.png" alt=""></a>
-                <p class="copywrite-text">
-                    Copyright &copy;
-                    <script>document.write(new Date().getFullYear());</script> All rights reserved | This template is made with <i class="fa fa-heart-o" aria-hidden="true"></i> by <a href="https://colorlib.com" target="_blank">Colorlib</a>
-                </p>
-            </div>
+        @Html.Action("GetMenuForFooter", "Menu")
 
-            <div class="col-12 col-md-6">
-                <div class="footer-nav">
-                    <!-- Lấy menu từ GetMenu của MenuController, loại trừ phần liên quan đến "Account" -->
-                    @Html.Action("GetMenuForFooter", "Menu")
-                </div>
-            </div>
-        </div>
     </div>
 </footer>
 

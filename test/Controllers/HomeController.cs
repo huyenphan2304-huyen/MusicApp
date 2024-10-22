@@ -41,20 +41,6 @@ namespace MusicApp.Controllers
             var latestAlbums = db.Albums.ToList();
             return PartialView("LatestAlbums", latestAlbums);
         }
-        public ActionResult LatestSongs()
-        {
-            // Lấy danh sách tất cả các bài hát
-            var songs = from s in db.Songs
-                        join a in db.Artists on s.ArtistId equals a.Id
-                        select new SongViewModel
-                        {
-                            Song = s,
-                            ArtistName = a.Name
-                        };
-
-            // Trả về view ListSong với danh sách các bài hát
-            return View("LastestSongs", songs.ToList());
-        }
 
         public ActionResult RecommendedAlbums()
         {

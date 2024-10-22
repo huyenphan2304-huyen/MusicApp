@@ -16,7 +16,7 @@
                         <p>See what’s new</p>
                         <h2>@Model.AlbumDetail.Title</h2>
                     </div>
-                    <p>Release Date: @(Model.AlbumDetail.ReleaseDate?.ToString("dd/MM/yyyy") ?? "N/A")</p>
+                    <p>@(Model.AlbumDetail.ReleaseDate?.ToString("dd/MM/yyyy") ?? "N/A")</p>
                     <p>Artist: @Model.AlbumDetail.Artist</p>
 
                     <h4>Songs:</h4>

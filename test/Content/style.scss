@@ -31,6 +31,10 @@ body {
     font-family: $fonts;
     font-size: 14px;
 
+
+}
+.body-content {
+    padding-top: calc(85px + 20px); /* 85px là chiều cao của header, thêm khoảng cách thêm là 20px */
 }
 
 h1,
@@ -1025,6 +1029,8 @@ img {
 .featured-artist-area {
     position: relative;
     z-index: 1;
+    display:inline;
+    width:100%;
 }
 
 .featured-artist-content {
@@ -1235,10 +1241,17 @@ img {
 }
 
 /* :: 10.0 Songs Area CSS */
-.artist-song-section {
+.artist-song-area {
     position: relative;
     z-index: 1;
 }
+
+.song-area {
+    position: relative;
+    z-index: 1;
+    display:inline;
+}
+
 
 .artist-song-section-content {
     position: relative;
@@ -1252,12 +1265,7 @@ img {
         color: #fff;
     }
 }
-.row.lyrics {
-    background-color: #f0f0f0 !important; /* Màu xám nhẹ */
-    padding: 20px;
-    border-radius: 8px;
-    margin-top: 20px;
-}
+
 .song-play-area {
     position: relative;
     z-index: 1;

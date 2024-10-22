@@ -4,29 +4,35 @@
     ViewBag.Title = "SongDetail";
 }
 
-<!-- ##### Event Detail Area Start ##### -->
-<div class="song-detail-area section-padding-100">
-    <div class="container">
-        <div class="row">
-            <div class="col">
-                <section class="artist-song-section bg-img bg-overlay bg-fixed" style="background-image: url(../../Content/img/bg-img/bg-4.jpg);">
-                    <div class="row align-items-center">
-                        <div class="col-12 col-md-5 col-lg-4">
-                            <div class="featured-artist-thumb">
-                                <img src="@Model.Song.CoverImageUrl" alt="@Model.Song.Title" class="img-fluid"> <!-- Sử dụng img-fluid để hình ảnh responsive -->
-                            </div>
-                        </div>
-                        <div class="col-12 col-md-7 col-lg-8">
-                            <div class="artist-song-content">
-                                <div class="section-heading white text-left mb-30">
-                                    <h2>@Model.Song.Title</h2>
-                                    <h6>@Model.Song.ReleaseDate</h6>
+<!-- ***** Container ***** -->
+<div class="container " style="padding-top: 80px;">
+    <div class="row">
+        <!-- ***** Section bên trái ***** -->
+        <div class="col-12 col-lg-8">
+            <!-- Thêm mã của bạn cho section ở đây -->
+            <div class="row">
+                <section class="featured-artist-area bg-img bg-overlay bg-fixed" style="background-image: url(../../Content/img/bg-img/bg-4.jpg); width: 100%;">
+                    <div class="container">
+                        <div class="row align-items-end">
+                            <!-- ***** Featured Artist bên trái ***** -->
+                            <div class="col-12 col-md-5 col-lg-4">
+                                <div class="featured-artist-thumb">
+                                    <img src="@Model.Song.CoverImageUrl" alt="@Model.Song.Title" class="img-fluid"> <!-- Sử dụng img-fluid để hình ảnh responsive -->
                                 </div>
                             </div>
+                            <div class="col-12 col-md-7 col-lg-8">
+                                <div class="featured-artist-content">
+                                    <!-- Section Heading -->
+                                    <div class="section-heading white text-left mb-30">
+                                        <h2>@Model.Song.Title</h2>
+                                        <h6>@(@Model.Song.ReleaseDate?.ToString("dd/MM/yyyy") ?? "N/A")</h6>
+                                    </div>
+
+                                </div>
+                            </div>
+
                         </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-12">
+                        <div class="row">
                             <div class="song-play-area">
                                 <div class="song-name">
                                     <p>@Model.Song.Title</p>
@@ -36,43 +42,53 @@
                                 </audio>
                             </div>
                         </div>
+
                     </div>
                 </section>
-
-                <div class="row lyrics">
-                    <h2>@Model.Song.Title</h2>
-                    <p>@Model.Song.Lyrics</p>
-                </div>
             </div>
-            <div class="col-12 col-lg-4">
-                <div class="weeks-top-area mb-100">
-                    <div class="section-heading text-left mb-50 wow fadeInUp" data-wow-delay="50ms">
-                        <h2>@Model.WeeksTopTitle</h2>
-                    </div>
+        
+            <div class="row lyrics padding-10">
 
-                    @if (Model.WeeksTop != null && Model.WeeksTop.Count > 0)
-                    {
-                        foreach (var item in Model.WeeksTop)
-                        {
-                            <div class="single-top-item d-flex wow fadeInUp">
-                                <div class="thumbnail">
-                                    <img src="@item.ImageUrl" alt="">
-                                </div>
-                                <div class="content-">
-                                    <h6>@item.Name</h6>
-                                    <p>@item.Description</p>
-                                </div>
-                            </div>
-                        }
-                    }
-                    else
-                    {
-                        <p>No top hits this week.</p>
-                    }
+                <div class="song-name">
+                    <h2>Lyrics</h2>
                 </div>
+                <p>@Model.Song.Lyrics</p>
+            </div>
+        </div>
+
+        <!-- ***** Weeks Top bên phải ***** -->
+        <div class="col-12 col-lg-4">
+            <div class="weeks-top-area mb-100">
+                <div class="section-heading text-left mb-50 wow fadeInUp" data-wow-delay="50ms">
+                    <h2>@Model.WeeksTopTitle</h2>
+                </div>
+
+                @if (Model.WeeksTop != null && Model.WeeksTop.Count > 0)
+                {
+                    foreach (var item in Model.WeeksTop)
+                    {
+                        <div class="single-top-item d-flex wow fadeInUp">
+                            <div class="thumbnail">
+                                <img src="@item.ImageUrl" alt="">
+                            </div>
+                            <disv class="content-">
+                                <h6>@item.Name</h6>
+                                <p>@item.Description</p>
+                            </disv>
+                        </div>
+                    }
+                }
+                else
+                {
+                    <p>No top hits this week.</p>
+                }
             </div>
         </div>
     </div>
+    
 </div>
 
+<div>
+    @Html.Action("LatestAlbums", "Home")
 
+</div>

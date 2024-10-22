@@ -5,24 +5,27 @@
 
 @model IEnumerable<MusicApp.Models.Album>
 
-<div class="oneMusic-recommended-albums has-fluid bg-gray section-padding-100">
-    <h3>RecommendedAlbums</h3>
-    <div class="row">
-        @foreach (var album in Model)
-        {
-            <div class="col-12 col-sm-6 col-md-4 col-lg-2">
-                <div class="single-album-area wow fadeInUp" data-wow-delay="100ms">
-                    <div class="album-thumb">
-                        <img src="@album.CoverImageUrl" alt="">
-                    </div>
-                    <div class="album-info">
-                        <a href="@Url.Action("AlbumDetail", "Album", new { id = album.Id })">
-                            <h5>@album.Title</h5>
-                        </a>
-                        <p>@album.Artist</p>
+<div class="container">
+    <div class="oneMusic-recommended-albums has-fluid bg-gray" style="padding:10px">
+        <h3>RecommendedAlbums</h3>
+        <div class="row">
+            @foreach (var album in Model)
+            {
+                <div class="col-12 col-sm-6 col-md-4 col-lg-2">
+                    <div class="single-album-area wow fadeInUp" data-wow-delay="100ms">
+                        <div class="album-thumb">
+                            <img src="@album.CoverImageUrl" alt="">
+                        </div>
+                        <div class="album-info">
+                            <a href="@Url.Action("AlbumDetail", "Album", new { id = album.Id })">
+                                <h5>@album.Title</h5>
+                            </a>
+                            <p>@album.Artist</p>
+                        </div>
                     </div>
                 </div>
-            </div>
-        }
+            }
+        </div>
     </div>
+
 </div>

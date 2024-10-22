@@ -4,16 +4,41 @@
     ViewBag.Title = "FooterMenu";
 }
 
+<div class="row d-flex flex-wrap align-items-center">
+    <div class="col-12 col-md-6">
+        <!-- Nav brand -->
+        <a href="~/home" class="nav-brand">
+            <!-- Hiển thị logo nếu menu.name là "Logo" -->
+            @foreach (var mainMenu in ViewBag.MainMenus)
+            {
+                if (mainMenu.Name == "Logo")
+                {
+                    <img src="@mainMenu.Url" alt="" />
+                }
+            }
+        </a>
 
 
-<ul>
-    @foreach (var menu in Model)
-    {
-        if (menu.ParentId == null) // Nếu là menu chính
-        {
-            <li>
-                <a href="@menu.Url">@menu.Name</a>
-            </li>
-        }
-    }
-</ul>
+        <p class="copywrite-text">
+            Copyright &copy;
+            <script>document.write(new Date().getFullYear());</script>
+            All rights reserved | This template is made with <i class="fa fa-heart-o" aria-hidden="true"></i> by <a href="https://colorlib.com" target="_blank">Colorlib</a>
+        </p>
+    </div>
+
+    <div class="col-12 col-md-6">
+        <div class="footer-nav">
+            <ul>
+                @foreach (var menu in ViewBag.MainMenus)
+                {
+                    if (menu.ParentId == null && menu.Name.ToLower() != "logo") // Loại trừ menu "logo"
+                    {
+                        <li>
+                            <a href="@menu.Url">@menu.Name</a>
+                        </li>
+                    }
+                }
+            </ul>
+        </div>
+    </div>
+</div>

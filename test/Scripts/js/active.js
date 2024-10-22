@@ -13,6 +13,8 @@
     // :: 2.0 Nav Active Code
     if ($.fn.classyNav) {
         $('#oneMusicNav').classyNav();
+    } else {
+        console.log("classyNav plugin is not loaded");
     }
 
     // :: 3.0 Sliders Active Code
@@ -22,7 +24,7 @@
         var albumSlides = $('.albums-slideshow');
         var songSlides = $('.song-slideshow');
 
-        // Khởi tạo slideshow cho welcome slide
+        // Initialize slideshow for welcome slide
         welcomeSlide.owlCarousel({
             items: 1,
             margin: 0,
@@ -36,7 +38,7 @@
             animateOut: 'fadeOut'
         });
 
-        // Hiệu ứng chuyển động cho welcome slide
+        // Transition animations for welcome slide
         welcomeSlide.on('translate.owl.carousel', function () {
             var slideLayer = $("[data-animation]");
             slideLayer.each(function () {
@@ -63,7 +65,7 @@
             $(this).css('animation-duration', anim_dur);
         });
 
-        // Khởi tạo slideshow cho testimonials
+        // Initialize slideshow for testimonials
         testimonials.owlCarousel({
             items: 1,
             margin: 0,
@@ -72,7 +74,7 @@
             autoplay: true
         });
 
-        // Khởi tạo slideshow cho albums
+        // Initialize slideshow for albums
         albumSlides.owlCarousel({
             items: 5,
             margin: 30,
@@ -101,8 +103,8 @@
                 }
             }
         });
-        console.log('Initializing song slideshow');
 
+        // Initialize slideshow for songs
         songSlides.owlCarousel({
             items: 4,
             margin: 30,
@@ -131,28 +133,25 @@
                 }
             }
         });
-            }
-        }
+    } // Closing the owlCarousel condition properly here
 
-    }
-
-    // :: 4.0 Masonary Gallery Active Code
+    // :: 4.0 Masonry Gallery Active Code
     if ($.fn.imagesLoaded) {
+        var $grid = $('.oneMusic-albums').isotope({
+            itemSelector: '.single-album-item',
+            percentPosition: true,
+            masonry: {
+                columnWidth: '.single-album-item'
+            }
+        });
+
         $('.oneMusic-albums').imagesLoaded(function () {
-            // filter items on button click
+            // Filter items on button click
             $('.catagory-menu').on('click', 'a', function () {
                 var filterValue = $(this).attr('data-filter');
                 $grid.isotope({
                     filter: filterValue
                 });
-            });
-            // init Isotope
-            var $grid = $('.oneMusic-albums').isotope({
-                itemSelector: '.single-album-item',
-                percentPosition: true,
-                masonry: {
-                    columnWidth: '.single-album-item'
-                }
             });
         });
     }
@@ -233,7 +232,7 @@
         });
     }
 
-    // :: 10.0 audioPlayer Active Code
+    // :: 10.0 Audio Player Active Code
     if ($.fn.audioPlayer) {
         $('audio').audioPlayer();
     }
@@ -243,12 +242,12 @@
         $('[data-toggle="tooltip"]').tooltip();
     }
 
-    // :: 12.0 prevent default a click
+    // :: 12.0 Prevent Default a Click
     $('a[href="#"]').on('click', function (event) {
         event.preventDefault();
     });
 
-    // :: 13.0 wow Active Code
+    // :: 13.0 WOW Animation Active Code
     if (browserWindow.width() > 767) {
         new WOW().init();
     }

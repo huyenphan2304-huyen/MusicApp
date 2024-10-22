@@ -12,18 +12,18 @@
             }
         }
     </a>
-
-    <!-- Navbar Toggler -->
-    <div class="classy-navbar-toggler">
-        <span class="navbarToggler"><span></span><span></span><span></span></span>
-    </div>
-
     <form class="form-inline my-2 my-lg-0">
         <input class="form-control" type="search" placeholder="Search" aria-label="Search" style="width: 300px; border: 1px solid white;">
         <button class="btn btn-outline-success" type="submit" style="color: white; border-color: white;">
             <img src="~/Content/fonts/magnifying-glass-solid.svg" alt="Search" style="width: 16px; height: 16px;">
         </button>
     </form>
+    <!-- Navbar Toggler -->
+    <div class="classy-navbar-toggler">
+        <span class="navbarToggler"><span></span><span></span><span></span></span>
+    </div>
+
+
 
     <!-- Menu -->
     <div class="classy-menu">
@@ -32,6 +32,7 @@
         </div>
 
         <div class="classynav">
+
             <ul>
                 @foreach (var mainMenu in ViewBag.MainMenus)
                 {

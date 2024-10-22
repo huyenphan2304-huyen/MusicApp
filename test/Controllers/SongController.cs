@@ -32,7 +32,6 @@ namespace MusicApp.Controllers
         }
 
 
-        // GET: Song/Detail/5
         // Phương thức để hiển thị chi tiết bài hát theo Id
         public ActionResult SongDetail(int id)
         {

@@ -13,7 +13,8 @@
                     @foreach (var item in ViewBag.WeeksTop as List<MusicApp.Models.Miscellaneous>)
                     {
 
-                <div class="single-top-item d-flex wow fadeInUp" onclick="location.href='@Url.Action("SongDetail", "Song", new { meta = item.Meta, id = item.Id })'" style="cursor: pointer;">
+                <div class="single-top-item d-flex wow fadeInUp" onclick="location.href='@Url.RouteUrl("SongDetail", new { type = "song", meta = item.Meta, id = item.Id })'"
+                     style="cursor: pointer;">
                     <div class="thumbnail">
                         <img src="@item.ImageUrl" alt="">
                     </div>
@@ -35,7 +36,9 @@
 
                     @foreach (var hit in ViewBag.NewHits as List<MusicApp.Models.Miscellaneous>)
                     {
-                <div class="single-new-item d-flex align-items-center justify-content-between wow fadeInUp" onclick="location.href='@Url.Action("SongDetail", "Song", new { meta = hit.Meta, id = hit.Id })'" style="cursor: pointer;">
+                <div class="single-new-item d-flex align-items-center justify-content-between wow fadeInUp" 
+                     onclick="location.href='@Url.RouteUrl("SongDetail", new { type = "song", meta = hit.Meta, id = hit.Id })'"
+                     style="cursor: pointer;">
                     <div class="first-part d-flex align-items-center">
                         <div class="thumbnail">
                             <img src="@hit.ImageUrl" alt="">
