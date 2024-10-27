@@ -29,8 +29,8 @@
       <Column Name="[Order]" Member="Order" Type="System.Int32" DbType="Int" CanBeNull="true" />
       <Column Name="DateBegin" Type="System.DateTime" DbType="SmallDateTime" CanBeNull="true" />
       <Association Name="Artist_Album" Member="Albums" ThisKey="Id" OtherKey="ArtistId" Type="Album" />
-      <Association Name="Artist_Miscellaneous" Member="Miscellaneous" ThisKey="Id" OtherKey="ArtistId" Type="Miscellaneous" />
       <Association Name="Artist_Song" Member="Songs" ThisKey="Id" OtherKey="ArtistId" Type="Song" />
+      <Association Name="Artist_Miscellaneous" Member="Miscellaneous" ThisKey="Id" OtherKey="ArtistId" Type="Miscellaneous" />
     </Type>
   </Table>
   <Table Name="dbo.Breadcrumbs" Member="Breadcrumbs">
@@ -43,6 +43,28 @@
       <Column Name="Hide" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
       <Column Name="[Order]" Member="Order" Type="System.Int32" DbType="Int" CanBeNull="true" />
       <Column Name="DateBegin" Type="System.DateTime" DbType="Date" CanBeNull="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Songs" Member="Songs">
+    <Type Name="Song">
+      <Column Name="Id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="Title" Type="System.String" DbType="NVarChar(255) NOT NULL" CanBeNull="false" />
+      <Column Name="ArtistId" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="CategoryId" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="ReleaseDate" Type="System.DateTime" DbType="Date" CanBeNull="true" />
+      <Column Name="CoverImageUrl" Type="System.String" DbType="NVarChar(500)" CanBeNull="true" />
+      <Column Name="Url" Type="System.String" DbType="NVarChar(500) NOT NULL" CanBeNull="false" />
+      <Column Name="IsFeatured" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Column Name="AlbumId" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="Meta" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="Hide" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Column Name="[Order]" Member="Order" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="DateBegin" Type="System.DateTime" DbType="SmallDateTime" CanBeNull="true" />
+      <Column Name="Lyrics" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
+      <Association Name="Song_Miscellaneous" Member="Miscellaneous" ThisKey="Id" OtherKey="SongId" Type="Miscellaneous" />
+      <Association Name="Album_Song" Member="Album" ThisKey="AlbumId" OtherKey="Id" Type="Album" IsForeignKey="true" />
+      <Association Name="Artist_Song" Member="Artist" ThisKey="ArtistId" OtherKey="Id" Type="Artist" IsForeignKey="true" />
+      <Association Name="Category_Song" Member="Category" ThisKey="CategoryId" OtherKey="Id" Type="Category" IsForeignKey="true" />
     </Type>
   </Table>
   <Table Name="dbo.BrowserCategories" Member="BrowserCategories">
@@ -60,8 +82,8 @@
     <Type Name="Category">
       <Column Name="Id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
       <Column Name="Name" Type="System.String" DbType="NVarChar(100) NOT NULL" CanBeNull="false" />
-      <Association Name="Category_Menu" Member="Menus" ThisKey="Id" OtherKey="CategoryId" Type="Menu" />
       <Association Name="Category_Song" Member="Songs" ThisKey="Id" OtherKey="CategoryId" Type="Song" />
+      <Association Name="Category_Menu" Member="Menus" ThisKey="Id" OtherKey="CategoryId" Type="Menu" />
     </Type>
   </Table>
   <Table Name="dbo.Contact" Member="Contacts">
@@ -155,28 +177,6 @@
       <Column Name="Hide" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
       <Column Name="[Order]" Member="Order" Type="System.Int32" DbType="Int" CanBeNull="true" />
       <Column Name="DateBegin" Type="System.DateTime" DbType="Date" CanBeNull="true" />
-    </Type>
-  </Table>
-  <Table Name="dbo.Songs" Member="Songs">
-    <Type Name="Song">
-      <Column Name="Id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
-      <Column Name="Title" Type="System.String" DbType="NVarChar(255) NOT NULL" CanBeNull="false" />
-      <Column Name="ArtistId" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
-      <Column Name="CategoryId" Type="System.Int32" DbType="Int" CanBeNull="true" />
-      <Column Name="ReleaseDate" Type="System.DateTime" DbType="Date" CanBeNull="true" />
-      <Column Name="CoverImageUrl" Type="System.String" DbType="NVarChar(500)" CanBeNull="true" />
-      <Column Name="Url" Type="System.String" DbType="NVarChar(500) NOT NULL" CanBeNull="false" />
-      <Column Name="IsFeatured" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
-      <Column Name="AlbumId" Type="System.Int32" DbType="Int" CanBeNull="true" />
-      <Column Name="Meta" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
-      <Column Name="Hide" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
-      <Column Name="[Order]" Member="Order" Type="System.Int32" DbType="Int" CanBeNull="true" />
-      <Column Name="DateBegin" Type="System.DateTime" DbType="SmallDateTime" CanBeNull="true" />
-      <Column Name="Lyrics" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
-      <Association Name="Song_Miscellaneous" Member="Miscellaneous" ThisKey="Id" OtherKey="SongId" Type="Miscellaneous" />
-      <Association Name="Album_Song" Member="Album" ThisKey="AlbumId" OtherKey="Id" Type="Album" IsForeignKey="true" />
-      <Association Name="Artist_Song" Member="Artist" ThisKey="ArtistId" OtherKey="Id" Type="Artist" IsForeignKey="true" />
-      <Association Name="Category_Song" Member="Category" ThisKey="CategoryId" OtherKey="Id" Type="Category" IsForeignKey="true" />
     </Type>
   </Table>
 </Database>

@@ -1,4 +1,5 @@
 ﻿@model IEnumerable<MusicApp.Models.Menu>
+@using Microsoft.AspNet.Identity
 
 <nav class="classy-navbar justify-content-between" id="oneMusicNav">
     <!-- Nav brand -->
@@ -8,22 +9,18 @@
         {
             if (mainMenu.Name == "Logo")
             {
-                <img src="@mainMenu.Url" alt="" />
+                <img src="@mainMenu.Url" alt="Logo" />
             }
         }
     </a>
+
+    <!-- Search form -->
     <form class="form-inline my-2 my-lg-0">
         <input class="form-control" type="search" placeholder="Search" aria-label="Search" style="width: 300px; border: 1px solid white;">
         <button class="btn btn-outline-success" type="submit" style="color: white; border-color: white;">
             <img src="~/Content/fonts/magnifying-glass-solid.svg" alt="Search" style="width: 16px; height: 16px;">
         </button>
     </form>
-    <!-- Navbar Toggler -->
-    <div class="classy-navbar-toggler">
-        <span class="navbarToggler"><span></span><span></span><span></span></span>
-    </div>
-
-
 
     <!-- Menu -->
     <div class="classy-menu">
@@ -32,7 +29,6 @@
         </div>
 
         <div class="classynav">
-
             <ul>
                 @foreach (var mainMenu in ViewBag.MainMenus)
                 {
@@ -57,6 +53,32 @@
                     }
                 }
             </ul>
+
+            <!-- Login/Register và Cart Button -->
+            <div class="login-register-cart-button d-flex align-items-center">
+
+                @if (Request.IsAuthenticated)
+                {<!-- Khi đã đăng nhập: Hiển thị giỏ hàng và Log out -->
+                    <div class="cart-btn">
+                        <p>
+                            <img class="user-icon" src="~/Content/img/icons8-user-30.png" alt="">
+                        </p>
+                    </div>
+
+                    <div class="login-register-btn ml-15">
+                        @using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm", @class = "navbar-right" }))
+                        {
+                            @Html.AntiForgeryToken()
+                            <div>
+                                <a href="javascript:document.getElementById('logoutForm').submit()">Log out</a>
+                            </div>}
+                    </div> }
+                else
+                { <!-- Khi chưa đăng nhập: Hiển thị Login, ẩn giỏ hàng -->
+                    <div class="login-register-btn ml-15">
+                        <a href="@Url.Action("Login", "Account")" id="loginLink">Log in</a>
+                    </div>}
+            </div>
         </div>
     </div>
 </nav>

@@ -190,7 +190,7 @@ INSERT INTO Menu (Name, Url, ParentId, Meta, Hide, [Order], DateBegin) VALUES
 ('Album', '/Album', NULL, 'album', NULL, 3, GETDATE()),
 ('Event', '/Event', NULL, 'event', NULL, 4, GETDATE()),
 ('Category', '/Category', NULL, 'category', NULL, 5, GETDATE()),
-('Account', '/Account', NULL, 'account', NULL, 6, GETDATE());
+('Library', '/Library', NULL, 'account', NULL, 6, GETDATE());
 
 -- Thêm menu con cho Category và liên kết với bảng Category
 INSERT INTO Menu (Name, Url, ParentId, CategoryId, Meta, Hide, [Order], DateBegin) 
@@ -431,5 +431,20 @@ select * from Songs
 select * from Miscellaneous
 
 
+CREATE TABLE AspNetUsers (
+    Id UNIQUEIDENTIFIER NOT NULL PRIMARY KEY,
+    Email NVARCHAR(256) NOT NULL UNIQUE,
+    PasswordHash NVARCHAR(256) NULL,
+    SecurityStamp NVARCHAR(256) NULL,
+    UserName NVARCHAR(256) NOT NULL,
+);
 
+INSERT INTO AspNetUsers (Id, Email, PasswordHash, SecurityStamp, UserName)
+VALUES 
+(NEWID(), 'user@example.com', 'password', NEWID(), 'user@example.com');
+
+DROP TABLE [dbo].[AspNetUsers];
+
+
+select* from LoginForm
 
