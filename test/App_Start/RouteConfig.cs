@@ -58,7 +58,16 @@ namespace MusicApp
                  defaults: new { controller = "Account", action = "Index", formType = UrlParameter.Optional }
              );
 
-
+            routes.MapRoute(
+                name: "Library",
+                url: "{controller}/{action}/{id}",
+                defaults: new { controller = "Library", action = "Index", id = UrlParameter.Optional }
+            );
+            routes.MapRoute(
+                name: "Category",
+                url: "{controller}/{action}/{id}",
+                defaults: new { controller = "Category", action = "Index", id = UrlParameter.Optional }
+            );
             routes.MapRoute(
                 name: "Default",
                 url: "{controller}/{action}/{id}",

@@ -37,7 +37,7 @@
                         if (ViewBag.SubMenus.ContainsKey(mainMenu.Id) && ViewBag.SubMenus[mainMenu.Id].Count > 0)
                         {
                             <li>
-                                <a href="#">@mainMenu.Name</a>
+                                <a href="@mainMenu.Url">@mainMenu.Name</a>
                                 <ul class="dropdown">
                                     @foreach (var subMenu in ViewBag.SubMenus[mainMenu.Id])
                                     {

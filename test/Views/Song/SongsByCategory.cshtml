@@ -1,0 +1,37 @@
+﻿@{
+    ViewBag.Title = "Songs by Category";
+}
+
+@model List<MusicApp.ViewModels.SongViewModel>
+
+<section class="latest-albums-area section-padding-10">
+    <div class="container">
+        <div class="row">
+            <h2>Songs by Category</h2> <!-- Thay đổi tiêu đề -->
+        </div>
+        <div class="row">
+            <div class="col-12">
+                <div class="albums-slideshow owl-carousel">
+                    @foreach (var songViewModel in Model)
+                    {
+                        <div class="single-album" onclick="location.href='@Url.RouteUrl("SongDetail", new { type = "song", meta = songViewModel.Song.Meta, id = songViewModel.Song.Id })'" style="cursor: pointer;">
+                            <img src="@songViewModel.Song.CoverImageUrl" alt="@songViewModel.Song.Title" style="width:100%; height:auto;">
+                            <div class="album-info">
+                                <a href="@Url.RouteUrl("SongDetail", new { type = "song", meta = songViewModel.Song.Meta, id = songViewModel.Song.Id })">
+                                    <h5>@songViewModel.Song.Title</h5>
+                                </a>
+                                <p>@songViewModel.ArtistName</p>
+                                <p>
+                                    @if (songViewModel.Song.ReleaseDate.HasValue)
+                                    {
+                                        @songViewModel.Song.ReleaseDate.Value.ToString("dd/MM/yy") <!-- Định dạng ngày -->
+                                    }
+                                </p>
+                            </div>
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

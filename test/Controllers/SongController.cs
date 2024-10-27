@@ -67,6 +67,28 @@ namespace MusicApp.Controllers
             // Trả về view SongDetail với dữ liệu ViewModel
             return View("SongDetail", viewModel);
         }
+        public ActionResult SongsByCategory(int categoryId)
+        {
+            // Lấy danh sách các bài hát theo CategoryId được chỉ định
+            var songs = from s in db.Songs
+                        join a in db.Artists on s.ArtistId equals a.Id
+                        where s.CategoryId == categoryId // Lọc theo CategoryId
+                        select new SongViewModel
+                        {
+                            Song = s,
+                            ArtistName = a.Name
+                        };
+
+            // Kiểm tra xem có bài hát nào không
+            if (!songs.Any())
+            {
+                return HttpNotFound("Không tìm thấy bài hát trong thể loại này.");
+            }
+
+            // Trả về view với danh sách các bài hát theo thể loại
+            ViewBag.CategoryId = categoryId; // Ghi nhận CategoryId để sử dụng trong view
+            return PartialView("SongsByCategory", songs.ToList());
+        }
 
 
     }

@@ -1,0 +1,26 @@
+﻿@model List<MusicApp.Models.Category>
+
+@{
+    ViewBag.Title = "Categories";
+}
+
+<section class="categories-area section-padding-10 mt-15>
+    <div class="container">
+        <div class="row">
+            <h2>Categories</h2>
+        </div>
+        @foreach (var category in Model)
+        {
+            <div class="category-section">
+                <h3>@category.Name</h3> <!-- Tiêu đề thể loại -->
+                @{
+                    var songs = Html.Action("SongsByCategory", "Song", new { categoryId = category.Id });
+                }
+
+                @songs
+            </div>
+        }
+    </div>
+</section>
+
+@Html.Action("LastestSongs","Song")
