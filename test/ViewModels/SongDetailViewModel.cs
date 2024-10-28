@@ -9,5 +9,7 @@ namespace MusicApp.ViewModels
         public Song Song { get; set; }
         public List<Miscellaneous> WeeksTop { get; set; }
         public string WeeksTopTitle { get; set; }
+        public int CategoryId { get; set; } // Thêm thuộc tính CategoryId
+
     }
 }

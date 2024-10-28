@@ -1,0 +1,44 @@
+﻿
+@{
+    ViewBag.Title = "My Favorite";
+}
+
+@model List<MusicApp.ViewModels.SongViewModel>
+
+<!-- ##### Song Area Start ##### -->
+<div class="one-music-songs-area mb-70">
+    <div class="container">
+        <div class="row">
+            <!-- Hiển thị tiêu đề My Favorite -->
+            <h2>@ViewBag.Title</h2>
+
+            <!-- Hiển thị từng bài hát yêu thích -->
+            @foreach (var songViewModel in Model)
+            {
+        <div class="col-12">
+
+                <div class="single-song-area mb-30 d-flex flex-wrap align-items-end"  onclick="location.href='@Url.RouteUrl("SongDetail", new { type = "song", meta = songViewModel.Song.Meta, id = songViewModel.Song.Id })'" style="cursor: pointer;">
+                    <div class="song-thumbnail">
+                        <!-- Hiển thị ảnh bìa bài hát -->
+                        <img src="@songViewModel.Song.CoverImageUrl" alt="@songViewModel.Song.Title">
+                    </div>
+                    <div class="song-play-area">
+                        <div class="song-name">
+                            <!-- Hiển thị tên bài hát và nghệ sĩ -->
+                            <p>
+                                <a>@songViewModel.Song.Title - @songViewModel.ArtistName</a>
+
+                            </p>
+                        </div>
+                        <audio preload="auto" controls>
+                            <!-- Hiển thị đường dẫn đến file nhạc -->
+                            <source src="@songViewModel.Song.Url">
+                        </audio>
+                    </div>
+                </div>
+            </div>
+            }
+        </div>
+    </div>
+</div>
+<!-- ##### Song Area End ##### -->

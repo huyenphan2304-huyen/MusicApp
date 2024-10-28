@@ -1365,6 +1365,75 @@ img {
         color: #fff;
     }
 }
+.single-song-area {
+    position: relative;
+    z-index: 1;
+    background-color: #f5f9fa;
+
+
+    .song-thumbnail {
+        position: relative;
+        z-index: 1;
+        @include flex(0 0 120px);
+        max-width: 120px;
+        width: 135px;
+        margin-right: 20px;
+
+        img {
+            width: 100%;
+        }
+
+        @media #{$breakpoint-xs} {
+            margin-right: 0;
+            @include flex(0 0 100%);
+            max-width: 100%;
+            width: 100%;
+        }
+    }
+
+    .song-play-area {
+        position: relative;
+        z-index: 1;
+        @include flex(0 0 calc(100% - 185px));
+        max-width: calc(100% - 185px);
+        width: calc(100% - 185px);
+        background-color: #262626;
+        padding: 15px 30px 20px;
+
+        @media #{$breakpoint-xs} {
+            @include flex(0 0 100%);
+            max-width: 100%;
+            width: 100%;
+        }
+
+        .song-name p {
+            color: #b8b8b8;
+            margin-bottom: 5px;
+        }
+
+        .audioplayer {
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            height: auto;
+            align-items: center;
+            border: none;
+            border-radius: 0;
+            background: transparent;
+        }
+
+        .audioplayer-playing .audioplayer-playpause,
+        .audioplayer:not(.audioplayer-playing) .audioplayer-playpause:hover,
+        .audioplayer:not(.audioplayer-playing) .audioplayer-playpause {
+            background: #fff;
+        }
+
+        .audioplayer-time {
+            font-size: 14px;
+            color: #fff;
+        }
+    }
+}
 
 .song-play-area {
     position: relative;
@@ -1842,7 +1911,7 @@ img {
     z-index: 10;
     width: 100%;
     height: 385px;
-
+    margin-bottom: 20px;
     @media #{$breakpoint-xs} {
         height: 270px;
     }

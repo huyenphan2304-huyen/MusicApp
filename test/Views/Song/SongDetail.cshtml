@@ -47,12 +47,15 @@
                 </section>
             </div>
         
-            <div class="row lyrics padding-10">
+            <div class="row lyrics padding-10" style="background-color:#f5f9fa; padding:inherit;">
 
                 <div class="song-name">
                     <h2>Lyrics</h2>
                 </div>
-                <p>@Model.Song.Lyrics</p>
+                <div>
+                    <p>@Model.Song.Lyrics</p>
+
+                </div>
             </div>
         </div>
 
@@ -89,6 +92,6 @@
 </div>
 
 <div>
-    @Html.Action("LatestAlbums", "Home")
+    @Html.Action("SongsByCategory", "Song", new { categoryId = Model.CategoryId })
 
 </div>

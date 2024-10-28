@@ -1,0 +1,43 @@
+﻿@model MusicApp.ViewModels.PlaylistDetailViewModel
+
+@{
+    ViewBag.Title = Model.PlaylistName; // Set the page title to the playlist name
+}
+
+<!-- ##### Breadcrumb Start ##### -->
+@Html.Action("GetBreadcrumb", "Breadcrumb", new { pageTitle = Model.PlaylistName })
+<!-- ##### Breadcrumb End ##### -->
+
+
+<section class="playlist-detail section-padding-10">
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <h2>@Model.PlaylistName</h2>
+                <p><strong>Created on:</strong>@(@Model.CreatedDate?.ToString("dd/MM/yyyy"))</p>
+                <p>@Model.PlaylistDescription</p>
+                <hr />
+                <div class="song-list">
+                    @foreach (var songViewModel in Model.Songs)
+                    {
+                        <div class="single-song-area mb-30 d-flex flex-wrap align-items-end">
+                            <div class="song-thumbnail">
+                                <img src="@songViewModel.Song.CoverImageUrl" alt="@songViewModel.Song.Title">
+                            </div>
+                            <div class="song-play-area">
+                                <div class="song-name">
+                                    <p>
+                                        <a>@songViewModel.Song.Title - @songViewModel.ArtistName</a>
+                                    </p>
+                                </div>
+                                <audio preload="auto" controls>
+                                    <source src="@songViewModel.Song.Url">
+                                </audio>
+                            </div>
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

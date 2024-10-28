@@ -1,18 +1,18 @@
 ﻿@model List<MusicApp.Models.Category>
 
 @{
-    ViewBag.Title = "Categories";
+    ViewBag.Title = "Category";
 }
 
-<section class="categories-area section-padding-10 mt-15>
+<!-- Gọi breadcrumb cho trang Category -->
+@Html.Action("GetBreadcrumb", "Breadcrumb", new { pageTitle = ViewBag.Title })
+
+<section class="categories-area section-padding-10 mt-50>
     <div class="container">
-        <div class="row">
-            <h2>Categories</h2>
-        </div>
+
         @foreach (var category in Model)
         {
             <div class="category-section">
-                <h3>@category.Name</h3> <!-- Tiêu đề thể loại -->
                 @{
                     var songs = Html.Action("SongsByCategory", "Song", new { categoryId = category.Id });
                 }
@@ -23,4 +23,3 @@
     </div>
 </section>
 
-@Html.Action("LastestSongs","Song")

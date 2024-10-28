@@ -61,7 +61,9 @@ namespace MusicApp.Controllers
             {
                 Song = song,
                 WeeksTop = weeksTop, // Danh sách top hits tuần này
-                WeeksTopTitle = "This Week's Top Hits" // Tiêu đề cho phần top hits
+                WeeksTopTitle = "This Week's Top Hits", // Tiêu đề cho phần top hits
+                CategoryId = (int)song.CategoryId // Truyền CategoryId để gọi SongsByCategory trong view
+
             };
 
             // Trả về view SongDetail với dữ liệu ViewModel
@@ -69,6 +71,13 @@ namespace MusicApp.Controllers
         }
         public ActionResult SongsByCategory(int categoryId)
         {
+            // Lấy tên thể loại từ bảng Category
+            var category = db.Categories.FirstOrDefault(c => c.Id == categoryId);
+            if (category == null)
+            {
+                return HttpNotFound("Thể loại không tồn tại.");
+            }
+
             // Lấy danh sách các bài hát theo CategoryId được chỉ định
             var songs = from s in db.Songs
                         join a in db.Artists on s.ArtistId equals a.Id
@@ -86,9 +95,10 @@ namespace MusicApp.Controllers
             }
 
             // Trả về view với danh sách các bài hát theo thể loại
-            ViewBag.CategoryId = categoryId; // Ghi nhận CategoryId để sử dụng trong view
+            ViewBag.CategoryName = category.Name; // Ghi nhận CategoryName để sử dụng trong view
             return PartialView("SongsByCategory", songs.ToList());
         }
+
 
 
     }

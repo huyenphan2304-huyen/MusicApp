@@ -4,6 +4,8 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 
 }
+<!-- Gọi breadcrumb cho trang Album -->
+@Html.Action("GetBreadcrumb", "Breadcrumb", new { pageTitle = ViewBag.Title })
 
 <!-- ##### Album Catagory Area Start ##### -->
 <section class="album-catagory section-padding-100-0">

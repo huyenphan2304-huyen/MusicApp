@@ -208,12 +208,14 @@
     <Compile Include="Areas\admin\adminAreaRegistration.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\AlbumController.cs" />
+    <Compile Include="Controllers\BreadcrumbController.cs" />
     <Compile Include="Controllers\CategoryController.cs" />
     <Compile Include="Controllers\EventController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\LayoutController.cs" />
     <Compile Include="Controllers\LibraryController.cs" />
     <Compile Include="Controllers\MenuController.cs" />
+    <Compile Include="Controllers\PlaylistController.cs" />
     <Compile Include="Controllers\SongController.cs" />
     <Compile Include="Controllers\UserController.cs" />
     <Compile Include="Global.asax.cs">
@@ -239,6 +241,8 @@
     <Compile Include="ViewModels\EventDetailViewModel.cs" />
     <Compile Include="ViewModels\ManageViewModels.cs" />
     <Compile Include="ViewModels\MiscellaneousViewModel.cs" />
+    <Compile Include="ViewModels\PlaylistDetailViewModel.cs" />
+    <Compile Include="ViewModels\PlaylistViewModel.cs" />
     <Compile Include="ViewModels\SongDetailViewModel.cs" />
     <Compile Include="ViewModels\SongViewModel.cs" />
   </ItemGroup>
@@ -474,11 +478,16 @@
     <Content Include="Views\Category\category.cshtml" />
     <Content Include="Views\Library\Library.cshtml" />
     <Content Include="Views\Song\SongsByCategory.cshtml" />
+    <Content Include="Views\Shared\_Breadcrumb.cshtml" />
+    <Content Include="Views\Library\MyPlaylists.cshtml" />
+    <Content Include="Views\Playlist\PlaylistDetail.cshtml" />
+    <Content Include="Views\Library\MyFavorite.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Areas\admin\Controllers\" />
     <Folder Include="Areas\admin\Data\" />
+    <Folder Include="Views\Breadcrums\" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{3259AA49-8AA1-44D3-9025-A0B520596A8C}" />

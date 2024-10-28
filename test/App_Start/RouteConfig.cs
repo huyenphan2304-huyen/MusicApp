@@ -23,6 +23,13 @@ namespace MusicApp
                 defaults: new { controller = "Event", action = "EventDetail", id = UrlParameter.Optional },
                 constraints: new { type = "event" } 
             );
+            // Định nghĩa route cho PlaylistDetail
+            routes.MapRoute(
+                name: "PlaylistDetail",
+                 url: "{type}/{id}",
+                defaults: new { controller = "Playlist", action = "PlaylistDetail", id = UrlParameter.Optional },
+                constraints: new { type = "playlist" }
+            );
             // Định nghĩa route cho SongDetail
             routes.MapRoute(
                 name: "SongDetail",

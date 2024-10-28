@@ -1,0 +1,31 @@
+﻿@model List<MusicApp.ViewModels.PlaylistViewModel>
+@{
+    ViewBag.Title = "My Playlists";
+}
+<section class="latest-albums-area section-padding-10">
+    <div class="container">
+        <div class="row">
+            <h2>@ViewBag.MyPlaylistName</h2> <!-- Hiển thị tên thể loại -->
+        </div>
+        <div class="row">
+            <div class="col-12">
+                <div class="albums-slideshow owl-carousel">
+                    @foreach (var playlistViewModel in Model)
+                    {
+
+                        <div class="single-album" onclick="location.href='@Url.RouteUrl("PlayListDetail", new { type = "playlist", id = playlistViewModel.Id })'" style="cursor: pointer;">
+                            <img src="@playlistViewModel.FirstSongCoverImageUrl" alt="@playlistViewModel.PlaylistName" style="width:100%; height:auto;">
+                            <div class="album-info">
+                                <a href="@Url.RouteUrl("PlaylistDetail", new { id = playlistViewModel.Id })">
+                                    <h5>@playlistViewModel.PlaylistName</h5>
+                                </a>
+                                <p>@playlistViewModel.CreatedBy</p>
+                                <p>@playlistViewModel.CreatedDate.ToString("dd/MM/yyyy")</p>
+                            </div>
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

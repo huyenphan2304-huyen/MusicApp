@@ -1,13 +1,9 @@
-﻿@{
-    ViewBag.Title = "Songs by Category";
-}
-
-@model List<MusicApp.ViewModels.SongViewModel>
+﻿@model List<MusicApp.ViewModels.SongViewModel>
 
 <section class="latest-albums-area section-padding-10">
     <div class="container">
         <div class="row">
-            <h2>Songs by Category</h2> <!-- Thay đổi tiêu đề -->
+            <h2>@ViewBag.CategoryName</h2> <!-- Hiển thị tên thể loại -->
         </div>
         <div class="row">
             <div class="col-12">
@@ -24,7 +20,7 @@
                                 <p>
                                     @if (songViewModel.Song.ReleaseDate.HasValue)
                                     {
-                                        @songViewModel.Song.ReleaseDate.Value.ToString("dd/MM/yy") <!-- Định dạng ngày -->
+                                        @songViewModel.Song.ReleaseDate.Value.ToString("dd/MM/yyyy") <!-- Định dạng ngày -->
                                     }
                                 </p>
                             </div>

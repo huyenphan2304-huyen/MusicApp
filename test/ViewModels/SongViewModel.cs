@@ -10,5 +10,6 @@ namespace MusicApp.ViewModels
     {
         public Song Song { get; set; }
         public string ArtistName { get; set; }
+
     }
 }
