@@ -482,6 +482,7 @@
     <Content Include="Views\Library\MyPlaylists.cshtml" />
     <Content Include="Views\Playlist\PlaylistDetail.cshtml" />
     <Content Include="Views\Library\MyFavorite.cshtml" />
+    <Content Include="Views\Breadcrumb\GetBreadcrumb.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
