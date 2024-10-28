@@ -26,7 +26,7 @@ namespace MusicApp.Controllers
             }
 
             // Trả về PartialView với model là breadcrumb
-            return PartialView("GetBreadcrumb", breadcrumb);
+            return PartialView("_Breadcrumb", breadcrumb);
         }
     }
 }

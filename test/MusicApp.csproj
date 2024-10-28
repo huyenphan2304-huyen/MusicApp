@@ -425,7 +425,6 @@
     <Content Include="Views\Home\About.cshtml" />
     <Content Include="Views\Home\Contact.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
-    <Content Include="Views\Menu\FooterMenu.cshtml" />
     <Content Include="Views\Menu\GetMenu.cshtml" />
     <Content Include="Views\Menu\GetMenuForFooter.cshtml" />
     <Content Include="Views\Home\GetFeaturedSongs.cshtml" />
@@ -442,8 +441,6 @@
     <Content Include="Views\Event\getEvents.cshtml" />
     <Content Include="Views\Event\events.cshtml" />
     <Content Include="Views\Event\BreadcumbArea.cshtml" />
-    <Content Include="Views\Account\LoginForm.cshtml" />
-    <Content Include="Views\Account\RegisterForm.cshtml" />
     <Content Include="Views\Account\Account.cshtml" />
     <Content Include="Views\User\GetFavoriteSongs.cshtml" />
     <Content Include="Views\Album\Album.cshtml" />
@@ -482,13 +479,12 @@
     <Content Include="Views\Library\MyPlaylists.cshtml" />
     <Content Include="Views\Playlist\PlaylistDetail.cshtml" />
     <Content Include="Views\Library\MyFavorite.cshtml" />
-    <Content Include="Views\Breadcrumb\GetBreadcrumb.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Areas\admin\Controllers\" />
     <Folder Include="Areas\admin\Data\" />
-    <Folder Include="Views\Breadcrums\" />
+    <Folder Include="Views\Breadcrumb\" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{3259AA49-8AA1-44D3-9025-A0B520596A8C}" />

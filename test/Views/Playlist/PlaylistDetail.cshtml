@@ -20,7 +20,7 @@
                 <div class="song-list">
                     @foreach (var songViewModel in Model.Songs)
                     {
-                        <div class="single-song-area mb-30 d-flex flex-wrap align-items-end">
+                        <div class="single-song-area mb-30 d-flex flex-wrap align-items-end"  onclick="location.href='@Url.RouteUrl("SongDetail", new { type = "song", meta = songViewModel.Song.Meta, id = songViewModel.Song.Id })'" style="cursor: pointer;">
                             <div class="song-thumbnail">
                                 <img src="@songViewModel.Song.CoverImageUrl" alt="@songViewModel.Song.Title">
                             </div>
