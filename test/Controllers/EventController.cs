@@ -24,12 +24,7 @@ namespace MusicApp.Controllers
             var events = db.Events.ToList();
             return PartialView("getEvents",events);
         }
-        public ActionResult BreadcumbArea()
-        {
-            var breadcrumb = db.Breadcrumbs.FirstOrDefault();
-
-            return PartialView("BreadcumbArea",breadcrumb);
-        }
+        
         public ActionResult EventDetail(int id)
         {
             // Truy vấn sự kiện từ cơ sở dữ liệu
@@ -49,7 +44,12 @@ namespace MusicApp.Controllers
 
             return View(); // Trả về view
         }
+        public ActionResult BreadcumbArea()
+        {
+            var breadcrumb = db.Breadcrumbs.FirstOrDefault();
 
+            return PartialView("BreadcumbArea", breadcrumb);
+        }
 
     }
 }

@@ -727,3 +727,5 @@ VALUES
 (4, 11), -- Bài hát 11 trong playlist 'Workout Mix'
 (4, 12); -- Bài hát 12 trong playlist 'Workout Mix'
 
+select * from Events
+

@@ -9,28 +9,33 @@ namespace MusicApp
         {
             routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
 
-            // Route AlbumDetail cần đặt trước route Default
+            routes.MapRoute(
+                name: "Album",
+                url: "Album/{action}/{id}",
+                defaults: new { controller = "Album", action = "Index", id = UrlParameter.Optional }
+                );
+            // Route AlbumDetail 
             routes.MapRoute(
                  name: "AlbumDetail",
                  url: "{type}/{meta}/{id}",
                  defaults: new { controller = "Album", action = "AlbumDetail", id = UrlParameter.Optional },
-                 constraints: new { type = "album" } // Chỉ áp dụng route này cho 'album'
+                 constraints: new { type = "album" } 
             );
-            // Định nghĩa route cho EventDetail
+            // route EventDetail
             routes.MapRoute(
                 name: "EventDetail",
                  url: "{type}/{meta}/{id}",
                 defaults: new { controller = "Event", action = "EventDetail", id = UrlParameter.Optional },
                 constraints: new { type = "event" } 
             );
-            // Định nghĩa route cho PlaylistDetail
+            // PlaylistDetail
             routes.MapRoute(
                 name: "PlaylistDetail",
                  url: "{type}/{id}",
                 defaults: new { controller = "Playlist", action = "PlaylistDetail", id = UrlParameter.Optional },
                 constraints: new { type = "playlist" }
             );
-            // Định nghĩa route cho SongDetail
+            // SongDetail
             routes.MapRoute(
                 name: "SongDetail",
                  url: "{type}/{meta}/{id}",
@@ -47,11 +52,14 @@ namespace MusicApp
                 name: "Song",
                 url: "Song/{action}/{id}",
                 defaults: new { controller = "Song", action = "Index", id = UrlParameter.Optional }
-            );
+
+
+);
             routes.MapRoute(
                 name: "Event",
                 url: "Event/{action}/{id}",
                 defaults: new { controller = "Event", action = "Index", id = UrlParameter.Optional }
+                 
             );
 
             routes.MapRoute(
@@ -60,7 +68,7 @@ namespace MusicApp
                 defaults: new { controller = "Account", action = "Index", id = UrlParameter.Optional }
             );
             routes.MapRoute(
-                 name: "AccountForm",  // Đổi tên route này để tránh trùng lặp
+                 name: "AccountForm", 
                  url: "account/{formType}",
                  defaults: new { controller = "Account", action = "Index", formType = UrlParameter.Optional }
              );
@@ -74,6 +82,7 @@ namespace MusicApp
                 name: "Category",
                 url: "{controller}/{action}/{id}",
                 defaults: new { controller = "Category", action = "Index", id = UrlParameter.Optional }
+                 
             );
             routes.MapRoute(
                 name: "Default",

@@ -43,8 +43,8 @@ namespace MusicApp.Controllers
 
             // Lấy danh sách Miscellaneous từ cơ sở dữ liệu, sắp xếp và lọc các mục không ẩn
             var miscellaneousItems = db.Miscellaneous
-                .Where(m => !m.Hide) // Chỉ lấy những mục không bị ẩn
-                .OrderBy(m => m.OrderPosition) // Sắp xếp theo OrderPosition
+                .Where(m => !m.Hide) 
+                .OrderBy(m => m.OrderPosition) 
                 .ToList();
 
             // Chia thành các nhóm cho This Week's Top Hits
@@ -60,13 +60,13 @@ namespace MusicApp.Controllers
             var viewModel = new SongDetailViewModel
             {
                 Song = song,
-                WeeksTop = weeksTop, // Danh sách top hits tuần này
-                WeeksTopTitle = "This Week's Top Hits", // Tiêu đề cho phần top hits
-                CategoryId = (int)song.CategoryId // Truyền CategoryId để gọi SongsByCategory trong view
+                WeeksTop = weeksTop,
+                WeeksTopTitle = "This Week's Top Hits", 
+                CategoryId = (int)song.CategoryId 
 
             };
+            ViewBag.Lyrics = song.Lyrics;
 
-            // Trả về view SongDetail với dữ liệu ViewModel
             return View("SongDetail", viewModel);
         }
         public ActionResult SongsByCategory(int categoryId)
@@ -77,7 +77,6 @@ namespace MusicApp.Controllers
             {
                 return HttpNotFound("Thể loại không tồn tại.");
             }
-
             // Lấy danh sách các bài hát theo CategoryId được chỉ định
             var songs = from s in db.Songs
                         join a in db.Artists on s.ArtistId equals a.Id
@@ -87,19 +86,13 @@ namespace MusicApp.Controllers
                             Song = s,
                             ArtistName = a.Name
                         };
-
-            // Kiểm tra xem có bài hát nào không
             if (!songs.Any())
             {
                 return HttpNotFound("Không tìm thấy bài hát trong thể loại này.");
             }
-
             // Trả về view với danh sách các bài hát theo thể loại
             ViewBag.CategoryName = category.Name; // Ghi nhận CategoryName để sử dụng trong view
             return PartialView("SongsByCategory", songs.ToList());
         }
-
-
-
     }
 }

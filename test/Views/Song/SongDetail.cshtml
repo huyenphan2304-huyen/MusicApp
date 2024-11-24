@@ -3,7 +3,6 @@
 @{
     ViewBag.Title = "SongDetail";
 }
-
 <!-- ***** Container ***** -->
 <div class="container " style="padding-top: 80px;">
     <div class="row">
@@ -59,10 +58,10 @@
             </div>
         </div>
 
-        <!-- ***** Weeks Top bên phải ***** -->
+        <!-- ***** Weeks Top ***** -->
         <div class="col-12 col-lg-4">
             <div class="weeks-top-area mb-100">
-                <div class="section-heading text-left mb-50 wow fadeInUp" data-wow-delay="50ms">
+                <div class="single-top-item d-flex wow fadeInUp" onclick="location.href='@Url.RouteUrl("SongDetail", new { type = "song", meta = Model.Song.Meta, id = Model.Song.Id })'"
                     <h2>@Model.WeeksTopTitle</h2>
                 </div>
 
@@ -95,3 +94,12 @@
     @Html.Action("SongsByCategory", "Song", new { categoryId = Model.CategoryId })
 
 </div>
+
+
+<script>
+    // Truyền lyrics từ ViewBag vào JavaScript
+    var lyrics = "@ViewBag.Lyrics";
+
+    // Hiển thị lyrics ra console của trình duyệt
+    console.log("Lyrics:", lyrics);
+</script>

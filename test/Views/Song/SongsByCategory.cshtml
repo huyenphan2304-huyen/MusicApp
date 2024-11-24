@@ -3,14 +3,15 @@
 <section class="latest-albums-area section-padding-10">
     <div class="container">
         <div class="row">
-            <h2>@ViewBag.CategoryName</h2> <!-- Hiển thị tên thể loại -->
+            <h2>@ViewBag.CategoryName</h2> 
         </div>
         <div class="row">
             <div class="col-12">
                 <div class="albums-slideshow owl-carousel">
                     @foreach (var songViewModel in Model)
                     {
-                        <div class="single-album" onclick="location.href='@Url.RouteUrl("SongDetail", new { type = "song", meta = songViewModel.Song.Meta, id = songViewModel.Song.Id })'" style="cursor: pointer;">
+                        <div class="single-album" 
+                             onclick="location.href='@Url.RouteUrl("SongDetail", new { type = "song", meta = songViewModel.Song.Meta, id = songViewModel.Song.Id })'" style="cursor: pointer;">
                             <img src="@songViewModel.Song.CoverImageUrl" alt="@songViewModel.Song.Title" style="width:100%; height:auto;">
                             <div class="album-info">
                                 <a href="@Url.RouteUrl("SongDetail", new { type = "song", meta = songViewModel.Song.Meta, id = songViewModel.Song.Id })">
@@ -20,7 +21,7 @@
                                 <p>
                                     @if (songViewModel.Song.ReleaseDate.HasValue)
                                     {
-                                        @songViewModel.Song.ReleaseDate.Value.ToString("dd/MM/yyyy") <!-- Định dạng ngày -->
+                                        @songViewModel.Song.ReleaseDate.Value.ToString("dd/MM/yyyy") 
                                     }
                                 </p>
                             </div>

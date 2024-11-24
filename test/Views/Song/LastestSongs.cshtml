@@ -14,7 +14,9 @@
                 <div class="albums-slideshow owl-carousel">
                     @foreach (var songViewModel in Model)
                     {
-                    <div class="single-album"  onclick="location.href='@Url.RouteUrl("SongDetail", new { type = "song", meta = songViewModel.Song.Meta, id = songViewModel.Song.Id })'"   style="cursor: pointer;">
+                    <div class="single-album"  
+                         onclick="location.href='@Url.RouteUrl("SongDetail", new { type = "song", meta = songViewModel.Song.Meta, id = songViewModel.Song.Id })'"
+                         style="cursor: pointer;">
                         <img src="@songViewModel.Song.CoverImageUrl" alt="@songViewModel.Song.Title" style="width:100%; height:auto;">
                         <div class="album-info">
                             <a href="@Url.RouteUrl("SongDetail", new { type = "song", meta = songViewModel.Song.Meta, id = songViewModel.Song.Id })">

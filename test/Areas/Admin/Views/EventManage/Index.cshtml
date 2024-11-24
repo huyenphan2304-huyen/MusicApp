@@ -1,0 +1,107 @@
+﻿@using PagedList.Mvc;
+@using PagedList;
+
+@model IPagedList<MusicApp.Models.Event>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+<p>
+    <a href="@Url.Action("Create", "Event")" class="create-link">
+        <img src="~/Areas/Admin/Content/assets/img/icons8-add-50.png" alt="Create New" />
+    </a>
+</p>
+
+<form method="get" id="pageSizeForm">
+    <label for="pageSize">Số lượng bài hát mỗi trang:</label>
+    <select id="pageSize" name="pageSize" onchange="document.getElementById('pageSizeForm').submit();">
+        <option value="5" @(Request.QueryString["pageSize"] == "5" ? "selected" : "")>5</option>
+        <option value="10" @(Request.QueryString["pageSize"] == "10" ? "selected" : "")>10</option>
+        <option value="20" @(Request.QueryString["pageSize"] == "20" ? "selected" : "")>20</option>
+        <option value="50" @(Request.QueryString["pageSize"] == "50" ? "selected" : "")>50</option>
+    </select>
+</form>
+
+<div class="table-responsive">
+    <table class="table">
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model[0].Title)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model[0].Place)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model[0].Date)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model[0].ImageUrl)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model[0].Description)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model[0].Meta)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model[0].Hide)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model[0].Order)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model[0].DateBegin)
+            </th>
+            <th></th>
+        </tr>
+
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Title)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Place)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Date)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ImageUrl)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Description)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Meta)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Hide)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Order)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.DateBegin)
+                </td>
+                <td>
+                    <p style=" display: inline-flex;">
+
+                        <a href="@Url.Action("Details", "Event", new { id = item.Id })" class="create-link">
+                            <img src="~/Areas/Admin/Content/assets/img/icons8-edit-30.png" alt="Edit" />
+                        </a>|
+                        <a href="@Url.Action("Delete", "Event", new { id = item.Id })" class="create-link">
+                            <img src="~/Areas/Admin/Content/assets/img/icons8-minus-30.png" alt="Delete" />
+                        </a>
+                        </p>
+                </td>
+            </tr>
+        }
+
+    </table>
+</div>
+
