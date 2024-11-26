@@ -17,7 +17,7 @@
                             <img src="@album.CoverImageUrl" alt="">
                         </div>
                         <div class="album-info">
-                            <a href="@Url.Action("AlbumDetail", "Album", new { id = album.Id })">
+                            <a href="@Url.RouteUrl("AlbumDetail", new { type = "album", meta = album.Meta, id = album.Id })">
                                 <h5>@album.Title</h5>
                             </a>
                             <p>@album.Artist</p>

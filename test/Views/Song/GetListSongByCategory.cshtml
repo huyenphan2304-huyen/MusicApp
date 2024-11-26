@@ -1,0 +1,36 @@
+﻿@model MusicApp.ViewModels.CategoryViewModel
+
+@{
+    ViewBag.Title = "Songs in " + Model.Category.Name + " Category";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<!-- Breadcrumb Section -->
+@Html.Action("GetBreadcrumb", "Breadcrumb", new { pageTitle = ViewBag.Title })
+
+<!-- Song List Area -->
+<section class="song-category section-padding-100-0">
+    <div class="container">
+
+        <h2>Songs in @Model.Category.Name</h2>
+
+        <div class="row oneMusic-songs">
+            @foreach (var song in Model.Songs)
+            {
+                <div class="col-12 col-sm-4 col-md-3 col-lg-2 single-song-item">
+                    <div class="single-song">
+                        <img src="@song.Song.CoverImageUrl" alt="@song.Song.Title">
+                        <div class="song-info">
+                            <a href="@Url.Action("SongDetail", "Song", new { id = song.Song.Id })">
+                                <h5>@song.Song.Title</h5>
+                            </a>
+                            <p>@song.ArtistName</p>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+
+    </div>
+</section>
+<!-- End of Song List Area -->

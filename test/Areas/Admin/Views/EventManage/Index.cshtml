@@ -10,7 +10,7 @@
 <h2>Index</h2>
 
 <p>
-    <a href="@Url.Action("Create", "Event")" class="create-link">
+    <a href="@Url.Action("Create", "EventManage")" class="create-link">
         <img src="~/Areas/Admin/Content/assets/img/icons8-add-50.png" alt="Create New" />
     </a>
 </p>
@@ -71,7 +71,9 @@
                     @Html.DisplayFor(modelItem => item.Date)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.ImageUrl)
+
+                    <img src="@Url.Content(item.ImageUrl)" alt="Cover Image" style="max-width: 100px; max-height: 100px;" />
+
                 </td>
                 <td>
                     @Html.DisplayFor(modelItem => item.Description)
@@ -91,10 +93,10 @@
                 <td>
                     <p style=" display: inline-flex;">
 
-                        <a href="@Url.Action("Details", "Event", new { id = item.Id })" class="create-link">
+                        <a href="@Url.Action("Edit", "EventManage", new { id = item.Id })" class="create-link">
                             <img src="~/Areas/Admin/Content/assets/img/icons8-edit-30.png" alt="Edit" />
                         </a>|
-                        <a href="@Url.Action("Delete", "Event", new { id = item.Id })" class="create-link">
+                        <a href="@Url.Action("Delete", "EventManage", new { id = item.Id })" class="create-link">
                             <img src="~/Areas/Admin/Content/assets/img/icons8-minus-30.png" alt="Delete" />
                         </a>
                         </p>

@@ -93,6 +93,9 @@ namespace MusicApp.Models
     partial void InsertAspNetUser(AspNetUser instance);
     partial void UpdateAspNetUser(AspNetUser instance);
     partial void DeleteAspNetUser(AspNetUser instance);
+    partial void InsertSlide(Slide instance);
+    partial void UpdateSlide(Slide instance);
+    partial void DeleteSlide(Slide instance);
     #endregion
 		
 		public MusicDbDataContext() : 
@@ -290,6 +293,14 @@ namespace MusicApp.Models
 			get
 			{
 				return this.GetTable<AspNetUser>();
+			}
+		}
+		
+		public System.Data.Linq.Table<Slide> Slides
+		{
+			get
+			{
+				return this.GetTable<Slide>();
 			}
 		}
 	}
@@ -620,6 +631,8 @@ namespace MusicApp.Models
 		
 		private EntitySet<Song> _Songs;
 		
+		private EntitySet<Slide> _Slides;
+		
 		private EntityRef<Artist> _Artist1;
 		
     #region Extensibility Method Definitions
@@ -653,6 +666,7 @@ namespace MusicApp.Models
 		public Album()
 		{
 			this._Songs = new EntitySet<Song>(new Action<Song>(this.attach_Songs), new Action<Song>(this.detach_Songs));
+			this._Slides = new EntitySet<Slide>(new Action<Slide>(this.attach_Slides), new Action<Slide>(this.detach_Slides));
 			this._Artist1 = default(EntityRef<Artist>);
 			OnCreated();
 		}
@@ -894,6 +908,19 @@ namespace MusicApp.Models
 			}
 		}
 		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Album_Slide", Storage="_Slides", ThisKey="Id", OtherKey="AlbumId")]
+		public EntitySet<Slide> Slides
+		{
+			get
+			{
+				return this._Slides;
+			}
+			set
+			{
+				this._Slides.Assign(value);
+			}
+		}
+		
 		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Artist_Album", Storage="_Artist1", ThisKey="ArtistId", OtherKey="Id", IsForeignKey=true)]
 		public Artist Artist1
 		{
@@ -955,6 +982,18 @@ namespace MusicApp.Models
 		}
 		
 		private void detach_Songs(Song entity)
+		{
+			this.SendPropertyChanging();
+			entity.Album = null;
+		}
+		
+		private void attach_Slides(Slide entity)
+		{
+			this.SendPropertyChanging();
+			entity.Album = this;
+		}
+		
+		private void detach_Slides(Slide entity)
 		{
 			this.SendPropertyChanging();
 			entity.Album = null;
@@ -5823,6 +5862,253 @@ namespace MusicApp.Models
 		{
 			this.SendPropertyChanging();
 			entity.AspNetUser = null;
+		}
+	}
+	
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.Slides")]
+	public partial class Slide : INotifyPropertyChanging, INotifyPropertyChanged
+	{
+		
+		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
+		
+		private int _Id;
+		
+		private System.Nullable<int> _AlbumId;
+		
+		private System.Nullable<System.DateTime> _CreatedDate;
+		
+		private string _Meta;
+		
+		private System.Nullable<bool> _Hide;
+		
+		private System.Nullable<int> _Order;
+		
+		private System.Nullable<System.DateTime> _DateBegin;
+		
+		private EntityRef<Album> _Album;
+		
+    #region Extensibility Method Definitions
+    partial void OnLoaded();
+    partial void OnValidate(System.Data.Linq.ChangeAction action);
+    partial void OnCreated();
+    partial void OnIdChanging(int value);
+    partial void OnIdChanged();
+    partial void OnAlbumIdChanging(System.Nullable<int> value);
+    partial void OnAlbumIdChanged();
+    partial void OnCreatedDateChanging(System.Nullable<System.DateTime> value);
+    partial void OnCreatedDateChanged();
+    partial void OnMetaChanging(string value);
+    partial void OnMetaChanged();
+    partial void OnHideChanging(System.Nullable<bool> value);
+    partial void OnHideChanged();
+    partial void OnOrderChanging(System.Nullable<int> value);
+    partial void OnOrderChanged();
+    partial void OnDateBeginChanging(System.Nullable<System.DateTime> value);
+    partial void OnDateBeginChanged();
+    #endregion
+		
+		public Slide()
+		{
+			this._Album = default(EntityRef<Album>);
+			OnCreated();
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Id", AutoSync=AutoSync.OnInsert, DbType="Int NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
+		public int Id
+		{
+			get
+			{
+				return this._Id;
+			}
+			set
+			{
+				if ((this._Id != value))
+				{
+					this.OnIdChanging(value);
+					this.SendPropertyChanging();
+					this._Id = value;
+					this.SendPropertyChanged("Id");
+					this.OnIdChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_AlbumId", DbType="Int")]
+		public System.Nullable<int> AlbumId
+		{
+			get
+			{
+				return this._AlbumId;
+			}
+			set
+			{
+				if ((this._AlbumId != value))
+				{
+					if (this._Album.HasLoadedOrAssignedValue)
+					{
+						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
+					}
+					this.OnAlbumIdChanging(value);
+					this.SendPropertyChanging();
+					this._AlbumId = value;
+					this.SendPropertyChanged("AlbumId");
+					this.OnAlbumIdChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_CreatedDate", DbType="DateTime")]
+		public System.Nullable<System.DateTime> CreatedDate
+		{
+			get
+			{
+				return this._CreatedDate;
+			}
+			set
+			{
+				if ((this._CreatedDate != value))
+				{
+					this.OnCreatedDateChanging(value);
+					this.SendPropertyChanging();
+					this._CreatedDate = value;
+					this.SendPropertyChanged("CreatedDate");
+					this.OnCreatedDateChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Meta", DbType="NVarChar(50)")]
+		public string Meta
+		{
+			get
+			{
+				return this._Meta;
+			}
+			set
+			{
+				if ((this._Meta != value))
+				{
+					this.OnMetaChanging(value);
+					this.SendPropertyChanging();
+					this._Meta = value;
+					this.SendPropertyChanged("Meta");
+					this.OnMetaChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Hide", DbType="Bit")]
+		public System.Nullable<bool> Hide
+		{
+			get
+			{
+				return this._Hide;
+			}
+			set
+			{
+				if ((this._Hide != value))
+				{
+					this.OnHideChanging(value);
+					this.SendPropertyChanging();
+					this._Hide = value;
+					this.SendPropertyChanged("Hide");
+					this.OnHideChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Name="[Order]", Storage="_Order", DbType="Int")]
+		public System.Nullable<int> Order
+		{
+			get
+			{
+				return this._Order;
+			}
+			set
+			{
+				if ((this._Order != value))
+				{
+					this.OnOrderChanging(value);
+					this.SendPropertyChanging();
+					this._Order = value;
+					this.SendPropertyChanged("Order");
+					this.OnOrderChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_DateBegin", DbType="SmallDateTime")]
+		public System.Nullable<System.DateTime> DateBegin
+		{
+			get
+			{
+				return this._DateBegin;
+			}
+			set
+			{
+				if ((this._DateBegin != value))
+				{
+					this.OnDateBeginChanging(value);
+					this.SendPropertyChanging();
+					this._DateBegin = value;
+					this.SendPropertyChanged("DateBegin");
+					this.OnDateBeginChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Album_Slide", Storage="_Album", ThisKey="AlbumId", OtherKey="Id", IsForeignKey=true)]
+		public Album Album
+		{
+			get
+			{
+				return this._Album.Entity;
+			}
+			set
+			{
+				Album previousValue = this._Album.Entity;
+				if (((previousValue != value) 
+							|| (this._Album.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._Album.Entity = null;
+						previousValue.Slides.Remove(this);
+					}
+					this._Album.Entity = value;
+					if ((value != null))
+					{
+						value.Slides.Add(this);
+						this._AlbumId = value.Id;
+					}
+					else
+					{
+						this._AlbumId = default(Nullable<int>);
+					}
+					this.SendPropertyChanged("Album");
+				}
+			}
+		}
+		
+		public event PropertyChangingEventHandler PropertyChanging;
+		
+		public event PropertyChangedEventHandler PropertyChanged;
+		
+		protected virtual void SendPropertyChanging()
+		{
+			if ((this.PropertyChanging != null))
+			{
+				this.PropertyChanging(this, emptyChangingEventArgs);
+			}
+		}
+		
+		protected virtual void SendPropertyChanged(String propertyName)
+		{
+			if ((this.PropertyChanged != null))
+			{
+				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+			}
 		}
 	}
 }

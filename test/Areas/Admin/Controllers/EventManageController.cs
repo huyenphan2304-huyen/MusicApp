@@ -2,7 +2,9 @@
 using PagedList;
 using System;
 using System.Configuration;
+using System.IO;
 using System.Linq;
+using System.Web;
 using System.Web.Mvc;
 
 namespace MusicApp.Areas.Admin.Controllers
@@ -38,16 +40,35 @@ namespace MusicApp.Areas.Admin.Controllers
         // POST: Admin/Event/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(Event @event)
+        public ActionResult Create(MusicApp.Models.Event model, HttpPostedFileBase ImageFile)
         {
+            if (string.IsNullOrEmpty(model.Place))
+            {
+                ModelState.AddModelError("Place", "The Place field is required.");
+                return View(model);
+            }
             if (ModelState.IsValid)
             {
-                db.Events.InsertOnSubmit(@event);
+                if (ImageFile != null && ImageFile.ContentLength > 0)
+                {
+                    // Lưu hình ảnh vào thư mục trên server
+                    var fileName = Path.GetFileName(ImageFile.FileName);
+                    var path = Path.Combine(Server.MapPath("~/Content/Img/"), fileName);
+                    ImageFile.SaveAs(path);
+
+                    // Cập nhật đường dẫn hình ảnh
+                    model.ImageUrl = "~/Content/img/" + fileName;
+                }
+
+
+                db.Events.InsertOnSubmit(model);
                 db.SubmitChanges();
                 return RedirectToAction("Index");
             }
-            return View(@event);
+
+            return View(model);
         }
+
 
         // GET: Admin/Event/Edit/5
         public ActionResult Edit(int id)
@@ -63,29 +84,48 @@ namespace MusicApp.Areas.Admin.Controllers
         // POST: Admin/Event/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(Event @event)
+        public ActionResult Edit(int id, MusicApp.Models.Event model)
         {
+            var existingEvent = db.Events.FirstOrDefault(e => e.Id == id);
+            if (existingEvent == null)
+            {
+                return HttpNotFound();
+            }
+
+            if (string.IsNullOrEmpty(model.Place))
+            {
+                ModelState.AddModelError("Place", "The Place field is required.");
+                return View(model);
+            }
+
             if (ModelState.IsValid)
             {
-                var existingEvent = db.Events.FirstOrDefault(e => e.Id == @event.Id);
-                if (existingEvent != null)
-                {
-                    existingEvent.Title = @event.Title;
-                    existingEvent.Place = @event.Place;
-                    existingEvent.Date = @event.Date;
-                    existingEvent.ImageUrl = @event.ImageUrl;
-                    existingEvent.Description = @event.Description;
-                    existingEvent.Meta = @event.Meta;
-                    existingEvent.Hide = @event.Hide;
-                    existingEvent.Order = @event.Order;
-                    existingEvent.DateBegin = @event.DateBegin;
+                // Update properties that do not involve the image
+                existingEvent.Title = model.Title;
+                existingEvent.Place = model.Place;
+                existingEvent.Date = model.Date;
+                existingEvent.Description = model.Description;
+                existingEvent.Meta = model.Meta;
+                existingEvent.Hide = model.Hide;
+                existingEvent.Order = model.Order;
+                existingEvent.DateBegin = model.DateBegin;
 
-                    db.SubmitChanges();
+                // Check if a new image was uploaded
+                var imageFile = Request.Files["ImageFile"];
+                var imageUrl = SaveImage(imageFile);
+                if (imageUrl != null)
+                {
+                    existingEvent.ImageUrl = imageUrl;
                 }
+
+                // Save changes to the database
+                db.SubmitChanges();
                 return RedirectToAction("Index");
             }
-            return View(@event);
+
+            return View(existingEvent);
         }
+
 
         // GET: Admin/Event/Delete/5
         public ActionResult Delete(int id)
@@ -111,5 +151,34 @@ namespace MusicApp.Areas.Admin.Controllers
             }
             return RedirectToAction("Index");
         }
+
+        private string SaveImage(HttpPostedFileBase imageFile)
+        {
+            if (imageFile == null || imageFile.ContentLength == 0)
+            {
+                return null;
+            }
+
+            // Extract the file name from the uploaded image
+            var fileName = Path.GetFileName(imageFile.FileName);
+            // Generate a unique file name (optional) to prevent overwriting
+            var uniqueFileName = Guid.NewGuid().ToString() + Path.GetExtension(fileName);
+
+            // Set the directory where you want to save the image
+            var directoryPath = Server.MapPath("~/Content/img/");
+            if (!Directory.Exists(directoryPath))
+            {
+                Directory.CreateDirectory(directoryPath); // Create the directory if it doesn't exist
+            }
+
+            // Save the image to the directory
+            var filePath = Path.Combine(directoryPath, uniqueFileName);
+            imageFile.SaveAs(filePath);
+
+            // Return the relative path to the image
+            return "/Content/img/" + uniqueFileName;
+        }
+
+
     }
 }

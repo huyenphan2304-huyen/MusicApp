@@ -6,13 +6,13 @@
 <h2>Index</h2>
 
 <p>
-    <a href="@Url.Action("Create", "Playlist")" class="create-link">
+    <a href="@Url.Action("Create", "PlaylistManage")" class="create-link">
         <img src="~/Areas/Admin/Content/assets/img/icons8-add-50.png" alt="Create New" />
     </a>
 </p>
 
 <form method="get" id="pageSizeForm">
-    <label for="pageSize">Số lượng bài hát mỗi trang:</label>
+    <label for="pageSize">Show</label>
     <select id="pageSize" name="pageSize" onchange="document.getElementById('pageSizeForm').submit();">
         <option value="5" @(Request.QueryString["pageSize"] == "5" ? "selected" : "")>5</option>
         <option value="10" @(Request.QueryString["pageSize"] == "10" ? "selected" : "")>10</option>
@@ -41,10 +41,10 @@
                 <td>
                     <p style=" display: inline-flex;">
 
-                        <a href="@Url.Action("Details", "Playlist", new { id = item.Id })" class="create-link">
+                        <a href="@Url.Action("Edit", "PlaylistManage", new { id = item.Id })" class="create-link">
                             <img src="~/Areas/Admin/Content/assets/img/icons8-edit-30.png" alt="Edit" />
                         </a> |
-                        <a href="@Url.Action("Delete", "Playlist", new { id = item.Id })" class="create-link">
+                        <a href="@Url.Action("Delete", "PlaylistManage", new { id = item.Id })" class="create-link">
                             <img src="~/Areas/Admin/Content/assets/img/icons8-minus-30.png" alt="Delete" />
                         </a>
                         </p>

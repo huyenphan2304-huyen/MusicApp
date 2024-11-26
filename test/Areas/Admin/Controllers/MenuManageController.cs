@@ -20,8 +20,14 @@ namespace MusicApp.Areas.Admin.Controllers
                 ViewBag.Message = "No Menus found.";
                 return View();
             }
+
+            // Tạo một ViewBag chứa thông tin phân biệt Menu chính và Submenu
+            ViewBag.MainMenus = Menus.Where(m => m.ParentId == null).ToList();
+            ViewBag.SubMenus = Menus.Where(m => m.ParentId != null).ToList();
+
             int pageNumber = page ?? 1;
             var pagedMenus = Menus.ToPagedList(pageNumber, pageSize);
+           
 
             return View(pagedMenus);
         }

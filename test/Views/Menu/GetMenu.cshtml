@@ -41,7 +41,9 @@
                                 <ul class="dropdown">
                                     @foreach (var subMenu in ViewBag.SubMenus[mainMenu.Id])
                                     {
-                                        <li><a href="@subMenu.Url">@subMenu.Name</a></li>
+                                    <li>
+                                        <a href="@Url.Action("GetListSongByCategory", "Song", new { categoryName = @subMenu.Name })">@subMenu.Name</a>
+                                    </li>
                                     }
                                 </ul>
                             </li>

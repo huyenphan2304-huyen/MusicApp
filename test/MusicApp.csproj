@@ -219,9 +219,11 @@
     <Compile Include="Areas\Admin\Controllers\EventManageController.cs" />
     <Compile Include="Areas\Admin\Controllers\MenuManageController.cs" />
     <Compile Include="Areas\Admin\Controllers\PlaylistManageController.cs" />
+    <Compile Include="Areas\Admin\Controllers\SlideController.cs" />
     <Compile Include="Areas\Admin\Controllers\SongManageController.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\AlbumController.cs" />
+    <Compile Include="Controllers\ArtistController.cs" />
     <Compile Include="Controllers\BreadcrumbController.cs" />
     <Compile Include="Controllers\CategoryController.cs" />
     <Compile Include="Controllers\EventController.cs" />
@@ -257,6 +259,7 @@
     <Compile Include="ViewModels\MiscellaneousViewModel.cs" />
     <Compile Include="ViewModels\PlaylistDetailViewModel.cs" />
     <Compile Include="ViewModels\PlaylistViewModel.cs" />
+    <Compile Include="ViewModels\SlideViewModel.cs" />
     <Compile Include="ViewModels\SongDetailViewModel.cs" />
     <Compile Include="ViewModels\SongViewModel.cs" />
   </ItemGroup>
@@ -826,7 +829,6 @@
     <Content Include="Areas\Admin\Views\ArtistManage\Edit.cshtml" />
     <Content Include="Areas\Admin\Views\ArtistManage\Delete.cshtml" />
     <Content Include="Areas\Admin\Views\PlaylistManage\Index.cshtml" />
-    <Content Include="Areas\Admin\Views\PlaylistManage\Edit.cshtml" />
     <Content Include="Areas\Admin\Views\PlaylistManage\Create.cshtml" />
     <Content Include="Areas\Admin\Views\PlaylistManage\Delete.cshtml" />
     <Content Include="Areas\Admin\Views\CategoryManage\Index.cshtml" />
@@ -839,6 +841,11 @@
     <Content Include="Areas\Admin\Views\CategoryManage\Delete.cshtml" />
     <Content Include="Areas\Admin\Views\ArtistManage\Create.cshtml" />
     <Content Include="Areas\Admin\Views\EventManage\Create.cshtml" />
+    <Content Include="Areas\Admin\Views\PlaylistManage\Edit.cshtml" />
+    <Content Include="Areas\Admin\Views\Slide\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\Slide\Create.cshtml" />
+    <Content Include="Areas\Admin\Views\Slide\Edit.cshtml" />
+    <Content Include="Areas\Admin\Views\Slide\Delete.cshtml" />
     <None Include="compilerconfig.json" />
     <None Include="compilerconfig.json.defaults">
       <DependentUpon>compilerconfig.json</DependentUpon>
@@ -933,10 +940,13 @@
     <Content Include="Views\Library\MyPlaylists.cshtml" />
     <Content Include="Views\Playlist\PlaylistDetail.cshtml" />
     <Content Include="Views\Library\MyFavorite.cshtml" />
+    <Content Include="Views\Song\LoadSongs.cshtml" />
+    <Content Include="Views\Song\GetListSongByCategory.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Areas\Admin\Data\" />
+    <Folder Include="Views\Artist\" />
     <Folder Include="Views\Breadcrumb\" />
   </ItemGroup>
   <ItemGroup>

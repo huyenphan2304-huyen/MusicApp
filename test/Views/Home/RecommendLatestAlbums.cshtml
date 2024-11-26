@@ -16,7 +16,8 @@
                             <div class="hero-slides-content text-center">
                                 <h6 data-animation="fadeInUp" data-delay="100ms">Latest album</h6>
                                 <h2 data-animation="fadeInUp" data-delay="300ms">@album.Title <span>@album.Title</span></h2>
-                                <a data-animation="fadeInUp" data-delay="500ms" href="@album.Url" class="btn oneMusic-btn mt-50">Discover <i class="fa fa-angle-double-right"></i></a>
+
+                                    <a data-animation="fadeInUp" data-delay="500ms" href="@Url.RouteUrl("AlbumDetail", new { type = "album", meta = album.Meta, id = album.Id })" class="btn oneMusic-btn mt-50">Discover <i class="fa fa-angle-double-right"></i></a>
                             </div>
                         </div>
                     </div>

@@ -94,5 +94,36 @@ namespace MusicApp.Controllers
             ViewBag.CategoryName = category.Name; // Ghi nhận CategoryName để sử dụng trong view
             return PartialView("SongsByCategory", songs.ToList());
         }
+        public ActionResult LoadSongs()
+        {
+            var songs = db.Songs.ToList(); // Lấy dữ liệu mới nhất từ cơ sở dữ liệu
+            return PartialView("LoadSongs", songs); // Trả về PartialView với danh sách bài hát
+        }
+
+        public ActionResult GetListSongByCategory(String categoryName)
+        {
+            // Get the list of songs by category from the database
+            var songs = db.Songs.Where(s => s.Category.Name == categoryName).ToList();  // Example query, adjust as needed
+
+            // Create a list of SongViewModel
+            var songViewModels = from s in songs
+                                 join a in db.Artists on s.ArtistId equals a.Id
+                                 select new SongViewModel
+                                 {
+                                     Song = s,
+                                     ArtistName = a.Name
+                                 };
+
+            // Create CategoryViewModel
+            var categoryViewModel = new CategoryViewModel
+            {
+                Category = new Category { Name = categoryName },
+                Songs = songViewModels.ToList()
+            };
+
+            // Pass data to the View
+            return PartialView("GetListSongByCategory", categoryViewModel); // Passing CategoryViewModel to the view
+        }
+
     }
 }

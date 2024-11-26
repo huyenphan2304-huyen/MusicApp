@@ -31,6 +31,7 @@
       <Column Name="[Order]" Member="Order" Type="System.Int32" DbType="Int" CanBeNull="true" />
       <Column Name="DateBegin" Type="System.DateTime" DbType="SmallDateTime" CanBeNull="true" />
       <Association Name="Album_Song" Member="Songs" ThisKey="Id" OtherKey="AlbumId" Type="Song" />
+      <Association Name="Album_Slide" Member="Slides" ThisKey="Id" OtherKey="AlbumId" Type="Slide" />
       <Association Name="Artist_Album" Member="Artist1" ThisKey="ArtistId" OtherKey="Id" Type="Artist" IsForeignKey="true" />
     </Type>
   </Table>
@@ -267,6 +268,18 @@
       <Association Name="AspNetUser_AspNetUserClaim" Member="AspNetUserClaims" ThisKey="Id" OtherKey="UserId" Type="AspNetUserClaim" />
       <Association Name="AspNetUser_AspNetUserLogin" Member="AspNetUserLogins" ThisKey="Id" OtherKey="UserId" Type="AspNetUserLogin" />
       <Association Name="AspNetUser_AspNetUserRole" Member="AspNetUserRoles" ThisKey="Id" OtherKey="UserId" Type="AspNetUserRole" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Slides" Member="Slides">
+    <Type Name="Slide">
+      <Column Name="Id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="AlbumId" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="CreatedDate" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="Meta" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="Hide" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Column Name="[Order]" Member="Order" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="DateBegin" Type="System.DateTime" DbType="SmallDateTime" CanBeNull="true" />
+      <Association Name="Album_Slide" Member="Album" ThisKey="AlbumId" OtherKey="Id" Type="Album" IsForeignKey="true" />
     </Type>
   </Table>
 </Database>

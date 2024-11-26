@@ -10,9 +10,21 @@
 }
 
 <h2>Index</h2>
+<style>
+    /* Menu chính bị vô hiệu hóa */
+    .disabled-menu {
+        background-color: #f0f0f0; /* Xám nhạt */
+        pointer-events: none; /* Không cho phép click */
+    }
 
+    /* Submenu có thể click */
+    .submenu {
+        background-color: #ffffff; /* Trắng */
+    }
+
+</style>
 <p>
-    <a href="@Url.Action("Create", "Menu")" class="create-link">
+    <a href="@Url.Action("Create", "MenuManage")" class="create-link">
         <img src="~/Areas/Admin/Content/assets/img/icons8-add-50.png" alt="Create New" />
     </a>
 </p>
@@ -30,74 +42,45 @@
 
     <table class="table">
         <tr>
-            <th>
-                @Html.DisplayNameFor(model => model[0].Name)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model[0].Url)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model[0].ParentId)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model[0].CategoryId)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model[0].Meta)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model[0].Hide)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model[0].Order)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model[0].DateBegin)
-            </th>
+            <th>@Html.DisplayNameFor(model => model[0].Name)</th>
+            <th>@Html.DisplayNameFor(model => model[0].Url)</th>
+            <th>@Html.DisplayNameFor(model => model[0].ParentId)</th>
+            <th>@Html.DisplayNameFor(model => model[0].CategoryId)</th>
+            <th>@Html.DisplayNameFor(model => model[0].Meta)</th>
+            <th>@Html.DisplayNameFor(model => model[0].Hide)</th>
+            <th>@Html.DisplayNameFor(model => model[0].Order)</th>
+            <th>@Html.DisplayNameFor(model => model[0].DateBegin)</th>
             <th></th>
         </tr>
 
         @foreach (var item in Model)
         {
-            <tr>
+            <tr class="@(item.ParentId == null ? "disabled-menu" : "submenu")">
+                <td>@Html.DisplayFor(modelItem => item.Name)</td>
+                <td>@Html.DisplayFor(modelItem => item.Url)</td>
+                <td>@Html.DisplayFor(modelItem => item.ParentId)</td>
+                <td>@Html.DisplayFor(modelItem => item.CategoryId)</td>
+                <td>@Html.DisplayFor(modelItem => item.Meta)</td>
+                <td>@Html.DisplayFor(modelItem => item.Hide)</td>
+                <td>@Html.DisplayFor(modelItem => item.Order)</td>
+                <td>@Html.DisplayFor(modelItem => item.DateBegin)</td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.Name)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Url)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.ParentId)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.CategoryId)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Meta)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Hide)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Order)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.DateBegin)
-                </td>
-                <td>
-                    <p style=" display: inline-flex;">
-                        <a href="@Url.Action("Details", "MenuManage", new { id = item.Id })" class="create-link">
-                            <img src="~/Areas/Admin/Content/assets/img/icons8-edit-30.png" alt="Edit" />
-                        </a>|
-                        <a href="@Url.Action("Delete", "MenuManage", new { id = item.Id })" class="create-link">
-                            <img src="~/Areas/Admin/Content/assets/img/icons8-minus-30.png" alt="Delete" />
-                        </a>
-                    </p>
+                    @if (item.ParentId != null)  // Chỉ cho phép sửa/xóa menu con
+                    {
+                        <p style="display: inline-flex;">
+                            <a href="@Url.Action("Edit", "MenuManage", new { id = item.Id })" class="create-link">
+                                <img src="~/Areas/Admin/Content/assets/img/icons8-edit-30.png" alt="Edit" />
+                            </a>|
+                            <a href="@Url.Action("Delete", "MenuManage", new { id = item.Id })" class="create-link">
+                                <img src="~/Areas/Admin/Content/assets/img/icons8-minus-30.png" alt="Delete" />
+                            </a>
+                        </p>
+                    }
                 </td>
             </tr>
         }
-
     </table>
+
     <div class="pagination">
         @Html.PagedListPager(Model, page => Url.Action("Index", new { page, pageSize = Request.QueryString["pageSize"] }))
     </div>

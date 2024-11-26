@@ -1,0 +1,25 @@
+﻿@model IEnumerable<MusicApp.Models.Song>
+
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>Title</th>
+            <th>Artist</th>
+            <th>Album</th>
+            <th>Genre</th>
+            <th>Release Date</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var song in Model)
+        {
+            <tr>
+                <td>@song.Title</td>
+                <td>@song.Artist</td>
+                <td>@song.Album</td>
+                <td>@song.Category</td>
+                <td>@song.ReleaseDate?ToString("dd/MM/yyyy")</td>
+            </tr>
+        }
+    </tbody>
+</table>

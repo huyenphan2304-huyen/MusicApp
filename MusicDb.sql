@@ -729,3 +729,17 @@ VALUES
 
 select * from Events
 
+
+CREATE TABLE Slides (
+    Id INT PRIMARY KEY IDENTITY(1,1),
+    AlbumId INT,
+    CreatedDate DATETIME DEFAULT GETDATE(),
+    FOREIGN KEY (AlbumId) REFERENCES Albums(Id),
+    Meta NVARCHAR(50) NULL,
+    Hide BIT NULL,
+    [Order] INT NULL,
+    DateBegin SMALLDATETIME NULL
+
+);
+
+Drop table Slides

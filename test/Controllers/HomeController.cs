@@ -32,9 +32,18 @@ namespace MusicApp.Controllers
 
         public ActionResult RecommendLatestAlbums()
         {
-            var recommendLatestAlbums = db.Albums.OrderByDescending(album => album.ReleaseDate).Take(2).ToList();
+            // Retrieve albums that are featured in the slides and have Hide = true
+            var recommendLatestAlbums = db.Slides
+                .Where(slide => slide.Hide == true)  // Filter by Hide = true
+                .Join(db.Albums, slide => slide.AlbumId, album => album.Id, (slide, album) => album)  // Join with Albums
+                .OrderBy(album => album.Order)  // Order by the Order property (ascending)
+                .ThenByDescending(album => album.ReleaseDate)  // In case of tie, order by ReleaseDate descending
+                .ToList();
+
             return PartialView("RecommendLatestAlbums", recommendLatestAlbums);
         }
+
+
 
         public ActionResult LatestAlbums()
         {

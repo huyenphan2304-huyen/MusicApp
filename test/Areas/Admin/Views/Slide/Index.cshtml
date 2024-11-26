@@ -1,0 +1,71 @@
+﻿@model IEnumerable<MusicApp.ViewModels.SlideViewModel>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+
+@if (Model == null || !Model.Any())
+{
+    <p>No slides found.</p> <!-- Thông báo khi không có dữ liệu -->
+}
+else
+{
+    <table class="table">
+        <tr>
+            <th>
+                Slide Id <!-- Cột cho Slide Id -->
+            </th>
+            <th>
+                Album Title
+            </th>
+            <th>
+                Created Date
+            </th>
+            <th>
+                Meta
+            </th>
+            <th>
+                Hide
+            </th>
+            <th>
+                Order
+            </th>
+            <th>
+                Date Begin
+            </th>
+            <th></th>
+        </tr>
+
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @item.Id  <!-- Hiển thị Slide Id -->
+                </td>
+                <td>
+                    @item.AlbumTitle  <!-- Hiển thị tên Album -->
+                </td>
+                <td>
+                    @item.CreatedDate  <!-- Hiển thị Created Date -->
+                </td>
+                <td>
+                    @item.Meta  <!-- Hiển thị Meta -->
+                </td>
+                <td>
+                    @item.Hide  <!-- Hiển thị Hide -->
+                </td>
+                <td>
+                    @item.Order  <!-- Hiển thị Order -->
+                </td>
+                <td>
+                    @item.DateBegin  <!-- Hiển thị DateBegin -->
+                </td>
+                <td>
+                    @Html.ActionLink("Edit", "Edit", new { id = item.Id }) |
+                    @Html.ActionLink("Details", "Details", new { id = item.Id }) |
+                    @Html.ActionLink("Delete", "Delete", new { id = item.Id })
+                </td>
+            </tr>
+        }
+    </table>
+}

@@ -11,13 +11,13 @@
 <h2>Index</h2>
 
 <p>
-    <a href="@Url.Action("Create", "Category")" class="create-link">
+    <a href="@Url.Action("Create", "CategoryManage")" class="create-link">
         <img src="~/Areas/Admin/Content/assets/img/icons8-add-50.png" alt="Create New" />
     </a>
 </p>
 
 <form method="get" id="pageSizeForm">
-    <label for="pageSize">Số lượng bài hát mỗi trang:</label>
+    <label for="pageSize">Show</label>
     <select id="pageSize" name="pageSize" onchange="document.getElementById('pageSizeForm').submit();">
         <option value="5" @(Request.QueryString["pageSize"] == "5" ? "selected" : "")>5</option>
         <option value="10" @(Request.QueryString["pageSize"] == "10" ? "selected" : "")>10</option>
@@ -44,10 +44,10 @@
                 </td>
                 <td>
                     <p style=" display: inline-flex;">
-                        <a href="@Url.Action("Details", "Category", new { id = item.Id })" class="create-link">
+                        <a href="@Url.Action("Edit", "CategoryManage", new { id = item.Id })" class="create-link">
                             <img src="~/Areas/Admin/Content/assets/img/icons8-edit-30.png" alt="Edit" />
                         </a>|
-                        <a href="@Url.Action("Delete", "Category", new { id = item.Id })" class="create-link">
+                        <a href="@Url.Action("Delete", "CategoryManage", new { id = item.Id })" class="create-link">
                             <img src="~/Areas/Admin/Content/assets/img/icons8-minus-30.png" alt="Delete" />
                         </a>
                     </p>

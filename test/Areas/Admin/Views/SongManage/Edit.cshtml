@@ -6,10 +6,10 @@
 
 <h2>Edit</h2>
 
-@using (Html.BeginForm())
+@using (Html.BeginForm("Edit", "SongManage", FormMethod.Post, new { enctype = "multipart/form-data" }))
 {
     @Html.AntiForgeryToken()
-    
+
     <div class="form-horizontal">
         <h4>Song</h4>
         <hr />
@@ -48,18 +48,28 @@
             </div>
         </div>
 
+        <!-- Cover Image -->
         <div class="form-group">
             @Html.LabelFor(model => model.CoverImageUrl, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.CoverImageUrl, new { htmlAttributes = new { @class = "form-control" } })
+                <img src="@Url.Content(Model.CoverImageUrl)" alt="Cover Image" style="width: 100px; height: 100px;" />
+                <input type="file" name="CoverImage" class="form-control" onchange="previewImage(event)" />
                 @Html.ValidationMessageFor(model => model.CoverImageUrl, "", new { @class = "text-danger" })
             </div>
         </div>
 
+        <!-- Image Preview -->
+        <div class="form-group">
+            <div class="col-md-10 col-md-offset-2">
+                <img id="imagePreview" src="#" alt="Cover Image Preview" style="max-width: 200px; display:none;" />
+            </div>
+        </div>
+
+        <!-- Audio File (URL) -->
         <div class="form-group">
             @Html.LabelFor(model => model.Url, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.Url, new { htmlAttributes = new { @class = "form-control" } })
+                <input type="file" name="AudioFile" class="form-control" />
                 @Html.ValidationMessageFor(model => model.Url, "", new { @class = "text-danger" })
             </div>
         </div>
@@ -139,3 +149,15 @@
 <div>
     @Html.ActionLink("Back to List", "Index")
 </div>
+
+<script type="text/javascript">
+        function previewImage(event) {
+            var reader = new FileReader();
+            reader.onload = function () {
+                var output = document.getElementById('imagePreview');
+                output.src = reader.result;
+                output.style.display = 'block';
+            }
+            reader.readAsDataURL(event.target.files[0]);
+        }
+</script>
