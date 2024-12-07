@@ -12,6 +12,9 @@ drop table Songs
 drop table Albums
 drop table Artists
 drop table category
+drop table Playlists
+drop table Users
+
 
 -- Tạo bảng Artists
 CREATE TABLE Artists (
@@ -21,7 +24,7 @@ CREATE TABLE Artists (
     BackgroundImageUrl NVARCHAR(500),
     Description NVARCHAR(MAX),
     Meta NVARCHAR(50) NULL,
-    Hide BIT NULL,
+    Hide BIT NOT NULL DEFAULT 1,
     [Order] INT NULL,
     DateBegin SMALLDATETIME NULL
 );
@@ -40,7 +43,7 @@ CREATE TABLE Albums (
     ReleaseDate DATE,
     ArtistId INT NULL,
     Meta NVARCHAR(50) NULL,
-    Hide BIT NULL,
+    Hide BIT NOT NULL DEFAULT 1,
     [Order] INT NULL,
     DateBegin SMALLDATETIME NULL,
     CONSTRAINT FK_Albums_Artists FOREIGN KEY (ArtistId) REFERENCES Artists(Id)
@@ -55,14 +58,14 @@ CREATE TABLE Songs (
     ReleaseDate DATE,                               -- Ngày phát hành
     CoverImageUrl NVARCHAR(500),                    -- Đường dẫn đến ảnh bìa
     Url NVARCHAR(500) NOT NULL,                     -- Đường dẫn đến tệp âm thanh
-    IsFeatured BIT,                                 -- Đánh dấu bài hát nổi bật
+    IsFeatured BIT NOT NULL DEFAULT 1,                                 -- Đánh dấu bài hát nổi bật
     AlbumId INT NULL,                               -- Khóa ngoại tham chiếu đến bảng Albums (có thể null)
     Meta NVARCHAR(50) NULL,                         -- Thông tin meta
-    Hide BIT NULL,                                  -- Trạng thái ẩn
+    Hide BIT NOT NULL DEFAULT 1,                                  -- Trạng thái ẩn
     [Order] INT NULL,                               -- Thứ tự bài hát
     DateBegin SMALLDATETIME NULL,                   -- Ngày bắt đầu
     Lyrics NVARCHAR(MAX) NULL,                      -- Lời bài hát
-    IsFavorite BIT,                                 -- Đánh dấu bài hát yêu thích
+    IsFavorite BIT NOT NULL DEFAULT 1,                                 -- Đánh dấu bài hát yêu thích
 
     CONSTRAINT FK_Songs_Albums FOREIGN KEY (AlbumId) REFERENCES Albums(Id),   -- Ràng buộc khóa ngoại với bảng Albums
     CONSTRAINT FK_Songs_Artists FOREIGN KEY (ArtistId) REFERENCES Artists(Id), -- Ràng buộc khóa ngoại với bảng Artists
@@ -77,7 +80,7 @@ CREATE TABLE Menu (
     ParentId INT NULL,                              -- Khóa ngoại tham chiếu đến chính bảng Menu (menu cha)
     CategoryId INT NULL,                            -- Khóa ngoại tham chiếu đến bảng Category (nếu menu liên quan đến thể loại)
     Meta NVARCHAR(50) NULL,                         -- Thông tin meta
-    Hide BIT NULL,                                  -- Trạng thái ẩn
+    Hide BIT NOT NULL DEFAULT 1,                                  -- Trạng thái ẩn
     [Order] INT NULL,                               -- Thứ tự menu
     DateBegin SMALLDATETIME NULL,                   -- Ngày bắt đầu
     CONSTRAINT FK_Menu_Category FOREIGN KEY (CategoryId) REFERENCES Category(Id) -- Ràng buộc khóa ngoại với bảng Category
@@ -89,7 +92,7 @@ CREATE TABLE Contact (
     SectionTagline NVARCHAR(255) NOT NULL,
     SectionTitle NVARCHAR(255) NOT NULL,
     BackgroundImageUrl NVARCHAR(500),
-    Hide BIT DEFAULT 0,
+    Hide BIT DEFAULT 1,
     [Order] INT DEFAULT 1,
     DateBegin DATE DEFAULT GETDATE()
 );
@@ -100,7 +103,7 @@ CREATE TABLE Breadcrumbs (
     Subtitle NVARCHAR(255) NOT NULL,
     BackgroundImage NVARCHAR(500) NOT NULL,
     Meta NVARCHAR(255),
-    Hide BIT,
+    Hide BIT NOT NULL DEFAULT 1,
     [Order] INT,
     DateBegin DATE DEFAULT GETDATE()  
 );
@@ -112,8 +115,8 @@ CREATE TABLE Miscellaneous (
     Description NVARCHAR(MAX),                 -- Mô tả
     Link NVARCHAR(500),                        -- Liên kết ngoài (nếu có)
     Meta NVARCHAR(255),                        -- Hiển thị trên URL (SEO)
-    Hide BIT NOT NULL DEFAULT 0,               -- Hiển thị hay ẩn đi (0: hiển thị, 1: ẩn)
-    OrderPosition INT NOT NULL DEFAULT 0,      -- Vị trí xuất hiện
+    Hide BIT NOT NULL DEFAULT 1,               -- Hiển thị hay ẩn đi (0: hiển thị, 1: ẩn)
+    OrderPosition INT NOT NULL DEFAULT 1,      -- Vị trí xuất hiện
     DateBegin DATETIME DEFAULT GETDATE(),      -- Ngày bắt đầu
     PText NVARCHAR(MAX),                       -- Nội dung cho thẻ <p>
     H2Text NVARCHAR(MAX),                      -- Nội dung cho thẻ <h2>
@@ -134,7 +137,7 @@ CREATE TABLE Events (
     ImageUrl NVARCHAR(500),
     Description NVARCHAR(MAX),
     Meta NVARCHAR(255),
-    Hide BIT,
+    Hide BIT NOT NULL DEFAULT 1,
     [Order] INT,
     DateBegin DATE DEFAULT GETDATE()  -- Thêm mặc định cho DateBegin
 );
@@ -148,7 +151,7 @@ CREATE TABLE LoginForm (
     PasswordPlaceholder NVARCHAR(255),
     ButtonText NVARCHAR(255),
     Meta NVARCHAR(255),
-    Hide BIT,
+    Hide BIT NOT NULL DEFAULT 1,
     [Order] INT,
     DateBegin DATE DEFAULT GETDATE()  
 );
@@ -163,7 +166,7 @@ CREATE TABLE RegisterForm (
     PasswordPlaceholder NVARCHAR(255),
     ButtonText NVARCHAR(255),
     Meta NVARCHAR(255),
-    Hide BIT,
+    Hide BIT NOT NULL DEFAULT 1,
     [Order] INT,
     DateBegin DATE DEFAULT GETDATE()  
 );
@@ -172,7 +175,7 @@ CREATE TABLE BrowserCategories (
     Name NVARCHAR(5),
     Filter NVARCHAR(10),
     Meta NVARCHAR(255),
-    Hide BIT,
+    Hide BIT NOT NULL DEFAULT 1,
     [Order] INT,
     DateBegin DATE DEFAULT GETDATE()  
 );
@@ -195,31 +198,31 @@ INSERT INTO Category (Name) VALUES
 
 -- Thêm menu chính
 INSERT INTO Menu (Name, Url, ParentId, Meta, Hide, [Order], DateBegin) VALUES 
-('Logo', '/Content/img/core-img/logo.png', NULL, 'logo', NULL, 1, GETDATE()),
-('Home', '/Home', NULL, 'home', NULL, 2, GETDATE()),
-('Album', '/Album', NULL, 'album', NULL, 3, GETDATE()),
-('Event', '/Event', NULL, 'event', NULL, 4, GETDATE()),
-('Category', '/Category', NULL, 'category', NULL, 5, GETDATE()),
-('Library', '/Library', NULL, 'account', NULL, 6, GETDATE());
+('Logo', '/Content/img/core-img/logo.png', 1, 'logo', 1, 1, GETDATE()),
+('Home', '/Home', NULL, 'home', 1, 2, GETDATE()),
+('Album', '/Album', NULL, 'album', 1, 3, GETDATE()),
+('Event', '/Event', NULL, 'event', 1, 4, GETDATE()),
+('Category', '/Category', NULL, 'category', 1, 5, GETDATE()),
+('Library', '/Library', NULL, 'account', 1, 6, GETDATE());
 
 -- Thêm menu con cho Category và liên kết với bảng Category
 INSERT INTO Menu (Name, Url, ParentId, CategoryId, Meta, Hide, [Order], DateBegin) 
 VALUES 
-('Pop', '/category/pop', (SELECT Id FROM Menu WHERE Name = 'Category'), (SELECT Id FROM Category WHERE Name = 'Pop'), 'pop', NULL, 1, GETDATE()),
-('Rock', '/category/rock', (SELECT Id FROM Menu WHERE Name = 'Category'), (SELECT Id FROM Category WHERE Name = 'Rock'), 'rock', NULL, 2, GETDATE()),
-('Jazz', '/category/jazz', (SELECT Id FROM Menu WHERE Name = 'Category'), (SELECT Id FROM Category WHERE Name = 'Jazz'), 'jazz', NULL, 3, GETDATE()),
-('Hip Hop', '/category/hiphop', (SELECT Id FROM Menu WHERE Name = 'Category'), (SELECT Id FROM Category WHERE Name = 'Hip Hop'), 'hiphop', NULL, 4, GETDATE()),
-('Classical', '/category/classical', (SELECT Id FROM Menu WHERE Name = 'Category'), (SELECT Id FROM Category WHERE Name = 'Classical'), 'classical', NULL, 5, GETDATE()),
-('Electronic', '/category/electronic', (SELECT Id FROM Menu WHERE Name = 'Category'), (SELECT Id FROM Category WHERE Name = 'Electronic'), 'electronic', NULL, 6, GETDATE());
+('Pop', '/category/pop', (SELECT Id FROM Menu WHERE Name = 'Category'), (SELECT Id FROM Category WHERE Name = 'Pop'), 'pop', 1, 1, GETDATE()),
+('Rock', '/category/rock', (SELECT Id FROM Menu WHERE Name = 'Category'), (SELECT Id FROM Category WHERE Name = 'Rock'), 'rock', 1, 2, GETDATE()),
+('Jazz', '/category/jazz', (SELECT Id FROM Menu WHERE Name = 'Category'), (SELECT Id FROM Category WHERE Name = 'Jazz'), 'jazz', 1, 3, GETDATE()),
+('Hip Hop', '/category/hiphop', (SELECT Id FROM Menu WHERE Name = 'Category'), (SELECT Id FROM Category WHERE Name = 'Hip Hop'), 'hiphop', 1, 4, GETDATE()),
+('Classical', '/category/classical', (SELECT Id FROM Menu WHERE Name = 'Category'), (SELECT Id FROM Category WHERE Name = 'Classical'), 'classical', 1, 5, GETDATE()),
+('Electronic', '/category/electronic', (SELECT Id FROM Menu WHERE Name = 'Category'), (SELECT Id FROM Category WHERE Name = 'Electronic'), 'electronic', 1, 6, GETDATE());
 
 -- Thêm menu con cho Category
 INSERT INTO Menu (Name, Url, ParentId, CategoryId, Meta, Hide, [Order], DateBegin) 
 VALUES 
-('Reggae', '/category/reggae', (SELECT Id FROM Menu WHERE Name = 'Category'), (SELECT Id FROM Category WHERE Name = 'Reggae'), 'reggae', NULL, 7, GETDATE()),
-('Country', '/category/country', (SELECT Id FROM Menu WHERE Name = 'Category'), (SELECT Id FROM Category WHERE Name = 'Country'), 'country', NULL, 8, GETDATE()),
-('Blues', '/category/blues', (SELECT Id FROM Menu WHERE Name = 'Category'), (SELECT Id FROM Category WHERE Name = 'Blues'), 'blues', NULL, 9, GETDATE()),
-('Folk', '/category/folk', (SELECT Id FROM Menu WHERE Name = 'Category'), (SELECT Id FROM Category WHERE Name = 'Folk'), 'folk', NULL, 10, GETDATE()),
-('Metal', '/category/metal', (SELECT Id FROM Menu WHERE Name = 'Category'), (SELECT Id FROM Category WHERE Name = 'Metal'), 'metal', NULL, 11, GETDATE());
+('Reggae', '/category/reggae', (SELECT Id FROM Menu WHERE Name = 'Category'), (SELECT Id FROM Category WHERE Name = 'Reggae'), 'reggae', 1, 7, GETDATE()),
+('Country', '/category/country', (SELECT Id FROM Menu WHERE Name = 'Category'), (SELECT Id FROM Category WHERE Name = 'Country'), 'country', 1, 8, GETDATE()),
+('Blues', '/category/blues', (SELECT Id FROM Menu WHERE Name = 'Category'), (SELECT Id FROM Category WHERE Name = 'Blues'), 'blues', 1, 9, GETDATE()),
+('Folk', '/category/folk', (SELECT Id FROM Menu WHERE Name = 'Category'), (SELECT Id FROM Category WHERE Name = 'Folk'), 'folk', 1, 10, GETDATE()),
+('Metal', '/category/metal', (SELECT Id FROM Menu WHERE Name = 'Category'), (SELECT Id FROM Category WHERE Name = 'Metal'), 'metal', 1, 11, GETDATE());
 
 -- Thêm nghệ sĩ
 INSERT INTO Artists (Name, ImageUrl, BackgroundImageUrl, Description, Meta, Hide, [Order], DateBegin) VALUES
@@ -511,58 +514,58 @@ VALUES
 
 -- Chèn dữ liệu cho phần Bài Hát Mới
 INSERT INTO Miscellaneous (Type, Name, Description, Link, Meta, Hide, OrderPosition, DateBegin, PText, H2Text, ImageUrl, AudioUrl, SongId, ArtistId) VALUES 
-('NewHits', 'Echoes of Silence', 'A heartfelt ballad from Sam Smith.', NULL, 'echoes-of-silence', 0, 1, GETDATE(), NULL, NULL, '/Content/img/bg-img/a1.jpg', 
+('NewHits', 'Echoes of Silence', 'A heartfelt ballad from Sam Smith.', 0, 'echoes-of-silence', 0, 1, GETDATE(), NULL, NULL, '/Content/img/bg-img/a1.jpg', 
     (SELECT TOP 1 Url FROM Songs WHERE Title = 'Echoes of Silence'), 
     (SELECT Id FROM Songs WHERE Title = 'Echoes of Silence'), 
     (SELECT Id FROM Artists WHERE Name = 'Sam Smith')),
-('NewHits', 'Midnight Dreams', 'A song that brings colorful dreams to life.', NULL, 'midnight-dreams', 0, 2, GETDATE(), NULL, NULL, '/Content/img/bg-img/a2.jpg', 
+('NewHits', 'Midnight Dreams', 'A song that brings colorful dreams to life.', 0, 'midnight-dreams', 0, 2, GETDATE(), NULL, NULL, '/Content/img/bg-img/a2.jpg', 
     (SELECT TOP 1 Url FROM Songs WHERE Title = 'Midnight Dreams'), 
     (SELECT Id FROM Songs WHERE Title = 'Midnight Dreams'), 
     (SELECT Id FROM Artists WHERE Name = 'William Parker')),
-('NewHits', 'Chasing Stars', 'A gentle and soulful jazz tune.', NULL, 'chasing-stars', 0, 3, GETDATE(), NULL, NULL, '/Content/img/bg-img/a3.jpg', 
+('NewHits', 'Chasing Stars', 'A gentle and soulful jazz tune.', 0, 'chasing-stars', 0, 3, GETDATE(), NULL, NULL, '/Content/img/bg-img/a3.jpg', 
     (SELECT TOP 1 Url FROM Songs WHERE Title = 'Chasing Stars'), 
     (SELECT Id FROM Songs WHERE Title = 'Chasing Stars'), 
     (SELECT Id FROM Artists WHERE Name = 'Jessica Walsh')),
-('NewHits', 'Rhythm of the Night', 'An energetic R&B track that will get you moving.', NULL, 'rhythm-of-the-night', 0, 4, GETDATE(), NULL, NULL, '/Content/img/bg-img/a4.jpg', 
+('NewHits', 'Rhythm of the Night', 'An energetic R&B track that will get you moving.', 0, 'rhythm-of-the-night', 0, 4, GETDATE(), NULL, NULL, '/Content/img/bg-img/a4.jpg', 
     (SELECT TOP 1 Url FROM Songs WHERE Title = 'Rhythm of the Night'), 
     (SELECT Id FROM Songs WHERE Title = 'Rhythm of the Night'), 
     (SELECT Id FROM Artists WHERE Name = 'Tha Stoves')),
-('NewHits', 'Remix Magic', 'An amazing remix by DJ Ajay.', NULL, 'remix-magic', 0, 5, GETDATE(), NULL, NULL, '/Content/img/bg-img/a5.jpg', 
+('NewHits', 'Remix Magic', 'An amazing remix by DJ Ajay.', 0, 'remix-magic', 0, 5, GETDATE(), NULL, NULL, '/Content/img/bg-img/a5.jpg', 
     (SELECT TOP 1 Url FROM Songs WHERE Title = 'Remix Magic'), 
     (SELECT Id FROM Songs WHERE Title = 'Remix Magic'), 
     (SELECT Id FROM Artists WHERE Name = 'DJ Ajay')),
-('NewHits', 'Unforgettable Moments', 'A wonderful song from Radio Vibez.', NULL, 'unforgettable-moments', 0, 6, GETDATE(), NULL, NULL, '/Content/img/bg-img/a6.jpg', 
+('NewHits', 'Unforgettable Moments', 'A wonderful song from Radio Vibez.', 0, 'unforgettable-moments', 0, 6, GETDATE(), NULL, NULL, '/Content/img/bg-img/a6.jpg', 
     (SELECT TOP 1 Url FROM Songs WHERE Title = 'Unforgettable Moments'), 
     (SELECT Id FROM Songs WHERE Title = 'Unforgettable Moments'), 
     (SELECT Id FROM Artists WHERE Name = 'Radio Vibez')),
-('NewHits', 'Harmonious Vibes', 'A cheerful track from Music 4u.', NULL, 'harmonious-vibes', 0, 7, GETDATE(), NULL, NULL, '/Content/img/bg-img/a7.jpg', 
+('NewHits', 'Harmonious Vibes', 'A cheerful track from Music 4u.', 0, 'harmonious-vibes', 0, 7, GETDATE(), NULL, NULL, '/Content/img/bg-img/a7.jpg', 
     (SELECT TOP 1 Url FROM Songs WHERE Title = 'Harmonious Vibes'), 
     (SELECT Id FROM Songs WHERE Title = 'Harmonious Vibes'), 
     (SELECT Id FROM Artists WHERE Name = 'Music 4u'));
 
 -- Chèn dữ liệu cho phần Top
 INSERT INTO Miscellaneous (Type, Name, Description, Link, Meta, Hide, OrderPosition, DateBegin, PText, H2Text, ImageUrl, AudioUrl, SongId, ArtistId) VALUES 
-('Top', 'Beyond Time', 'A standout song by Sam Smith.', NULL, 'beyond-time', 0, 1, GETDATE(), NULL, NULL, '/Content/img/bg-img/a1.jpg', 
+('Top', 'Beyond Time', 'A standout song by Sam Smith.', 0, 'beyond-time', 0, 1, GETDATE(), NULL, NULL, '/Content/img/bg-img/a1.jpg', 
     (SELECT TOP 1 Url FROM Songs WHERE Title = 'Beyond Time'), 
     (SELECT Id FROM Songs WHERE Title = 'Beyond Time'), 
     (SELECT Id FROM Artists WHERE Name = 'Sam Smith')),
-('Top', 'Colorlib Music', 'A lively rock anthem.', NULL, 'colorlib-music', 0, 2, GETDATE(), NULL, NULL, '/Content/img/bg-img/a2.jpg', 
+('Top', 'Colorlib Music', 'A lively rock anthem.', 0, 'colorlib-music', 0, 2, GETDATE(), NULL, NULL, '/Content/img/bg-img/a2.jpg', 
     (SELECT TOP 1 Url FROM Songs WHERE Title = 'Colorlib Music'), 
     (SELECT Id FROM Songs WHERE Title = 'Colorlib Music'), 
     (SELECT Id FROM Artists WHERE Name = 'William Parker')),
-('Top', 'New Era', 'A fresh and unique jazz piece.', NULL, 'new-era', 0, 3, GETDATE(), NULL, NULL, '/Content/img/bg-img/a3.jpg', 
+('Top', 'New Era', 'A fresh and unique jazz piece.', 0, 'new-era', 0, 3, GETDATE(), NULL, NULL, '/Content/img/bg-img/a3.jpg', 
     (SELECT TOP 1 Url FROM Songs WHERE Title = 'New Era'), 
     (SELECT Id FROM Songs WHERE Title = 'New Era'), 
     (SELECT Id FROM Artists WHERE Name = 'Jessica Walsh')),
-('Top', 'Rhythm of the Night', 'A fantastic song from Tha Stoves.', NULL, 'rhythm-of-the-night', 0, 4, GETDATE(), NULL, NULL, '/Content/img/bg-img/a4.jpg', 
+('Top', 'Rhythm of the Night', 'A fantastic song from Tha Stoves.', 0, 'rhythm-of-the-night', 0, 4, GETDATE(), NULL, NULL, '/Content/img/bg-img/a4.jpg', 
     (SELECT TOP 1 Url FROM Songs WHERE Title = 'Rhythm of the Night'), 
     (SELECT Id FROM Songs WHERE Title = 'Rhythm of the Night'), 
     (SELECT Id FROM Artists WHERE Name = 'Tha Stoves')),
-('Top', 'Remix Magic', 'An outstanding remix by DJ Ajay.', NULL, 'remix-magic', 0, 5, GETDATE(), NULL, NULL, '/Content/img/bg-img/a5.jpg', 
+('Top', 'Remix Magic', 'An outstanding remix by DJ Ajay.', 0, 'remix-magic', 0, 5, GETDATE(), NULL, NULL, '/Content/img/bg-img/a5.jpg', 
     (SELECT TOP 1 Url FROM Songs WHERE Title = 'Remix Magic'), 
     (SELECT Id FROM Songs WHERE Title = 'Remix Magic'), 
     (SELECT Id FROM Artists WHERE Name = 'DJ Ajay')),
-('Top', 'Unforgettable Moments', 'A fantastic track from Radio Vibez.', NULL, 'unforgettable-moments', 0, 6, GETDATE(), NULL, NULL, '/Content/img/bg-img/a6.jpg', 
+('Top', 'Unforgettable Moments', 'A fantastic track from Radio Vibez.', 0, 'unforgettable-moments', 0, 6, GETDATE(), NULL, NULL, '/Content/img/bg-img/a6.jpg', 
     (SELECT TOP 1 Url FROM Songs WHERE Title = 'Unforgettable Moments'), 
     (SELECT Id FROM Songs WHERE Title = 'Unforgettable Moments'), 
     (SELECT Id FROM Artists WHERE Name = 'Radio Vibez'));
@@ -608,26 +611,22 @@ VALUES
 select * from menu
 
 
-INSERT INTO Breadcrumbs (Title, Subtitle, BackgroundImage)
+INSERT INTO Breadcrumbs (Title, Subtitle, BackgroundImage, Hide)
 VALUES 
-('Events', 'See what’s new', '/Content/img/bg-img/breadcumb3.jpg'),
-('Concerts', 'Live Music Events', '/Content/img/bg-img/breadcumb3.jpg'),
-('Festivals', 'Celebrating Together', '/Content/img/bg-img/breadcumb3.jpg'),
-('Album', 'Discover new music', '/Content/img/bg-img/breadcumb3.jpg'),
-('Category', 'Browse by genre', '/Content/img/bg-img/breadcumb3.jpg'),
-('Library', 'Your favorite collection', '/Content/img/bg-img/breadcumb3.jpg');
+('Events', 'See what’s new', '/Content/img/bg-img/breadcumb3.jpg',0),
+('Concerts', 'Live Music Events', '/Content/img/bg-img/breadcumb3.jpg',0),
+('Festivals', 'Celebrating Together', '/Content/img/bg-img/breadcumb3.jpg',0),
+('Album', 'Discover new music', '/Content/img/bg-img/breadcumb3.jpg',0),
+('Category', 'Browse by genre', '/Content/img/bg-img/breadcumb3.jpg',0),
+('Library', 'Your favorite collection', '/Content/img/bg-img/breadcumb3.jpg',0);
 
-INSERT INTO LoginForm (Title, EmailLabel, EmailPlaceholder, EmailHelpText, PasswordLabel, PasswordPlaceholder, ButtonText)
-VALUES ('Welcome Back', 'Email address', 'Enter E-mail', 'We will never share your email with anyone else.', 'Password', 'Enter Password', 'Login');
-
-
-
-INSERT INTO RegisterForm (Title, NameLabel, NamePlaceholder, EmailLabel, EmailPlaceholder, PasswordLabel, PasswordPlaceholder, ButtonText)
-VALUES ('Create Your Account', 'Full Name', 'Enter your full name', 'Email address', 'Enter your email', 'Password', 'Enter your password', 'Register');
+INSERT INTO LoginForm (Title, EmailLabel, EmailPlaceholder, EmailHelpText, PasswordLabel, PasswordPlaceholder, ButtonText,Hide)
+VALUES ('Welcome Back', 'Email address', 'Enter E-mail', 'We will never share your email with anyone else.', 'Password', 'Enter Password', 'Login',0);
 
 
 
-
+INSERT INTO RegisterForm (Title, NameLabel, NamePlaceholder, EmailLabel, EmailPlaceholder, PasswordLabel, PasswordPlaceholder, ButtonText,Hide)
+VALUES ('Create Your Account', 'Full Name', 'Enter your full name', 'Email address', 'Enter your email', 'Password', 'Enter your password', 'Register',0);
 
 
 
@@ -655,13 +654,6 @@ select * from Songs
 select * from Miscellaneous
 
 
-CREATE TABLE AspNetUsers (
-    Id UNIQUEIDENTIFIER NOT NULL PRIMARY KEY,
-    Email NVARCHAR(256) NOT NULL UNIQUE,
-    PasswordHash NVARCHAR(256) NULL,
-    SecurityStamp NVARCHAR(256) NULL,
-    UserName NVARCHAR(256) NOT NULL,
-);
 
 -- Tạo bảng Users để lưu thông tin người dùng
 CREATE TABLE Users (
@@ -684,9 +676,14 @@ CREATE TABLE Playlists (
     PlaylistName NVARCHAR(255) NOT NULL,          -- Tên playlist
     PlaylistDescription NVARCHAR(MAX) NULL,       -- Mô tả playlist
     UserId INT NOT NULL,                          -- Khóa ngoại tham chiếu đến bảng Users (người tạo playlist)
-    CreatedDate DATETIME DEFAULT GETDATE(),       -- Ngày tạo playlist
+    CreatedDate DATETIME DEFAULT GETDATE(),   -- Ngày tạo playlist
+    Meta NVARCHAR(255),
+    Hide BIT NOT NULL DEFAULT 0,
+    [Order] INT,
+    DateBegin DATE DEFAULT GETDATE(), 
     CONSTRAINT FK_Playlists_Users FOREIGN KEY (UserId) REFERENCES Users(Id) -- Ràng buộc với bảng Users
 );
+
 -- Tạo bảng PlaylistSongs để lưu mối quan hệ giữa Playlists và Songs
 CREATE TABLE PlaylistSongs (
     PlaylistId INT NOT NULL,                     -- Khóa ngoại tham chiếu đến bảng Playlists
@@ -736,10 +733,8 @@ CREATE TABLE Slides (
     CreatedDate DATETIME DEFAULT GETDATE(),
     FOREIGN KEY (AlbumId) REFERENCES Albums(Id),
     Meta NVARCHAR(50) NULL,
-    Hide BIT NULL,
+    Hide BIT NOT NULL DEFAULT 1,
     [Order] INT NULL,
     DateBegin SMALLDATETIME NULL
 
 );
-
-Drop table Slides

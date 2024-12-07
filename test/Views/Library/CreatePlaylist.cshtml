@@ -1,0 +1,22 @@
+﻿@model MusicApp.ViewModels.PlaylistViewModel
+
+<div id="createPlaylistModal" style="display:none;">
+    <h3>Create Playlist</h3>
+    @using (Html.BeginForm("CreatePlaylist", "Library", FormMethod.Post, new { id = "createPlaylistForm" }))
+    {
+        @Html.AntiForgeryToken()
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.PlaylistName)
+            @Html.TextBoxFor(model => model.PlaylistName, new { @class = "form-control", placeholder = "Playlist Name" })
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.PlaylistDescription)
+            @Html.TextAreaFor(model => model.PlaylistDescription, new { @class = "form-control", placeholder = "Playlist Description" })
+        </div>
+
+        <button type="submit" class="btn btn-primary">Create Playlist</button>
+        <button type="button" class="btn btn-secondary" id="cancelBtn">Cancel</button>
+    }
+</div>

@@ -6,158 +6,130 @@
 
 <h2>Edit</h2>
 
-@using (Html.BeginForm("Edit", "SongManage", FormMethod.Post, new { enctype = "multipart/form-data" }))
-{
-    @Html.AntiForgeryToken()
-
-    <div class="form-horizontal">
-        <h4>Song</h4>
-        <hr />
-        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-        @Html.HiddenFor(model => model.Id)
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.Title, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.Title, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.Title, "", new { @class = "text-danger" })
+<div class="row">
+    <div class="col-md-12">
+        <div class="card">
+            <div class="card-header">
+                <div class="card-title">Form Elements</div>
             </div>
-        </div>
+            <div class="card-body">
+                @using (Html.BeginForm("Edit", "SongManage", FormMethod.Post, new { enctype = "multipart/form-data" }))
+                {
+                    @Html.AntiForgeryToken()
+                    <div class="row">
+                        <!-- Left column -->
+                        <div class="col-md-6 col-lg-4">
+                            <div class="form-group form-group-default">
+                                @Html.LabelFor(model => model.Title)
+                                @Html.EditorFor(model => model.Title, new { htmlAttributes = new { @class = "form-control" } })
+                                @Html.ValidationMessageFor(model => model.Title, "", new { @class = "text-danger" })
+                            </div>
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.ArtistId, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.ArtistId, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.ArtistId, "", new { @class = "text-danger" })
-            </div>
-        </div>
+                            <div class="form-group form-group-default">
+                                @Html.LabelFor(model => model.ArtistId)
+                                @Html.EditorFor(model => model.ArtistId, new { htmlAttributes = new { @class = "form-control" } })
+                                @Html.ValidationMessageFor(model => model.ArtistId, "", new { @class = "text-danger" })
+                            </div>
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.CategoryId, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.CategoryId, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.CategoryId, "", new { @class = "text-danger" })
-            </div>
-        </div>
+                            <div class="form-group form-group-default">
+                                @Html.LabelFor(model => model.CategoryId)
+                                @Html.EditorFor(model => model.CategoryId, new { htmlAttributes = new { @class = "form-control" } })
+                                @Html.ValidationMessageFor(model => model.CategoryId, "", new { @class = "text-danger" })
+                            </div>
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.ReleaseDate, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.ReleaseDate, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.ReleaseDate, "", new { @class = "text-danger" })
-            </div>
-        </div>
+                            <div class="form-group form-group-default">
+                                @Html.LabelFor(model => model.AlbumId)
+                                @Html.EditorFor(model => model.AlbumId, new { htmlAttributes = new { @class = "form-control" } })
+                                @Html.ValidationMessageFor(model => model.AlbumId, "", new { @class = "text-danger" })
+                            </div>
+                            <div class="form-group">
+                                <div class="d-flex">
+                                    <div class="form-check">
+                                        @Html.LabelFor(model => model.IsFavorite)
+                                        @Html.EditorFor(model => model.IsFavorite, new { htmlAttributes = new { @class = "form-check-input" } })
+                                    </div>
+                                    <div class="form-check">
+                                        @Html.LabelFor(model => model.IsFeatured)
+                                        @Html.EditorFor(model => model.IsFeatured, new { htmlAttributes = new { @class = "form-check-input" } })
+                                    </div>
+                                </div>
+                            </div>
 
-        <!-- Cover Image -->
-        <div class="form-group">
-            @Html.LabelFor(model => model.CoverImageUrl, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                <img src="@Url.Content(Model.CoverImageUrl)" alt="Cover Image" style="width: 100px; height: 100px;" />
-                <input type="file" name="CoverImage" class="form-control" onchange="previewImage(event)" />
-                @Html.ValidationMessageFor(model => model.CoverImageUrl, "", new { @class = "text-danger" })
-            </div>
-        </div>
+                        </div>
 
-        <!-- Image Preview -->
-        <div class="form-group">
-            <div class="col-md-10 col-md-offset-2">
-                <img id="imagePreview" src="#" alt="Cover Image Preview" style="max-width: 200px; display:none;" />
-            </div>
-        </div>
+                        <!-- Middle column -->
+                        <div class="col-md-6 col-lg-4">
+                            <div class="form-group">
+                                @Html.Label("Upload Cover Image", htmlAttributes: new { @class = "control-label col-md-2" })
+                                <div class="col-md-10">
+                                    <input type="file" name="CoverImage" class="form-control" accept="image/*" onchange="previewImage(event)" />
+                                </div>
+                            </div>
 
-        <!-- Audio File (URL) -->
-        <div class="form-group">
-            @Html.LabelFor(model => model.Url, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                <input type="file" name="AudioFile" class="form-control" />
-                @Html.ValidationMessageFor(model => model.Url, "", new { @class = "text-danger" })
-            </div>
-        </div>
+                            <!-- Display image preview -->
+                            <div class="form-group">
+                                <div class="col-md-10 col-md-offset-2">
+                                    <img id="imagePreview" src="@Url.Content(Model.CoverImageUrl)" alt="Cover Image Preview" style="max-width: 200px; display:block;" />
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label>Audio Upload</label>
+                                <input type="file" name="AudioFile" class="form-control" accept="audio/*" />
+                            </div>
+                        </div>
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.IsFeatured, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.IsFeatured, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.IsFeatured, "", new { @class = "text-danger" })
-            </div>
-        </div>
+                        <!-- Right column -->
+                        <div class="col-md-6 col-lg-4">
+                            <div class="form-group form-group-default">
+                                @Html.LabelFor(model => model.ReleaseDate)
+                                @Html.EditorFor(model => model.ReleaseDate, new { htmlAttributes = new { @class = "form-control ", type = "date" } })
+                                @Html.ValidationMessageFor(model => model.ReleaseDate, "", new { @class = "text-danger" })
+                            </div>
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.AlbumId, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.AlbumId, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.AlbumId, "", new { @class = "text-danger" })
-            </div>
-        </div>
+                            <div class="form-group">
+                                @Html.LabelFor(model => model.Hide)
+                                @Html.EditorFor(model => model.Hide, new { htmlAttributes = new { @class = "form-check-input" } })
+                            </div>
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.Meta, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.Meta, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.Meta, "", new { @class = "text-danger" })
-            </div>
-        </div>
+                            <div class="form-group form-inline">
+                                @Html.LabelFor(model => model.Order, new { @class = "col-md-3 col-form-label" })
+                                <div class="col-md-9 p-0">
+                                    @Html.EditorFor(model => model.Order, new { htmlAttributes = new { @class = "form-control" } })
+                                    @Html.ValidationMessageFor(model => model.Order, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.Hide, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.Hide, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.Hide, "", new { @class = "text-danger" })
-            </div>
-        </div>
+                            <div class="form-group form-group-default">
+                                @Html.LabelFor(model => model.Meta)
+                                @Html.EditorFor(model => model.Meta, new { htmlAttributes = new { @class = "form-control" } })
+                            </div>
+                        </div>
+                    </div>
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.Order, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.Order, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.Order, "", new { @class = "text-danger" })
-            </div>
-        </div>
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.Lyrics)
+                        @Html.TextAreaFor(model => model.Lyrics, new { @class = "form-control", rows = 5 })
+                        @Html.ValidationMessageFor(model => model.Lyrics, "", new { @class = "text-danger" })
+                    </div>
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.DateBegin, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.DateBegin, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.DateBegin, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.Lyrics, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.Lyrics, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.Lyrics, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.IsFavorite, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.IsFavorite, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.IsFavorite, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Save" class="btn btn-default" />
+                    <div class="form-group">
+                        <input type="submit" value="Save Changes" class="btn btn-success" />
+                        <a href="@Url.Action("Index", "SongManage")" class="btn btn-danger">Cancel</a>
+                    </div>
+                }
             </div>
         </div>
     </div>
-}
-
-<div>
-    @Html.ActionLink("Back to List", "Index")
 </div>
 
-<script type="text/javascript">
-        function previewImage(event) {
-            var reader = new FileReader();
-            reader.onload = function () {
-                var output = document.getElementById('imagePreview');
-                output.src = reader.result;
-                output.style.display = 'block';
-            }
-            reader.readAsDataURL(event.target.files[0]);
-        }
+<script>
+    function previewImage(event) {
+        var reader = new FileReader();
+        reader.onload = function () {
+            var output = document.getElementById('imagePreview');
+            output.src = reader.result;
+            output.style.display = 'block';
+        };
+        reader.readAsDataURL(event.target.files[0]);
+    }
 </script>

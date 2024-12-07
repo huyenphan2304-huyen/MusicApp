@@ -1,4 +1,6 @@
 ﻿@model MusicApp.ViewModels.AlbumDetailPageViewModel
+
+
 <section class="featured-album-area section-padding-100 bg-img bg-overlay bg-fixed" style="background-image: url(../../Content/img/bg-img/bg-4.jpg);">
     <div class="container">
         <div class="row align-items-end">
@@ -18,23 +20,56 @@
                     <p>Artist: @Model.AlbumDetail.Artist</p>
 
                     <h4>Songs:</h4>
-                    @if (Model.AlbumDetail.Songs != null && Model.AlbumDetail.Songs.Any())
-                    {
-                        foreach (var song in Model.AlbumDetail.Songs)
+                    <div class="song-list-container" style="max-height: 360px; overflow-y: auto;">
+                        @if (Model.AlbumDetail.Songs != null && Model.AlbumDetail.Songs.Any())
                         {
-                            <div class="song-play-area">
-                                <div class="song-name">
-                                    <p>@song.Title</p>
+                            foreach (var song in Model.AlbumDetail.Songs)
+                            {
+                                <div class="song-play-area">
+                                    <div class="song-name">
+                                        <p>@song.Title</p>
+                                    </div>
+                                    <audio class="song-audio" preload="auto" controls>
+                                        <source src="@song.Url" />
+                                    </audio>
                                 </div>
-                                <audio preload="auto" controls>
-                                    <source src="@song.Url">
-                                </audio>
-                            </div>
+                            }
                         }
-                    }
+                    </div>
                 </div>
             </div>
         </div>
     </div>
 </section>
 
+<script>
+    document.querySelectorAll('.song-audio').forEach(function (audioElement) {
+        audioElement.addEventListener('play', function () {
+            // Pause all other audio elements and reset their buttons
+            document.querySelectorAll('.song-audio').forEach(function (otherAudio) {
+                if (otherAudio !== audioElement) {
+                    otherAudio.pause();
+                    otherAudio.closest('.song-play-area').classList.remove('audioplayer-playing');
+                }
+            });
+
+            // Set the current song as playing
+            audioElement.closest('.song-play-area').classList.add('audioplayer-playing');
+        });
+
+        // Handle the pause event to update the button state
+        audioElement.addEventListener('pause', function () {
+            audioElement.closest('.song-play-area').classList.remove('audioplayer-playing');
+        });
+
+        // Handle when the song is clicked to play/pause
+        audioElement.addEventListener('click', function () {
+            if (audioElement.paused) {
+                audioElement.play();
+            } else {
+                audioElement.pause();
+            }
+        });
+    });
+
+</script>

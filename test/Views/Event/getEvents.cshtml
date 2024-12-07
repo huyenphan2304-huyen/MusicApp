@@ -5,7 +5,8 @@
         @foreach (var eventItem in Model)
         {
         <div class="col-12 col-md-6 col-lg-4">
-            <div class="single-event-area mb-30" onclick="location.href='@Url.Action("EventDetail", "Event", new { meta = eventItem.Meta, id = eventItem.Id })'" style="cursor: pointer;">
+            <div class="single-event-area mb-30" onclick="location.href='@Url.RouteUrl("EventDetails", new { type = "event", meta = eventItem.Meta, id = eventItem.Id })'"
+                 style="cursor: pointer;">
                 <div class="event-thumbnail">
                     <img src="@eventItem.ImageUrl" alt="">
                 </div>
@@ -15,7 +16,7 @@
                         <a href="#" class="event-place">@eventItem.Place</a>
                         <a href="#" class="event-date">@eventItem.Date.ToString("MMMM dd, yyyy")</a>
                     </div>
-                    <a href="@Url.Action("Details", "Event", new { id = eventItem.Id })" class="btn see-more-btn">See Event</a>
+                    <a href="@Url.Action("EventDetails", "Event", new { id = eventItem.Id })" class="btn see-more-btn">See Event</a>
                 </div>
             </div>
         </div>

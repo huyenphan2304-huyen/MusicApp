@@ -32,6 +32,8 @@ namespace MusicApp.Areas.Admin.Controllers
         // GET: Admin/Playlist/Create
         public ActionResult Create()
         {
+            ViewBag.Users = db.Users.ToList(); // Lấy danh sách user từ cơ sở dữ liệu
+
             return View();
         }
 
@@ -58,6 +60,8 @@ namespace MusicApp.Areas.Admin.Controllers
             {
                 return HttpNotFound();
             }
+            ViewBag.Users = db.Users.ToList(); // Lấy danh sách user từ cơ sở dữ liệu
+
             return View(playlist);
         }
 

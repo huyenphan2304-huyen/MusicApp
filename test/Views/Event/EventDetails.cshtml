@@ -1,0 +1,36 @@
+﻿@model MusicApp.Models.Event
+
+<!-- ##### Event Detail Area Start ##### -->
+<div class="event-detail-area section-padding-100">
+        <div class="row">
+            <!-- Left Column - Event Details -->
+            <div class="col-12 col-lg-9">
+                <!-- Single Event Start -->
+                <div class="event-detail mb-100 wow fadeInUp" data-wow-delay="100ms">
+                    <!-- Event Thumbnail -->
+                   
+
+                    <!-- Event Content -->
+                    <div class="event-content">
+                        <!-- Event Title -->
+                        <h4 class="event-title">@ViewBag.Title</h4>
+                        <!-- Event Meta -->
+                        <div class="event-meta d-flex mb-30">
+                            <p class="event-author">Tổ chức bởi <a href="#">Admin</a></p>
+                            <p class="event-location">Place: <a href="#">@ViewBag.Place</a></p>
+                        </div>
+                        <!-- Event Description -->
+                        <p class="event-description">@Html.Raw(ViewBag.Description)</p>
+                    </div>
+                </div>
+                <!-- Single Event End -->
+            </div>
+
+            <!-- Right Column - Another Events -->
+            <div class="col-12 col-lg-3">
+                @Html.Action("getOtherEvents", "Event", new { currentEventId = ViewBag.Id })
+            </div>
+
+        </div>
+</div>
+<!-- ##### Event Detail Area End ##### -->

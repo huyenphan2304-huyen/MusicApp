@@ -1,59 +1,128 @@
-﻿@using PagedList.Mvc;
-@using PagedList;
+﻿@using PagedList.Mvc
+@using PagedList
 
 @model IPagedList<MusicApp.Models.Playlist>
 
-<h2>Index</h2>
+@{
+    ViewBag.Title = "Playlist Management";
+}
+<div class="container">
+    <div class="page-inner">
+        <div class="page-header">
+            <h3 class="fw-bold mb-3">Playlist Management</h3>
+            <ul class="breadcrumbs mb-3">
+                <li class="nav-home">
+                    <a href="#">
+                        <i class="icon-home"></i>
+                    </a>
+                </li>
+                <li class="separator">
+                    <i class="icon-arrow-right"></i>
+                </li>
+                <li class="nav-item">
+                    <a href="#">Management</a>
+                </li>
+                <li class="separator">
+                    <i class="icon-arrow-right"></i>
+                </li>
+                <li class="nav-item">
+                    <a href="#">Playlists</a>
+                </li>
+            </ul>
+        </div>
 
-<p>
-    <a href="@Url.Action("Create", "PlaylistManage")" class="create-link">
-        <img src="~/Areas/Admin/Content/assets/img/icons8-add-50.png" alt="Create New" />
-    </a>
-</p>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-header">
+                        <div class="d-flex align-items-center">
+                            <h4 class="card-title">Playlists</h4>
+                            <a href="@Url.Action("Create", "PlaylistManage")" class="btn btn-primary btn-round ms-auto">
+                                <i class="fa fa-plus"></i>
+                                Add New Playlist
+                            </a>
+                        </div>
+                    </div>
 
-<form method="get" id="pageSizeForm">
-    <label for="pageSize">Show</label>
-    <select id="pageSize" name="pageSize" onchange="document.getElementById('pageSizeForm').submit();">
-        <option value="5" @(Request.QueryString["pageSize"] == "5" ? "selected" : "")>5</option>
-        <option value="10" @(Request.QueryString["pageSize"] == "10" ? "selected" : "")>10</option>
-        <option value="20" @(Request.QueryString["pageSize"] == "20" ? "selected" : "")>20</option>
-        <option value="50" @(Request.QueryString["pageSize"] == "50" ? "selected" : "")>50</option>
-    </select>
-</form>
+                    <div class="table-responsive">
+                        <table id="add-row" class="display table table-striped table-hover">
+                            <thead>
+                                <tr>
+                                    <th>@Html.DisplayNameFor(model => model[0].PlaylistName)</th>
+                                    <th>@Html.DisplayNameFor(model => model[0].PlaylistDescription)</th>
+                                    <th>@Html.DisplayNameFor(model => model[0].UserId)</th>
+                                    <th>@Html.DisplayNameFor(model => model[0].CreatedDate)</th>
+                                    <th style="width: 10%">Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var item in Model)
+                                {
+                                    <tr>
+                                        <td>@Html.DisplayFor(modelItem => item.PlaylistName)</td>
+                                        <td>@Html.DisplayFor(modelItem => item.PlaylistDescription)</td>
+                                        <td>@Html.DisplayFor(modelItem => item.UserId)</td>
+                                        <td>@Html.DisplayFor(modelItem => item.CreatedDate)</td>
+                                        <td>
+                                            <div class="form-button-action">
+                                                <a href="@Url.Action("Edit", "PlaylistManage", new { id = item.Id })" class="btn btn-link btn-primary btn-lg">
+                                                    <i class="fa fa-edit"></i>
+                                                </a>
+                                                <a href="@Url.Action("Delete", "PlaylistManage", new { id = item.Id })" class="btn btn-link btn-danger btn-lg">
+                                                    <i class="fa fa-times"></i>
+                                                </a>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
 
-<div class="table-responsive">
-    <table class="table">
-        <tr>
-            <th>@Html.DisplayNameFor(model => model[0].PlaylistName)</th>
-            <th>@Html.DisplayNameFor(model => model[0].PlaylistDescription)</th>
-            <th>@Html.DisplayNameFor(model => model[0].UserId)</th>
-            <th>@Html.DisplayNameFor(model => model[0].CreatedDate)</th>
-            <th></th>
-        </tr>
-
-        @foreach (var item in Model)
-        {
-            <tr>
-                <td>@Html.DisplayFor(modelItem => item.PlaylistName)</td>
-                <td>@Html.DisplayFor(modelItem => item.PlaylistDescription)</td>
-                <td>@Html.DisplayFor(modelItem => item.UserId)</td>
-                <td>@Html.DisplayFor(modelItem => item.CreatedDate)</td>
-                <td>
-                    <p style=" display: inline-flex;">
-
-                        <a href="@Url.Action("Edit", "PlaylistManage", new { id = item.Id })" class="create-link">
-                            <img src="~/Areas/Admin/Content/assets/img/icons8-edit-30.png" alt="Edit" />
-                        </a> |
-                        <a href="@Url.Action("Delete", "PlaylistManage", new { id = item.Id })" class="create-link">
-                            <img src="~/Areas/Admin/Content/assets/img/icons8-minus-30.png" alt="Delete" />
-                        </a>
-                        </p>
-                </td>
-            </tr>
-        }
-    </table>
-
-    <div class="pagination">
-        @Html.PagedListPager(Model, page => Url.Action("Index", new { page, pageSize = Request.QueryString["pageSize"] }))
+                    <div class="pagination">
+                        @Html.PagedListPager(Model, page => Url.Action("Index", new { page, pageSize = Request.QueryString["pageSize"] }))
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 </div>
+<script src="~/Areas/Admin/Content/assets/js/core/jquery-3.7.1.min.js"></script>
+<script>
+        // Thiết lập sự kiện khi mở modal
+        $('#deleteModal').on('show.bs.modal', function (event) {
+            var button = $(event.relatedTarget); // Button đã click
+            var playlistId = button.data('id'); // Lấy id của playlist từ nút Delete
+            var playlistName = button.data('name'); // Lấy tên của playlist từ nút Delete
+
+            var modal = $(this);
+            modal.find('#playlistName').text(playlistName); // Hiển thị tên playlist trong modal
+            modal.find('#deleteButton').data('id', playlistId); // Gán id playlist vào nút Delete
+        });
+
+        // Xử lý khi nhấn nút Delete trong modal (AJAX)
+        $('#deleteButton').click(function () {
+            var playlistId = $(this).data('id');
+
+            $.ajax({
+                url: '@Url.Action("DeleteConfirmed", "PlaylistManage")',  // URL của action DeleteConfirmed
+                type: 'POST',
+                data: {
+                    id: playlistId
+                },
+                success: function (response) {
+                    if (response.success) {
+                        // Xóa playlist khỏi bảng HTML
+                        $('#playlist-' + playlistId).remove();
+                        $('#deleteModal').modal('hide');  // Đóng modal
+                        alert(response.message);  // Hiển thị thông báo thành công
+                    } else {
+                        alert(response.message);  // Thông báo lỗi nếu có
+                    }
+                },
+                error: function () {
+                    alert('An error occurred while deleting the playlist.');
+                }
+            });
+        });
+</script>

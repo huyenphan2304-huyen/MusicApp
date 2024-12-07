@@ -39,7 +39,7 @@ namespace MusicApp.Areas.Admin.Controllers
 
         // POST: Admin/Event/Create
         [HttpPost]
-        [ValidateAntiForgeryToken]
+        [ValidateInput(false)]
         public ActionResult Create(MusicApp.Models.Event model, HttpPostedFileBase ImageFile)
         {
             if (string.IsNullOrEmpty(model.Place))
@@ -49,6 +49,8 @@ namespace MusicApp.Areas.Admin.Controllers
             }
             if (ModelState.IsValid)
             {
+                // Automatically generate meta from title
+                model.Meta = GenerateMeta(model.Title);
                 if (ImageFile != null && ImageFile.ContentLength > 0)
                 {
                     // Lưu hình ảnh vào thư mục trên server
@@ -83,7 +85,7 @@ namespace MusicApp.Areas.Admin.Controllers
 
         // POST: Admin/Event/Edit/5
         [HttpPost]
-        [ValidateAntiForgeryToken]
+        [ValidateInput(false)]
         public ActionResult Edit(int id, MusicApp.Models.Event model)
         {
             var existingEvent = db.Events.FirstOrDefault(e => e.Id == id);
@@ -100,6 +102,9 @@ namespace MusicApp.Areas.Admin.Controllers
 
             if (ModelState.IsValid)
             {
+                // Automatically generate meta from title
+                model.Meta = GenerateMeta(model.Title);
+
                 // Update properties that do not involve the image
                 existingEvent.Title = model.Title;
                 existingEvent.Place = model.Place;
@@ -178,7 +183,14 @@ namespace MusicApp.Areas.Admin.Controllers
             // Return the relative path to the image
             return "/Content/img/" + uniqueFileName;
         }
+        // Helper method to generate meta from title
+        private string GenerateMeta(string title)
+        {
+            if (string.IsNullOrEmpty(title)) return string.Empty;
 
+            // Convert spaces to hyphens and make it lowercase
+            return title.Trim().ToLower().Replace(" ", "-");
+        }
 
     }
 }

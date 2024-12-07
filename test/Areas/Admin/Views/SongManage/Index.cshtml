@@ -6,88 +6,88 @@
 @{
     ViewBag.Title = "Index";
 }
-<style>
-    .song-lyrics {
-        max-height: 100px; /* You can adjust this value based on the desired height */
-        overflow-y: auto; /* This will make the lyrics scrollable if the content exceeds the height */
-        white-space: normal; /* Allows the text to wrap */
-        word-wrap: break-word; /* Makes sure long words are broken properly */
-    }
-
-</style>
-<h2>Index</h2>
-
-<p>
-    <a href="@Url.Action("Create", "SongManage")" class="create-link">
-        <img src="~/Areas/Admin/Content/assets/img/icons8-add-50.png" alt="Create New" />
-    </a>
-</p>
-
-<form method="get" id="pageSizeForm">
-    <label for="pageSize">Show</label>
-    <select id="pageSize" name="pageSize" onchange="document.getElementById('pageSizeForm').submit();">
-        <option value="5" @(Request.QueryString["pageSize"] == "5" ? "selected" : "")>5</option>
-        <option value="10" @(Request.QueryString["pageSize"] == "10" ? "selected" : "")>10</option>
-        <option value="20" @(Request.QueryString["pageSize"] == "20" ? "selected" : "")>20</option>
-        <option value="50" @(Request.QueryString["pageSize"] == "50" ? "selected" : "")>50</option>
-    </select>
-</form>
-
-<div class="table-responsive">
-    <table class="table">
-        <tr>
-            <th>@Html.DisplayNameFor(model => model[0].Title)</th>
-            <th>@Html.DisplayNameFor(model => model[0].ArtistId)</th>
-            <th>@Html.DisplayNameFor(model => model[0].CategoryId)</th>
-            <th>@Html.DisplayNameFor(model => model[0].ReleaseDate)</th>
-            <th>@Html.DisplayNameFor(model => model[0].CoverImageUrl)</th>
-            <th>@Html.DisplayNameFor(model => model[0].Url)</th>
-            <th>@Html.DisplayNameFor(model => model[0].IsFeatured)</th>
-            <th>@Html.DisplayNameFor(model => model[0].AlbumId)</th>
-            <th>@Html.DisplayNameFor(model => model[0].Meta)</th>
-            <th>@Html.DisplayNameFor(model => model[0].Hide)</th>
-            <th>@Html.DisplayNameFor(model => model[0].Order)</th>
-            <th>@Html.DisplayNameFor(model => model[0].DateBegin)</th>
-            <th>@Html.DisplayNameFor(model => model[0].Lyrics)</th>
-            <th>@Html.DisplayNameFor(model => model[0].IsFavorite)</th>
-            <th></th>
-        </tr>
-
-        @foreach (var item in Model)
-        {
-            <tr>
-                <td>@Html.DisplayFor(modelItem => item.Title)</td>
-                <td>@Html.DisplayFor(modelItem => item.ArtistId)</td>
-                <td>@Html.DisplayFor(modelItem => item.CategoryId)</td>
-                <td>@Html.DisplayFor(modelItem => item.ReleaseDate)</td>
-                <td>
-                    <img src="@Url.Content(item.CoverImageUrl)" alt="item.Meta" style="max-width: 100px; max-height: 100px;" />
-                </td>
-                <td>@Html.DisplayFor(modelItem => item.Url)</td>
-                <td>@Html.DisplayFor(modelItem => item.IsFeatured)</td>
-                <td>@Html.DisplayFor(modelItem => item.AlbumId)</td>
-                <td>@Html.DisplayFor(modelItem => item.Meta)</td>
-                <td>@Html.DisplayFor(modelItem => item.Hide)</td>
-                <td>@Html.DisplayFor(modelItem => item.Order)</td>
-                <td>@Html.DisplayFor(modelItem => item.DateBegin)</td>
-                <td class="song-lyrics">@Html.DisplayFor(modelItem => item.Lyrics)</td>
-                <td>@Html.DisplayFor(modelItem => item.IsFavorite)</td>
-                <td>
-                    <p style=" display: inline-flex;">
-
-                        <a href="@Url.Action("Edit", "SongManage", new { id = item.Id })" class="create-link">
-                            <img src="~/Areas/Admin/Content/assets/img/icons8-edit-30.png" alt="Edit" />
-                        </a> |
-                        <a href="@Url.Action("Delete", "SongManage", new { id = item.Id })" class="create-link">
-                            <img src="~/Areas/Admin/Content/assets/img/icons8-minus-30.png" alt="Delete" />
-                        </a>
-                        </p>
-                </td>
-            </tr>
-        }
-    </table>
-
-    <div class="pagination">
-        @Html.PagedListPager(Model, page => Url.Action("Index", new { page, pageSize = Request.QueryString["pageSize"] }))
+<div class="container">
+    <div class="page-inner">
+        <div class="page-header">
+            <h3 class="fw-bold mb-3">Song Management</h3>
+            <ul class="breadcrumbs mb-3">
+                <li class="nav-home">
+                    <a href="#">
+                        <i class="icon-home"></i>
+                    </a>
+                </li>
+                <li class="separator">
+                    <i class="icon-arrow-right"></i>
+                </li>
+                <li class="nav-item">
+                    <a href="#">Management</a>
+                </li>
+                <li class="separator">
+                    <i class="icon-arrow-right"></i>
+                </li>
+                <li class="nav-item">
+                    <a href="#">Songs</a>
+                </li>
+            </ul>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-header">
+                        <div class="d-flex align-items-center">
+                            <h4 class="card-title">Songs</h4>
+                            <a href="@Url.Action("Create", "SongManage")" class="btn btn-primary btn-round ms-auto">
+                                <i class="fa fa-plus"></i>
+                                Add New Song
+                            </a>
+                        </div>
+                    </div>
+                   
+                    <div class="table-responsive">
+                        <table id="add-row" class="display table table-striped table-hover">
+                            <thead>
+                                <tr>
+                                    <th>@Html.DisplayNameFor(model => model[0].Title)</th>
+                                    <th>@Html.DisplayNameFor(model => model[0].ReleaseDate)</th>
+                                    <th>@Html.DisplayNameFor(model => model[0].CoverImageUrl)</th>
+                                    <th>@Html.DisplayNameFor(model => model[0].Meta)</th>
+                                    <th>@Html.DisplayNameFor(model => model[0].Order)</th>
+                                    <th style="width: 10%">Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var item in Model)
+                                {
+                                    <tr>
+                                        <td>@Html.DisplayFor(modelItem => item.Title)</td>
+                                        <td>@Html.DisplayFor(modelItem => item.ReleaseDate)</td>
+                                        <td>
+                                            <img src="@Url.Content(item.CoverImageUrl)" alt="item.Meta" style="max-width: 100px; max-height: 100px;" />
+                                        </td>
+                                        <td>@Html.DisplayFor(modelItem => item.Meta)</td>
+                                        <td>@Html.DisplayFor(modelItem => item.Order)</td>
+                                        <td>
+                                            <div class="form-button-action">
+                                                <a href="@Url.Action("Edit", "SongManage", new { id = item.Id })" class="btn btn-link btn-primary btn-lg">
+                                                    <i class="fa fa-edit"></i>
+                                                </a>
+                                                <a href="@Url.Action("Delete", "SongManage", new { id = item.Id })" class="btn btn-link btn-danger btn-lg">
+                                                    <i class="fa fa-times"></i>
+                                                </a>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="pagination">
+                        @Html.PagedListPager(Model, page => Url.Action("Index", new { page, pageSize = Request.QueryString["pageSize"] }))
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 </div>
+
+

@@ -1,59 +1,107 @@
 ﻿@model MusicApp.Models.Playlist
 
 @{
-    ViewBag.Title = "Create";
+    ViewBag.Title = "Create Playlist";
 }
 
-<h2>Create</h2>
+<h2>Create Playlist</h2>
 
-@using (Html.BeginForm()) 
-{
-    @Html.AntiForgeryToken()
-    
-    <div class="form-horizontal">
-        <h4>Playlist</h4>
-        <hr />
-        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-        <div class="form-group">
-            @Html.LabelFor(model => model.PlaylistName, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.PlaylistName, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.PlaylistName, "", new { @class = "text-danger" })
+<div class="row">
+    <div class="col-md-12">
+        <div class="card">
+            <div class="card-header">
+                <div class="card-title">Create Playlist</div>
             </div>
-        </div>
+            <div class="card-body">
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.PlaylistDescription, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.PlaylistDescription, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.PlaylistDescription, "", new { @class = "text-danger" })
-            </div>
-        </div>
+                @using (Html.BeginForm("Create", "PlaylistManage", FormMethod.Post, new { enctype = "multipart/form-data" }))
+                {
+                    @Html.AntiForgeryToken()
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.UserId, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.UserId, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.UserId, "", new { @class = "text-danger" })
-            </div>
-        </div>
+                    <div class="row">
+                        <!-- Left column -->
+                        <div class="col-md-6 col-lg-6">
+                            <!-- Playlist Name -->
+                            <div class="form-group form-group-default">
+                                @Html.LabelFor(model => model.PlaylistName)
+                                @Html.EditorFor(model => model.PlaylistName, new { htmlAttributes = new { @class = "form-control", id = "PlaylistName", onkeyup = "generateMeta()" } })
+                                @Html.ValidationMessageFor(model => model.PlaylistName, "", new { @class = "text-danger" })
+                            </div>
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.CreatedDate, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.CreatedDate, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.CreatedDate, "", new { @class = "text-danger" })
-            </div>
-        </div>
+                            <!-- Meta -->
+                            <div class="form-group form-group-default">
+                                @Html.LabelFor(model => model.Meta)
+                                @Html.EditorFor(model => model.Meta, new { htmlAttributes = new { @class = "form-control", id = "Meta" } })
+                                @Html.ValidationMessageFor(model => model.Meta, "", new { @class = "text-danger" })
+                            </div>
 
-        <div class="form-group">
-            <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Create" class="btn btn-default" />
+                            <!-- Order -->
+                            <div class="form-group form-group-default">
+                                @Html.LabelFor(model => model.Order)
+                                @Html.EditorFor(model => model.Order, new { htmlAttributes = new { @class = "form-control" } })
+                                @Html.ValidationMessageFor(model => model.Order, "", new { @class = "text-danger" })
+                            </div>
+
+                            <!-- Hide Checkbox -->
+                            <div class="form-group form-check">
+                                @Html.CheckBoxFor(model => model.Hide, new { @class = "form-check-input" })
+                                @Html.LabelFor(model => model.Hide, new { @class = "form-check-label" })
+                                @Html.ValidationMessageFor(model => model.Hide, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+
+                        <!-- Middle column -->
+                        <div class="col-md-6 col-lg-4">
+                            <!-- Dropdown User -->
+                            <div class="form-group form-group-default">
+                                @Html.Label("User")
+                                @Html.DropDownList("UserId", new SelectList(ViewBag.Users as System.Collections.IEnumerable, "Id", "Username"), "-- Select User --", new { @class = "form-control" })
+                                @Html.ValidationMessageFor(model => model.UserId, "", new { @class = "text-danger" })
+                            </div>
+
+                            <!-- Created Date -->
+                            <div class="form-group form-group-default">
+                                @Html.LabelFor(model => model.CreatedDate)
+                                @Html.EditorFor(model => model.CreatedDate, new { htmlAttributes = new { @class = "form-control", type = "date" } })
+                                @Html.ValidationMessageFor(model => model.CreatedDate, "", new { @class = "text-danger" })
+                            </div>
+
+                            <!-- Date Begin -->
+                            <div class="form-group form-group-default">
+                                @Html.LabelFor(model => model.DateBegin)
+                                @Html.EditorFor(model => model.DateBegin, new { htmlAttributes = new { @class = "form-control", type = "date" } })
+                                @Html.ValidationMessageFor(model => model.DateBegin, "", new { @class = "text-danger" })
+                            </div>
+
+                        </div>
+                    </div>
+
+                    <!-- Description TextArea -->
+                    <div class="row-col-12">
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.PlaylistDescription)
+                            @Html.TextAreaFor(model => model.PlaylistDescription, new { @class = "form-control", id = "inputContent", rows = 10 })
+                            @Html.ValidationMessageFor(model => model.PlaylistDescription, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <input type="submit" value="Create Playlist" class="btn btn-success" />
+                        <a href="@Url.Action("Index", "PlaylistManage")" class="btn btn-danger">Cancel</a>
+                    </div>
+                }
             </div>
         </div>
     </div>
-}
-
-<div>
-    @Html.ActionLink("Back to List", "Index")
 </div>
+
+<script>
+    function generateMeta() {
+        var playlistName = document.getElementById('PlaylistName').value;
+        var meta = playlistName.toLowerCase()
+            .replace(/[^a-z0-9\s-]/g, '')  // Loại bỏ các ký tự đặc biệt
+            .replace(/\s+/g, '-')          // Thay khoảng trắng bằng dấu gạch ngang
+            .trim();
+        document.getElementById('Meta').value = meta;
+    }
+</script>

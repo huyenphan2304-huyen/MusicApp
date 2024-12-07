@@ -7,56 +7,151 @@
 @{
     ViewBag.Title = "Index";
 }
+<div class="container">
+    <div class="page-inner">
+        <div class="page-header">
+            <h3 class="fw-bold mb-3">Category Management</h3>
+            <ul class="breadcrumbs mb-3">
+                <li class="nav-home">
+                    <a href="#">
+                        <i class="icon-home"></i>
+                    </a>
+                </li>
+                <li class="separator">
+                    <i class="icon-arrow-right"></i>
+                </li>
+                <li class="nav-item">
+                    <a href="#">Management</a>
+                </li>
+                <li class="separator">
+                    <i class="icon-arrow-right"></i>
+                </li>
+                <li class="nav-item">
+                    <a href="#">Category</a>
+                </li>
+            </ul>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-header">
+                        <div class="d-flex align-items-center">
+                            <h4 class="card-title">Songs</h4>
+                            <a href="@Url.Action("Create", "CategoryManage")" class="btn btn-primary btn-round ms-auto">
+                                <i class="fa fa-plus"></i>
+                                Add New Song
+                            </a>
+                        </div>
+                    </div>
 
-<h2>Index</h2>
+                    <div class="table-responsive">
 
-<p>
-    <a href="@Url.Action("Create", "CategoryManage")" class="create-link">
-        <img src="~/Areas/Admin/Content/assets/img/icons8-add-50.png" alt="Create New" />
-    </a>
-</p>
+                        <table id="add-row" class="display table table-striped table-hover">
+                            <thead>
 
-<form method="get" id="pageSizeForm">
-    <label for="pageSize">Show</label>
-    <select id="pageSize" name="pageSize" onchange="document.getElementById('pageSizeForm').submit();">
-        <option value="5" @(Request.QueryString["pageSize"] == "5" ? "selected" : "")>5</option>
-        <option value="10" @(Request.QueryString["pageSize"] == "10" ? "selected" : "")>10</option>
-        <option value="20" @(Request.QueryString["pageSize"] == "20" ? "selected" : "")>20</option>
-        <option value="50" @(Request.QueryString["pageSize"] == "50" ? "selected" : "")>50</option>
-    </select>
-</form>
+                                <tr>
+                                    <th>
+                                        @Html.DisplayNameFor(model => model[0].Name)
+                                    </th>
+                                    <th style="width: 10%">Action</th>
 
-<div class="table-responsive">
+                                </tr>
+                            </thead>
+                            <tbody>
 
-    <table class="table">
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model[0].Name)
-            </th>
-            <th></th>
-        </tr>
+                                @foreach (var item in Model)
+                                {
+                                    <tr>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.Name)
+                                        </td>
+                                        <td>
+                                            <div class="form-button-action">
+                                                <a href="@Url.Action("Edit", "CategoryManage", new { id = item.Id })" class="btn btn-link btn-primary btn-lg">
+                                                    <i class="fa fa-edit"></i>
+                                                </a>
+                                                <a href="@Url.Action("Delete", "CategoryManage", new { id = item.Id })" class="btn btn-link btn-danger btn-lg">
+                                                    <i class="fa fa-times"></i>
+                                                </a>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                        <div class="pagination">
+                            @Html.PagedListPager(Model, page => Url.Action("Index", new { page, pageSize = Request.QueryString["pageSize"] }))
+                        </div>
+                    </div>
 
-        @foreach (var item in Model)
-        {
-            <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Name)
-                </td>
-                <td>
-                    <p style=" display: inline-flex;">
-                        <a href="@Url.Action("Edit", "CategoryManage", new { id = item.Id })" class="create-link">
-                            <img src="~/Areas/Admin/Content/assets/img/icons8-edit-30.png" alt="Edit" />
-                        </a>|
-                        <a href="@Url.Action("Delete", "CategoryManage", new { id = item.Id })" class="create-link">
-                            <img src="~/Areas/Admin/Content/assets/img/icons8-minus-30.png" alt="Delete" />
-                        </a>
-                    </p>
-                </td>
-            </tr>
-        }
 
-    </table>
-    <div class="pagination">
-        @Html.PagedListPager(Model, page => Url.Action("Index", new { page, pageSize = Request.QueryString["pageSize"] }))
+                </div>
+            </div>
+        </div>
     </div>
-    </div>
+</div>
+
+<script>
+    $(document).ready(function () {
+        // Khởi tạo lại các component của Bootstrap
+        $('[data-bs-toggle="collapse"]').collapse();
+    });
+</script>
+
+<script>
+    $(document).ready(function () {
+        $("#basic-datatables").DataTable({});
+
+        $("#multi-filter-select").DataTable({
+            pageLength: 5,
+            initComplete: function () {
+                this.api()
+                    .columns()
+                    .every(function () {
+                        var column = this;
+                        var select = $(
+                            '<select class="form-select"><option value=""></option></select>'
+                        )
+                            .appendTo($(column.footer()).empty())
+                            .on("change", function () {
+                                var val = $.fn.dataTable.util.escapeRegex($(this).val());
+
+                                column
+                                    .search(val ? "^" + val + "$" : "", true, false)
+                                    .draw();
+                            });
+
+                        column
+                            .data()
+                            .unique()
+                            .sort()
+                            .each(function (d, j) {
+                                select.append(
+                                    '<option value="' + d + '">' + d + "</option>"
+                                );
+                            });
+                    });
+            },
+        });
+
+        // Add Row
+        $("#add-row").DataTable({
+            pageLength: 5,
+        });
+        var action =
+            '<td> <div class="form-button-action"> <button type="button" data-bs-toggle="tooltip" title="" class="btn btn-link btn-primary btn-lg" data-original-title="Edit Task"> <i class="fa fa-edit"></i> </button> <button type="button" data-bs-toggle="tooltip" title="" class="btn btn-link btn-danger" data-original-title="Remove"> <i class="fa fa-times"></i> </button> </div> </td>';
+
+        $("#addRowButton").click(function () {
+            $("#add-row")
+                .dataTable()
+                .fnAddData([
+                    $("#addName").val(),
+                    $("#addPosition").val(),
+                    $("#addOffice").val(),
+                    action,
+                ]);
+            $("#addRowModal").modal("hide");
+
+        });
+    });
+</script>

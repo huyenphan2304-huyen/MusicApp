@@ -1,0 +1,15 @@
+﻿@model IEnumerable<MusicApp.Models.Event>
+    <h4>Other Events</h4>
+    @foreach (var eventItem in Model)
+    {
+            <div class="single-event-area mb-30" onclick="location.href='@Url.Action("EventDetails", "Event", new { meta = eventItem.Meta, id = eventItem.Id })'" style="cursor: pointer;">
+                <div class="event-text">
+                    <h4>@eventItem.Title</h4>
+                    <div class="event-meta-data">
+                        <a href="#" class="event-place">@eventItem.Place</a>
+                        <a href="#" class="event-date">@eventItem.Date.ToString("MMMM dd, yyyy")</a>
+                    </div>
+                    <a href="@Url.Action("EventDetails", "Event", new { id = eventItem.Id })" class="btn see-more-btn">See Event</a>
+                </div>
+            </div>
+    }

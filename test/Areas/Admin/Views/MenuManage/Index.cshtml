@@ -3,86 +3,92 @@
 
 @model IPagedList<MusicApp.Models.Menu>
 
-
-
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "Menu Management";
 }
 
-<h2>Index</h2>
-<style>
-    /* Menu chính bị vô hiệu hóa */
-    .disabled-menu {
-        background-color: #f0f0f0; /* Xám nhạt */
-        pointer-events: none; /* Không cho phép click */
-    }
+<div class="container">
+    <div class="page-inner">
+        <div class="page-header">
+            <h3 class="fw-bold mb-3">Menu Management</h3>
+            <ul class="breadcrumbs mb-3">
+                <li class="nav-home">
+                    <a href="#">
+                        <i class="icon-home"></i>
+                    </a>
+                </li>
+                <li class="separator">
+                    <i class="icon-arrow-right"></i>
+                </li>
+                <li class="nav-item">
+                    <a href="#">Management</a>
+                </li>
+                <li class="separator">
+                    <i class="icon-arrow-right"></i>
+                </li>
+                <li class="nav-item">
+                    <a href="#">Menu</a>
+                </li>
+            </ul>
+        </div>
 
-    /* Submenu có thể click */
-    .submenu {
-        background-color: #ffffff; /* Trắng */
-    }
-
-</style>
-<p>
-    <a href="@Url.Action("Create", "MenuManage")" class="create-link">
-        <img src="~/Areas/Admin/Content/assets/img/icons8-add-50.png" alt="Create New" />
-    </a>
-</p>
-
-<form method="get" id="pageSizeForm">
-    <label for="pageSize">Số lượng bài hát mỗi trang:</label>
-    <select id="pageSize" name="pageSize" onchange="document.getElementById('pageSizeForm').submit();">
-        <option value="5" @(Request.QueryString["pageSize"] == "5" ? "selected" : "")>5</option>
-        <option value="10" @(Request.QueryString["pageSize"] == "10" ? "selected" : "")>10</option>
-        <option value="20" @(Request.QueryString["pageSize"] == "20" ? "selected" : "")>20</option>
-        <option value="50" @(Request.QueryString["pageSize"] == "50" ? "selected" : "")>50</option>
-    </select>
-</form>
-<div class="table-responsive">
-
-    <table class="table">
-        <tr>
-            <th>@Html.DisplayNameFor(model => model[0].Name)</th>
-            <th>@Html.DisplayNameFor(model => model[0].Url)</th>
-            <th>@Html.DisplayNameFor(model => model[0].ParentId)</th>
-            <th>@Html.DisplayNameFor(model => model[0].CategoryId)</th>
-            <th>@Html.DisplayNameFor(model => model[0].Meta)</th>
-            <th>@Html.DisplayNameFor(model => model[0].Hide)</th>
-            <th>@Html.DisplayNameFor(model => model[0].Order)</th>
-            <th>@Html.DisplayNameFor(model => model[0].DateBegin)</th>
-            <th></th>
-        </tr>
-
-        @foreach (var item in Model)
-        {
-            <tr class="@(item.ParentId == null ? "disabled-menu" : "submenu")">
-                <td>@Html.DisplayFor(modelItem => item.Name)</td>
-                <td>@Html.DisplayFor(modelItem => item.Url)</td>
-                <td>@Html.DisplayFor(modelItem => item.ParentId)</td>
-                <td>@Html.DisplayFor(modelItem => item.CategoryId)</td>
-                <td>@Html.DisplayFor(modelItem => item.Meta)</td>
-                <td>@Html.DisplayFor(modelItem => item.Hide)</td>
-                <td>@Html.DisplayFor(modelItem => item.Order)</td>
-                <td>@Html.DisplayFor(modelItem => item.DateBegin)</td>
-                <td>
-                    @if (item.ParentId != null)  // Chỉ cho phép sửa/xóa menu con
-                    {
-                        <p style="display: inline-flex;">
-                            <a href="@Url.Action("Edit", "MenuManage", new { id = item.Id })" class="create-link">
-                                <img src="~/Areas/Admin/Content/assets/img/icons8-edit-30.png" alt="Edit" />
-                            </a>|
-                            <a href="@Url.Action("Delete", "MenuManage", new { id = item.Id })" class="create-link">
-                                <img src="~/Areas/Admin/Content/assets/img/icons8-minus-30.png" alt="Delete" />
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-header">
+                        <div class="d-flex align-items-center">
+                            <h4 class="card-title">Menu Items</h4>
+                            <a href="@Url.Action("Create", "MenuManage")" class="btn btn-primary btn-round ms-auto">
+                                <i class="fa fa-plus"></i>
+                                Add New
                             </a>
-                        </p>
-                    }
-                </td>
-            </tr>
-        }
-    </table>
+                        </div>
+                    </div>
 
-    <div class="pagination">
-        @Html.PagedListPager(Model, page => Url.Action("Index", new { page, pageSize = Request.QueryString["pageSize"] }))
+                    <div class="table-responsive">
+                        <table id="add-row" class="display table table-striped table-hover">
+                            <thead>
+                                <tr>
+                                    <th>@Html.DisplayNameFor(model => model[0].Name)</th>
+                                    <th>@Html.DisplayNameFor(model => model[0].Url)</th>
+                                    
+                                    <th>@Html.DisplayNameFor(model => model[0].Meta)</th>
+                                    <th>@Html.DisplayNameFor(model => model[0].Order)</th>
+                                    <th>@Html.DisplayNameFor(model => model[0].DateBegin)</th>
+                                    <th style="width: 10%">Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var item in Model)
+                                {
+                                    <tr class="@(item.ParentId == null ? "disabled-menu" : "submenu")">
+                                        <td>@Html.DisplayFor(modelItem => item.Name)</td>
+                                        <td>@Html.DisplayFor(modelItem => item.Url)</td>
+                                        <td>@Html.DisplayFor(modelItem => item.Meta)</td>
+                                        <td>@Html.DisplayFor(modelItem => item.Order)</td>
+                                        <td>@Html.DisplayFor(modelItem => item.DateBegin)</td>
+                                        <td>
+                                            @if (item.ParentId != null)
+                                            {
+                                                <p style="display: inline-flex;">
+                                                    <a href="@Url.Action("Edit", "MenuManage", new { id = item.Id })" class="btn btn-link btn-primary btn-lg">
+                                                        <i class="fa fa-edit"></i>
+                                                    </a>
+                                                    |
+                                                    <a href="@Url.Action("Delete", "MenuManage", new { id = item.Id })" class="btn btn-link btn-danger btn-lg">
+                                                        <i class="fa fa-times"></i>
+                                                    </a>
+                                                </p>
+                                            }
+                                        </td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+
+                </div>
+            </div>
+        </div>
     </div>
 </div>
-

@@ -24,8 +24,15 @@ namespace MusicApp.Controllers
             var events = db.Events.ToList();
             return PartialView("getEvents",events);
         }
-        
-        public ActionResult EventDetail(int id)
+        public ActionResult getOtherEvents(int currentEventId)
+        {
+            var events = db.Events.Where(e => e.Id != currentEventId).Take(5).ToList();
+            return PartialView("getOtherEvents", events);
+        }
+
+
+
+        public ActionResult EventDetails(int id)
         {
             // Truy vấn sự kiện từ cơ sở dữ liệu
             var eventDetail = db.Events.SingleOrDefault(e => e.Id == id);
@@ -38,11 +45,12 @@ namespace MusicApp.Controllers
             // Lưu thông tin sự kiện vào ViewBag
             ViewBag.Id = eventDetail.Id;
             ViewBag.Title = eventDetail.Title;
+            ViewBag.Place = eventDetail.Place;
             ViewBag.Description = eventDetail.Description;
             ViewBag.ImageUrl = eventDetail.ImageUrl;
             ViewBag.Date = eventDetail.Date; // Đảm bảo Date là DateTime
 
-            return View(); // Trả về view
+            return View("EventDetails",eventDetail); // Trả về view
         }
         public ActionResult BreadcumbArea()
         {

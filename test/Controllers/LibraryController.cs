@@ -53,6 +53,36 @@ namespace MusicApp.Controllers
 
             return PartialView("Myfavorite",favoriteSongs);  // Trả về view với danh sách các bài hát yêu thích
         }
+        public ActionResult CreatePlaylist()
+        {
+            return PartialView("CreatePlaylist");
+        }
+        // Action để tạo mới playlist
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult CreatePlaylist(PlaylistViewModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                // Tạo đối tượng Playlist mới
+                var playlist = new Playlist
+                {
+                    PlaylistName = model.PlaylistName,
+                    PlaylistDescription = model.PlaylistDescription,
+                    User = db.Users.FirstOrDefault(u => u.Username == User.Identity.Name), // Lấy người dùng đang đăng nhập
+                    CreatedDate = DateTime.Now
+                };
+
+                // Thêm vào cơ sở dữ liệu và lưu thay đổi
+                db.Playlists.InsertOnSubmit(playlist);
+                db.SubmitChanges();
+
+                return Json(new { success = true, message = "Playlist created successfully!" });
+            }
+
+            // Nếu có lỗi, trả về lại form
+            return PartialView("CreatePlaylist", model);
+        }
     }
     
 }

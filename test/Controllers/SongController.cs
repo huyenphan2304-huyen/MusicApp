@@ -55,7 +55,11 @@ namespace MusicApp.Controllers
             {
                 return HttpNotFound("Song not found");
             }
-
+            // Kiểm tra lại dữ liệu của WeeksTop
+            if (weeksTop == null || weeksTop.Count == 0)
+            {
+                ViewBag.WeeklyTopMessage = "No top hits this week.";
+            }
             // Tạo ViewModel cho bài hát và các thông tin liên quan
             var viewModel = new SongDetailViewModel
             {

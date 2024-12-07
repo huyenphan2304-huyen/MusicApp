@@ -7,103 +7,142 @@
     ViewBag.Title = "Index";
 }
 
-<h2>Index</h2>
+<div class="container">
+    <div class="page-inner">
+        <div class="page-header">
+            <h3 class="fw-bold mb-3">Event Management</h3>
+            <ul class="breadcrumbs mb-3">
+                <li class="nav-home">
+                    <a href="#">
+                        <i class="icon-home"></i>
+                    </a>
+                </li>
+                <li class="separator">
+                    <i class="icon-arrow-right"></i>
+                </li>
+                <li class="nav-item">
+                    <a href="#">Management</a>
+                </li>
+                <li class="separator">
+                    <i class="icon-arrow-right"></i>
+                </li>
+                <li class="nav-item">
+                    <a href="#">Event</a>
+                </li>
+            </ul>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-header">
+                        <div class="d-flex align-items-center">
+                            <h4 class="card-title">Events</h4>
+                            <a href="@Url.Action("Create", "EventManage")" class="btn btn-primary btn-round ms-auto">
+                                <i class="fa fa-plus"></i>
+                                Add New
+                            </a>
+                        </div>
+                    </div>
 
-<p>
-    <a href="@Url.Action("Create", "EventManage")" class="create-link">
-        <img src="~/Areas/Admin/Content/assets/img/icons8-add-50.png" alt="Create New" />
-    </a>
-</p>
 
-<form method="get" id="pageSizeForm">
-    <label for="pageSize">Số lượng bài hát mỗi trang:</label>
-    <select id="pageSize" name="pageSize" onchange="document.getElementById('pageSizeForm').submit();">
-        <option value="5" @(Request.QueryString["pageSize"] == "5" ? "selected" : "")>5</option>
-        <option value="10" @(Request.QueryString["pageSize"] == "10" ? "selected" : "")>10</option>
-        <option value="20" @(Request.QueryString["pageSize"] == "20" ? "selected" : "")>20</option>
-        <option value="50" @(Request.QueryString["pageSize"] == "50" ? "selected" : "")>50</option>
-    </select>
-</form>
+                    <div class="table-responsive">
+                        <table id="add-row" class="display table table-striped table-hover">
+                            <thead>
 
-<div class="table-responsive">
-    <table class="table">
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model[0].Title)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model[0].Place)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model[0].Date)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model[0].ImageUrl)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model[0].Description)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model[0].Meta)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model[0].Hide)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model[0].Order)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model[0].DateBegin)
-            </th>
-            <th></th>
-        </tr>
+                                <tr>
+                                    <th>
+                                        @Html.DisplayNameFor(model => model[0].Title)
+                                    </th>
+                                    <th>
+                                        @Html.DisplayNameFor(model => model[0].Place)
+                                    </th>
+                                    <th>
+                                        @Html.DisplayNameFor(model => model[0].Date)
+                                    </th>
+                                    <th>
+                                        @Html.DisplayNameFor(model => model[0].ImageUrl)
+                                    </th>
 
-        @foreach (var item in Model)
-        {
-            <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Title)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Place)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Date)
-                </td>
-                <td>
+                                    <th>
+                                        @Html.DisplayNameFor(model => model[0].Meta)
+                                    </th>
+                                    <th>
+                                        @Html.DisplayNameFor(model => model[0].Hide)
+                                    </th>
+                                    <th>
+                                        @Html.DisplayNameFor(model => model[0].Order)
+                                    </th>
+                                    <th>
+                                        @Html.DisplayNameFor(model => model[0].DateBegin)
+                                    </th>
+                                    <th style="width: 10%">Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
 
-                    <img src="@Url.Content(item.ImageUrl)" alt="Cover Image" style="max-width: 100px; max-height: 100px;" />
+                                @foreach (var item in Model)
+                                {
+                                    <tr>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.Title)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.Place)
+                                        </td>
+                                        <td>
+                                            @if (item.Date != null)
+                                            {
+                                                @Html.DisplayFor(modelItem => item.Date)
+                                            }
+                                            else
+                                            {
+                                                <span>No Date</span>
+                                            }
+                                        </td>
+                                        <td>
 
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Description)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Meta)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Hide)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Order)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.DateBegin)
-                </td>
-                <td>
-                    <p style=" display: inline-flex;">
+                                            @if (!string.IsNullOrEmpty(item.ImageUrl))
+                                            {
+                                                <img src="@Url.Content(item.ImageUrl)" alt="Event Image" style="max-width: 100px; max-height: 100px;"/>
+                                            }
+                                            else
+                                            {
+                                                <p>No image available</p>
+                                            }
 
-                        <a href="@Url.Action("Edit", "EventManage", new { id = item.Id })" class="create-link">
-                            <img src="~/Areas/Admin/Content/assets/img/icons8-edit-30.png" alt="Edit" />
-                        </a>|
-                        <a href="@Url.Action("Delete", "EventManage", new { id = item.Id })" class="create-link">
-                            <img src="~/Areas/Admin/Content/assets/img/icons8-minus-30.png" alt="Delete" />
-                        </a>
-                        </p>
-                </td>
-            </tr>
-        }
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.Meta)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.Hide)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.Order)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.DateBegin)
+                                        </td>
+                                        <td>
+                                            <div class="form-button-action">
+                                                <a href="@Url.Action("Edit", "EventManage", new { id = item.Id })" class="btn btn-link btn-primary btn-lg">
+                                                    <i class="fa fa-edit"></i>
+                                                </a>
+                                                <a href="@Url.Action("Delete", "EventManage", new { id = item.Id })" class="btn btn-link btn-danger btn-lg">
+                                                    <i class="fa fa-times"></i>
+                                                </a>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
 
-    </table>
+
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
 

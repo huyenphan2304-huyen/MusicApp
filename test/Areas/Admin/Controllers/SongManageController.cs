@@ -36,7 +36,11 @@ namespace MusicApp.Areas.Admin.Controllers
         // GET: Admin/Song/Create
         public ActionResult Create()
         {
-            return View();
+            var song = new Song
+            {
+                IsFeatured = false // Gán mặc định là false khi tạo song mới
+            };
+            return View(song);
         }
 
         // POST: Admin/Song/Create
@@ -44,43 +48,40 @@ namespace MusicApp.Areas.Admin.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create(Song Song, HttpPostedFileBase CoverImage, HttpPostedFileBase AudioFile)
         {
+            // Handle the Cover Image Upload
+            if (CoverImage != null && CoverImage.ContentLength > 0)
+            {
+                var coverImageFileName = Path.GetFileName(CoverImage.FileName);
+                var coverImagePath = Path.Combine(Server.MapPath("~/Content/img"), coverImageFileName);
+                CoverImage.SaveAs(coverImagePath);
+                Song.CoverImageUrl = "/Content/img/" + coverImageFileName;
+            }
+
+            // Handle the Audio File Upload (Song.Url)
+            if (AudioFile != null && AudioFile.ContentLength > 0)
+            {
+                var audioFileName = Path.GetFileName(AudioFile.FileName);
+                var audioFilePath = Path.Combine(Server.MapPath("~/Content/Audio/"), audioFileName);
+                AudioFile.SaveAs(audioFilePath);
+                Song.Url = "/Content/Audio/" + audioFileName;
+            }
+
+            
+
+
+            // Insert the Song into the database
             if (ModelState.IsValid)
             {
-                // Handle the Cover Image Upload
-                if (CoverImage != null && CoverImage.ContentLength > 0)
+                // Default IsFeatured to false if it's null
+                if (Song.IsFeatured == null)
                 {
-                    var coverImageFileName = Path.GetFileName(CoverImage.FileName);
-                    var coverImagePath = Path.Combine(Server.MapPath("~/Content/img"), coverImageFileName);
-                    CoverImage.SaveAs(coverImagePath);
-                    Song.CoverImageUrl = "/Content/img/" + coverImageFileName;
+                    Song.IsFeatured = false;
                 }
-
-                // Handle the Audio File Upload (Song.Url)
-                if (AudioFile != null && AudioFile.ContentLength > 0)
-                {
-                    var audioFileName = Path.GetFileName(AudioFile.FileName);
-                    var audioFilePath = Path.Combine(Server.MapPath("~/Content/Audio/"), audioFileName);
-                    AudioFile.SaveAs(audioFilePath);
-                    Song.Url = "/Content/Audio/" + audioFileName;
-                }
-
-                // Insert the Song into the database
                 db.Songs.InsertOnSubmit(Song);
                 db.SubmitChanges();
-
                 return RedirectToAction("Index");
             }
-            else
-            {
-                // If there are model validation errors, output them to the debug console
-                var errors = ModelState.Values.SelectMany(v => v.Errors);
-                foreach (var error in errors)
-                {
-                    System.Diagnostics.Debug.WriteLine(error.ErrorMessage);
-                }
-            }
 
-            // Return the Song model back to the view if there's a validation error
             return View(Song);
         }
 
@@ -235,6 +236,34 @@ namespace MusicApp.Areas.Admin.Controllers
             db.SubmitChanges(); // Lưu thay đổi vào database
             return RedirectToAction("Index"); // Quay lại danh sách bài hát
         }
+
+        //public JsonResult GetSongs(int pageNumber, int pageSize)
+        //{
+        //    try
+        //    {
+        //        // Lấy danh sách bài hát từ database
+        //        var songs = db.Songs
+        //                      .OrderBy(s => s.Title)
+        //                      .Skip((pageNumber - 1) * pageSize)
+        //                      .Take(pageSize)
+        //                      .ToList();
+
+        //        // Trả về dữ liệu theo định dạng JSON
+        //        return Json(new
+        //        {
+        //            draw = Request["draw"],  // Đảm bảo giữ đúng tham số "draw" từ DataTables
+        //            recordsTotal = db.Songs.Count(),  // Tổng số bản ghi trong cơ sở dữ liệu
+        //            recordsFiltered = db.Songs.Count(),  // Tổng số bản ghi sau khi lọc
+        //            data = songs  // Dữ liệu bài hát cần trả về
+        //        }, JsonRequestBehavior.AllowGet);
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        // Trả về thông báo lỗi nếu có vấn đề
+        //        return Json(new { error = ex.Message }, JsonRequestBehavior.AllowGet);
+        //    }
+        //}
+
 
     }
 }

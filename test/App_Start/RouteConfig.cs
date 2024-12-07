@@ -11,6 +11,11 @@ namespace MusicApp
         {
             routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
 
+            routes.MapRoute(
+                name: "AdminSongManage",
+                url: "Admin/SongManage/{action}/{id}",
+                defaults: new { controller = "SongManage", action = "Index", id = UrlParameter.Optional }
+            );
             // Song/{categoryName}
             routes.MapRoute(
                 name: "SongsByCategory",
@@ -24,16 +29,14 @@ namespace MusicApp
                 defaults: new { controller = "Album", action = "AlbumDetail", id = UrlParameter.Optional },
                 namespaces: new[] { "MusicApp.Controllers" }
             );
-
-            // route EventDetail
             routes.MapRoute(
-                name: "EventDetail",
-                 url: "{type}/{meta}/{id}",
-                defaults: new { controller = "Event", action = "EventDetail", id = UrlParameter.Optional },
+                name: "EventDetails",
+                url: "{type}/{meta}/{id}",
+                defaults: new { controller = "Event", action = "EventDetails", id = UrlParameter.Optional },
                 constraints: new { type = "event" },
-                        namespaces: new[] { "MusicApp.Controllers" }
-
+                namespaces: new[] { "MusicApp.Controllers" }
             );
+
             // PlaylistDetail
             routes.MapRoute(
                 name: "PlaylistDetail",

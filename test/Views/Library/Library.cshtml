@@ -1,13 +1,11 @@
-﻿
-@{
+﻿@{
     ViewBag.Title = "Library";
 }
 
-<!-- Gọi breadcrumb cho trang Album -->
+<!-- Breadcrumb -->
 @Html.Action("GetBreadcrumb", "Breadcrumb", new { pageTitle = ViewBag.Title })
 
+
 @Html.Action("MyPlaylists", "Library")
-
 @Html.Action("MyFavorite", "Library")
-
 

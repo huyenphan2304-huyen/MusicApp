@@ -23,7 +23,7 @@ namespace MusicApp.Areas.Admin.Controllers
                 AlbumTitle = s.Album.Title,
                 CreatedDate = s.CreatedDate, // No need to cast to DateTime
                 Meta = s.Meta,
-                Hide = s.Hide.HasValue ? s.Hide.Value : false, // Handle nullable bool
+                Hide = s.Hide, // Handle nullable bool
                 Order = s.Order.HasValue ? s.Order.Value : 0, // Handle nullable int
                 DateBegin = s.DateBegin // No need to cast to DateTime
             }).ToList();

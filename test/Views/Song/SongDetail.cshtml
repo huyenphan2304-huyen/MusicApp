@@ -3,6 +3,7 @@
 @{
     ViewBag.Title = "SongDetail";
 }
+
 <!-- ***** Container ***** -->
 <div class="container " style="padding-top: 80px;">
     <div class="row">
@@ -32,36 +33,63 @@
 
                         </div>
                         <div class="row">
-                            <div class="song-play-area">
-                                <div class="song-name">
-                                    <p>@Model.Song.Title</p>
+                            <div class="col-12">
+                                <!-- Giữ nguyên song-play-area để tận dụng CSS hiện tại -->
+                                <div class="song-play-area">
+                                    <!-- Hàng 1: Tên bài hát và các nút -->
+                                    <div class="d-flex justify-content-between align-items-center">
+                                        <!-- Cột 1: Tên bài hát -->
+                                        <div class="song-name">
+                                            <p class="mb-0">@Model.Song.Title</p>
+                                        </div>
+
+                                        <!-- Cột 2: Nút thêm vào mục yêu thích và playlist -->
+                                        <div class="song-actions d-flex align-items-center">
+                                            <!-- Nút thêm vào mục yêu thích -->
+                                            <button id="addToFavoritesBtn" class="btn btn-outline-danger mx-2">
+                                                <i class="fas fa-heart"></i> <!-- Biểu tượng trái tim -->
+                                            </button>
+
+                                            <!-- Nút thêm vào danh sách phát -->
+                                            <button id="addPlaylistBtn" class="btn btn-outline-primary">
+                                                <i class="fas fa-plus"></i> <!-- Biểu tượng dấu cộng -->
+                                            </button>
+                                        </div>
+                                    </div>
+
+                                    <!-- Hàng 2: Audio player -->
+                                    <div class="mt-3">
+                                        <audio preload="auto" controls style="width: 100%;">
+                                            <!-- Đặt audio chiếm toàn bộ chiều rộng -->
+                                            <source src="@Model.Song.Url" type="audio/mpeg">
+                                        </audio>
+                                    </div>
                                 </div>
-                                <audio preload="auto" controls>
-                                    <source src="@Model.Song.Url" type="audio/mpeg">
-                                </audio>
                             </div>
                         </div>
 
                     </div>
                 </section>
             </div>
-        
+
             <div class="row lyrics padding-10" style="background-color:#f5f9fa; padding:inherit;">
-
-                <div class="song-name">
+                <div class="song-name mb-3">
                     <h2>Lyrics</h2>
+                    <p><em>"@Model.Song.Title"</em></p> <!-- Hiển thị tên bài hát dưới tiêu đề -->
+                    <div>
+                        <!-- Render lyrics with preserved line breaks using Html.Raw -->
+                        <p>@Html.Raw(Model.Song.Lyrics.Replace("\n", "<br/>"))</p>
+                    </div>
                 </div>
-                <div>
-                    <p>@Model.Song.Lyrics</p>
 
-                </div>
             </div>
+
         </div>
 
         <!-- ***** Weeks Top ***** -->
         <div class="col-12 col-lg-4">
             <div class="weeks-top-area mb-100">
-                <div class="single-top-item d-flex wow fadeInUp" onclick="location.href='@Url.RouteUrl("SongDetail", new { type = "song", meta = Model.Song.Meta, id = Model.Song.Id })'"
+                <div class="single-top-item d-flex wow fadeInUp">
                     <h2>@Model.WeeksTopTitle</h2>
                 </div>
 
@@ -69,15 +97,23 @@
                 {
                     foreach (var item in Model.WeeksTop)
                     {
-                        <div class="single-top-item d-flex wow fadeInUp">
-                            <div class="thumbnail">
-                                <img src="@item.ImageUrl" alt="">
+                        if (item != null)
+                        {
+                            <div class="single-top-item d-flex wow fadeInUp" onclick="location.href='@Url.RouteUrl("SongDetail", new { type = "song", meta = item.Meta, id = item.Id })'">
+                                <div class="thumbnail">
+                                    <img src="@item.ImageUrl" alt="">
+                                </div>
+                                <div class="content-">
+                                    <h6>@item.Name</h6>
+                                    <p>@item.Description</p>
+                                </div>
                             </div>
-                            <disv class="content-">
-                                <h6>@item.Name</h6>
-                                <p>@item.Description</p>
-                            </disv>
-                        </div>
+                        }
+                        else
+                        {
+                            <p>Song details are missing for this item.</p>
+                        }
+
                     }
                 }
                 else
@@ -85,9 +121,27 @@
                     <p>No top hits this week.</p>
                 }
             </div>
+            <!-- Widget Area -->
+            <div class="single-widget-area mb-30">
+                <div class="widget-title">
+                    <h5>Another Category</h5>
+                </div>
+                <div class="widget-content">
+                    <ul class="tags">
+                        <li><a href="#">music</a></li>
+                        <li><a href="#">events</a></li>
+                        <li><a href="#">artists</a></li>
+                        <li><a href="#">press</a></li>
+                        <li><a href="#">mp3</a></li>
+                        <li><a href="#">videos</a></li>
+                        <li><a href="#">concerts</a></li>
+                        <li><a href="#">performers</a></li>
+                    </ul>
+                </div>
+            </div>
         </div>
     </div>
-    
+
 </div>
 
 <div>
@@ -95,11 +149,75 @@
 
 </div>
 
+<!-- Lớp overlay -->
+<div id="overlay" style="display:none;"></div>
 
-<script>
-    // Truyền lyrics từ ViewBag vào JavaScript
-    var lyrics = "@ViewBag.Lyrics";
+<script src="~/Areas/Admin/Content/assets/js/core/jquery-3.7.1.min.js"></script>
 
-    // Hiển thị lyrics ra console của trình duyệt
-    console.log("Lyrics:", lyrics);
+@{
+    // Lấy URL của action CreatePlaylist để sử dụng trong AJAX
+    var createPlaylistUrl = Url.Action("CreatePlaylist", "Library");
+}
+<script type="text/javascript">
+    var createPlaylistUrl = '@createPlaylistUrl';  // Lấy giá trị URL từ Razor
+    console.log("Create Playlist URL:", createPlaylistUrl);  // Kiểm tra URL trong console
+
+    $(document).ready(function () {
+        // Khi nhấn vào nút "Add Playlist"
+        $("#addPlaylistBtn").click(function () {
+            console.log('Button clicked');  // Kiểm tra xem sự kiện click có hoạt động không
+
+            // Gửi AJAX để lấy form tạo playlist
+            $.ajax({
+                url: createPlaylistUrl,  // Đảm bảo URL chính xác
+                type: 'GET',
+                success: function (data) {
+                    console.log('Success:', data);  // Kiểm tra xem dữ liệu trả về là gì
+
+                    // Nếu modal chưa được thêm vào trang, thì thêm vào body
+                    if ($("#createPlaylistModal").length === 0) {
+                        $("body").append(data); // Thêm modal vào trang
+                    }
+
+                    // Hiển thị modal
+                    $("#createPlaylistModal").fadeIn();
+                    $("#overlay").fadeIn();  // Hiển thị overlay khi modal hiển thị
+                },
+                error: function (xhr, status, error) {
+                    console.error('Error:', error);  // Log lỗi nếu có
+                }
+            });
+        });
+
+        // Event delegation cho nút "Cancel" vì modal có thể được tải động
+        $(document).on('click', '#cancelBtn', function () {
+            $("#createPlaylistModal").fadeOut();
+            $("#overlay").fadeOut();  // Ẩn overlay khi modal bị ẩn
+        });
+
+        // Khi submit form tạo playlist
+        $(document).on('submit', '#createPlaylistForm', function (e) {
+            e.preventDefault(); // Ngăn chặn hành vi submit mặc định của form
+
+            // Gửi dữ liệu form qua AJAX
+            $.ajax({
+                url: createPlaylistUrl,  // Đảm bảo URL chính xác
+                type: 'POST',
+                data: $(this).serialize(), // Lấy dữ liệu form
+                success: function (data) {
+                    if (data.success) {
+                        alert(data.message);  // Hiển thị thông báo thành công
+                        $("#createPlaylistModal").fadeOut();  // Ẩn modal
+                        $("#overlay").fadeOut();  // Ẩn overlay
+                    } else {
+                        alert("Failed to create playlist.");  // Thông báo lỗi
+                    }
+                },
+                error: function (xhr, status, error) {
+                    console.error('Error:', error);  // Log lỗi nếu có
+                    alert("Error occurred while creating playlist.");
+                }
+            });
+        });
+    });
 </script>

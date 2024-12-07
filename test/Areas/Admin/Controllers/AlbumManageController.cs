@@ -41,33 +41,35 @@ namespace MusicApp.Areas.Admin.Controllers
         {
             if (ModelState.IsValid)
             {
+                // Xử lý hình ảnh tải lên
                 if (CoverImage != null && CoverImage.ContentLength > 0)
                 {
-                    // Tạo đường dẫn để lưu file
                     var fileName = Path.GetFileName(CoverImage.FileName);
                     var path = Path.Combine(Server.MapPath("~/Content/img"), fileName);
-
-                    // Lưu file vào thư mục
                     CoverImage.SaveAs(path);
-
-                    // Lưu đường dẫn file vào database
                     album.CoverImageUrl = "/Content/img/" + fileName;
                 }
 
+                // Tạo giá trị meta và Url từ Title
+                album.Meta = GenerateSlug(album.Title);
+                album.Url = "/album/" + album.Meta;
+
+                // Lưu album vào cơ sở dữ liệu
                 db.Albums.InsertOnSubmit(album);
                 db.SubmitChanges();
 
                 return RedirectToAction("Index");
             }
-            else
-            {
-                var errors = ModelState.Values.SelectMany(v => v.Errors);
-                foreach (var error in errors)
-                {
-                    System.Diagnostics.Debug.WriteLine(error.ErrorMessage);
-                }
-            }
             return View(album);
+        }
+
+        private string GenerateSlug(string title)
+        {
+            // Chuyển đổi tiêu đề thành dạng URL thân thiện (slug)
+            string slug = title.ToLower().Trim();
+            slug = System.Text.RegularExpressions.Regex.Replace(slug, @"\s+", "-"); // Thay khoảng trắng bằng dấu gạch ngang
+            slug = System.Text.RegularExpressions.Regex.Replace(slug, @"[^a-z0-9-]", ""); // Loại bỏ ký tự đặc biệt
+            return slug;
         }
 
         public ActionResult Delete(int id)
@@ -111,12 +113,19 @@ namespace MusicApp.Areas.Admin.Controllers
         {
             if (ModelState.IsValid)
             {
+                // Tạo lại giá trị meta và Url từ Title (nếu Title bị thay đổi)
+                album.Meta = GenerateSlug(album.Title);
+                album.Url = "/album/" + album.Meta;
+
+                // Cập nhật album
                 db.Albums.Attach(album);
                 db.Refresh(System.Data.Linq.RefreshMode.KeepCurrentValues, album);
                 db.SubmitChanges();
+
                 return RedirectToAction("Index");
             }
             return View(album);
         }
+
     }
 }

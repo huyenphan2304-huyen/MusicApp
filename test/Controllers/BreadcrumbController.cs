@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System.Configuration;
+using System.Linq;
 using System.Web.Mvc;
 using MusicApp.Models;
 
@@ -6,7 +7,7 @@ namespace MusicApp.Controllers
 {
     public class BreadcrumbController : Controller
     {
-        private MusicDbDataContext db = new MusicDbDataContext();
+        private MusicDbDataContext db = new MusicDbDataContext(ConfigurationManager.ConnectionStrings["MusicDbDataContext"].ConnectionString);
 
         // Action để lấy breadcrumb dựa trên trang hiện tại
         public PartialViewResult GetBreadcrumb(string pageTitle)
